@@ -62,7 +62,7 @@ include::schedule.adoc[]
 *  **Dive into Systems** by Suzanne J. Matthews, Tia Newhall, and Kevin C. Webb.  Available free online from link:https://diveintosystems.org/[Dive into Systems]
 * link:https://patilsai.wordpress.com/wp-content/uploads/2019/07/data_structures_and_algorithm_analysis_in_c.pdf[Data Structures in C by Mark Allen Weiss]
 *  **Github Account** Please go to link:https://github.com/[github.com] and register. You will be using github to submit assignments. 
-*  **Slack** Please go to link:https://slack.com/signin[slack.com]. Our workspace is BrynMawr-CS223-S25. You can ask questions and request one-on-one help over zoom using this course's slack channel. 
+*  **Slack** Please go to link:https://slack.com/signin[slack.com]. Our workspace is BrynMawr-CS223-S26. You can ask questions and request one-on-one help over zoom using this course's slack channel. 
 
 === Unix, Bash, Makefiles
     
