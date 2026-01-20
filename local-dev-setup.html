@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>Untitled</title>
+<title>Set up a remote development environment with VS Code</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,302 +437,178 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 </div>
 <div id="content">
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 22.2222%;">
-<col style="width: 44.4444%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Week</th>
-<th class="tableblock halign-left valign-top">Date</th>
-<th class="tableblock halign-left valign-top">Agenda</th>
-<th class="tableblock halign-left valign-top">Resources</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">January 20, 22 <a id="week01"></a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Introductions, Hello C</strong></p>
+<div class="sect1">
+<h2 id="_set_up_a_remote_development_environment_with_vs_code">Set up a remote development environment with VS Code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>VS Code is an integrated development environment.</p>
+</div>
+<div class="paragraph">
+<p>A remote development environment will allow you to run code from
+comet.cs.brynmawr.edu, a remote server, from within VS Code.</p>
+</div>
+<div class="paragraph">
+<p>For this option, your need to use VS Code with the Remote-SSH extension to VS Code.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Topics: Programming at the command line, Makefiles, From Java to C, strings, arrays, function stack, basic pointers</p>
+<p><a href="https://code.visualstudio.com/">VS Code</a></p>
 </li>
 <li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/#_appendix_1_chapter_1_for_java_programmers">Chapter 1: From JAVA to C</a></p>
-</li>
-<li>
-<p><a href="assts/asst01.html">Assignment 01</a>: Due January 23</p>
-</li>
-<li>
-<p>Lab Jan 21: SSH and Github setup</p>
+<p><a href="https://code.visualstudio.com/docs/remote/ssh">Remote SSH Tutorial</a></p>
 </li>
 </ul>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
-<ul>
-<li>
-<p><a href="assts/ssh-setup.html">SSH Setup</a></p>
-</li>
-<li>
-<p><a href="http://linuxcommand.org/lc3_learning_the_shell.php">Learning the shell</a></p>
-</li>
-<li>
-<p><a href="https://pythontutor.com/c.html#mode=edit">C Tutor</a></p>
-</li>
-</ul>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">January 27, 29 <a id="week02"></a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Introduction to Pointers</strong></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Topics: More pointers, malloc/free, heap, file I/O, gdb, valgrind, hexedit</p>
-</li>
-<li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/#_a_deeper_dive_into_c_programming">Sections 2.1-2.8, 2.9 (Command line arguments only)</a></p>
-</li>
-<li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/#_c_debugging_tools">Sections 3.1-3.3</a></p>
-</li>
-<li>
-<p><a href="assts/asst02.">Assignment 02</a>: Due Jan 30</p>
-</li>
-<li>
-<p>Lab Jan 27: Code Jam 01</p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">February 3, 5 <a id="week03"></a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Data structures in C</strong></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Topics: linked lists, trees, editor design and implementation</p>
-</li>
-<li>
-<p>Read: <a href="https://diveintosystems.org/book/C2-C_depth/structs.html#_self_referential_structs">2.7.5. Self-Referential Structs</a></p>
-</li>
-<li>
-<p><a href="assts/asst03.">Assignment 03</a>: Due Feb 6</p>
-</li>
-<li>
-<p>Lab Feb 3: Practice Quiz 01, <a href="studyguide1.html">Study Guide: Quiz 01</a></p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">February 10, 12 <a id="week04"></a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Binary and Data Representation</strong></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Topics: number systems, integer/float/char binary formats, struct layouts, endianess</p>
-</li>
-<li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/#_binary_and_data_representation">Chapter 4.1-4.9</a></p>
-</li>
-<li>
-<p><a href="assts/asst04.">Assignment 04</a>: Due Feb 13</p>
-</li>
-<li>
-<p>Lab Feb 10: <strong>Quiz 01</strong>: 50 minutes</p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">February 17, 19 <a id="week05"></a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Bitwise operators, Introduction to Assembly</strong></p>
+<div class="sect1">
+<h2 id="_setting_up_your_own_local_development_environment">Setting up your own local development environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A local development environment allows you to write code on your own desktop or
+laptop. With a local development environment, you will be able to run your code even
+after you graduate from college.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Topics: bitwise operators, shifts, masking, working with bit fields</p>
-</li>
-<li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/#_what_von_neumann_knew_computer_architecture">Section 5, 5.1</a></p>
-</li>
-<li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/##_assembly_chapter">Chapter 6</a></p>
-</li>
-<li>
-<p><a href="assts/asst05.">Assignment 05</a>: Due Feb 20</p>
-</li>
-<li>
-<p>Lan Feb 17: Code Jam 02</p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-</tr>
+<div class="admonitionblock note">
+<table>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">February 24, 26 <a id="week06"></a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Assembly</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Topics: instruction set architecture, machine code, memory forms, x86_64 instructions</p>
-</li>
-<li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/#_x64_assembly_chapter">Chapter 7 (7.1-7.3,7.5,7.10), 10</a></p>
-</li>
-<li>
-<p><a href="assts/asst06.">Assignment 06</a>: Due Feb 27</p>
-</li>
-<li>
-<p>Lab Feb 24: Quiz 02 Practice, <a href="studyguide2.html">Study Guide: Quiz 02</a></p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+All programs must run on the lab&#8217;s Linux environment. Make sure you test
+your work on the lab machines if you work on your laptop!
+</td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">March 3,5 <a id="week07"></a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Assembly, The operating system</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Topics: Tracing assembly, buffoer exploits, loops, conditionals</p>
-</li>
-<li>
-<p>Topics: what is an operating system?, system calls</p>
-</li>
-<li>
-<p>Read: <a href="https://diveintosystems.org/singlepage/#_the_operating_system">Chapter 13, skip section 13.3</a></p>
-</li>
-<li>
-<p>Lab March 3: <strong>*Quiz 02</strong>: 50 minutes</p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">March 10, 12 <a id="week08"></a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><strong>Spring Break</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>NO LECTURES, LABS, HOMEWORKS</strong></p>
-</li>
-</ul>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>9</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">March 17, 19 <a id="week09"></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Processes</strong></p>
-<p class="tableblock">* Topics: Processes, fork, signals
-* <a href="assts/asst08.">Assignment 08</a>:
-* Lab March 17: <strong>Code Jam 03</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>10</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">March 24, 26 <a id="week10"></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Threads I</strong></p>
-<p class="tableblock">* Topics: Threads vs processes, designing concurrent algorithms, pthreads
-* Read: <a href="https://diveintosystems.org/singlepage/#_some_advanced_c_features">Section 2.9.3, 2.9.4 (void* and pointer arithmetic)</a>
-* Read: <a href="https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era">Chapter 14</a>
-* <a href="assts/asst09.">Assignment 09</a>: Due March 27
-* Lab March 24: Practice Quiz 03 <a href="studyguide3.html">Study Guide 03</a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>11</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">March 31, April 2 <a id="week11"></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Threads II</strong></p>
-<p class="tableblock">* Topics: performance, deadlock, thread safety, producer/consumer pattern
-* Read: <a href="https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era">Chapter 14</a>
-* <a href="assts/asst10.">Assignment 10</a>: Due April 3rd
-* Lab March 31: <strong>Quiz 03</strong>: 50 minutes</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>12</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">April 7, 9 <a id="week12"></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Memory</strong></p>
-<p class="tableblock">* Topics: Memory hierarchy, spatial/temporal locality, caching
-* Read: <a href="https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era">Chapter 14</a>
-* <a href="assts/asst11.">Assignment 11</a>: Due April 10th
-* Lab April 7: <strong>Code Jam 04</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>13</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">April 14, 16 <a id="week13"></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Memory</strong></p>
-<p class="tableblock">* Read:"My malloc: mylloc and mhysa" by Johan Montelius
-* Read: <a href="https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy">Chapter 11.1-11.3</a>
-* <a href="assts/asst12.">Assignment 12</a>:
-* Lab April 14: Practice Quiz 04 <a href="studyguide4.html">Study Guide 04</a></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>14</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">April 21, 23 <a id="week14"></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Code Optimization, C++</strong></p>
-<p class="tableblock">* Read: <a href="https://diveintosystems.org/singlepage/#_code_optimization">Chapter 12</a>
-* <a href="assts/asst13.">Assignment 13</a>: Due April 24, <strong>Hardcopy due in class April 24 - no late work accepted</strong>
-* Lab 23: <strong>Quiz 04</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>15</p>
-</div></div></td>
-</tr>
-</tbody>
 </table>
+</div>
+<div class="sect2">
+<h3 id="_windows">Windows</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open PowerShell and install wsl2: <code>wsl --install</code>. See <a href="https://docs.microsoft.com/en-us/windows/wsl/install">documentation</a>. Note that you may need to open powershell as an administrator.</p>
+</li>
+<li>
+<p>From the windows store, <a href="https://ubuntu.com/wsl">install <code>Ubuntu</code></a>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Once installed, you can setup your development environment from a bash shell.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open PowerShell</p>
+</li>
+<li>
+<p>Type <code>wsl</code> to start the windows subsystem for linux. This will give your a bash prompt</p>
+</li>
+<li>
+<p>Then install your development tools</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>sudo apt-get install cmake</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install git</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install g++</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install vim</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install libc6-dev-i386</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install gcc-multilib</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install hexedit</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install valgrind</code></p>
+</li>
+<li>
+<p><code>sudo apt-get install gdb</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>For example, you get something like the following</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Users\alinen&gt; wsl
+WSL alinen@Balthazar:~$ sudo apt-get install make
+
+etc</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+A quick way to open powershell is to type &lt;WindowsKey&gt;-'Q' and type 'powershell'.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_macos">MacOS</h3>
+<div class="paragraph">
+<p>From terminal, run command <code>xcode-select --install</code></p>
+</div>
+<div class="paragraph">
+<p>You can follow the instructions <a href="https://www.ics.uci.edu/~pattis/common/handouts/macclion/clang.html">here</a></p>
+</div>
+<div class="paragraph">
+<p>Then, to install additional dependencies, execute the following commands form terminal</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ brew install vim
+$ brew install git
+$ brew install cmake</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+A quick way to open terminal is to use spotlight. From the keyboard, type the &lt;cmd&gt; and &lt;spacebar&gt;. Then type terminal at the popup edit field.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Unfortunately, <code>valgrind</code> and <code>gdb</code> cannot be run natively on mac. However, you may try running <code>leaks</code> or <code>lldb</code> which are similar. However, we recommend you still test on goldengate or a lab machine.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-19 19:44:29 -0500
+Last updated 2026-01-19 18:51:59 -0500
 </div>
 </div>
 </body>

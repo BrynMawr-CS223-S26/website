@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.18">
+<meta name="generator" content="Asciidoctor 2.0.20">
 <title>Study Guide 1</title>
 <link rel="stylesheet" href="style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,7 +15,8 @@
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_study_guide_1">Study Guide 1</a></li>
-<li><a href="#_practice_questions">Practice questions</a></li>
+<li><a href="#_exercises">Exercises</a></li>
+<li><a href="#_coding">Coding</a></li>
 </ul>
 </div>
 </div>
@@ -24,7 +25,7 @@
 <h2 id="_study_guide_1">Study Guide 1</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quizzes will be closed book. You can bring one written cheat sheet. 30 minutes in class.</p>
+<p>Exams will be closed book. Lab coding challenges will be closed-internet.</p>
 </div>
 <div class="paragraph">
 <p>Topics:</p>
@@ -35,7 +36,7 @@
 <p>UNIX commands</p>
 </li>
 <li>
-<p>Programming in C</p>
+<p>Basic C programs</p>
 </li>
 <li>
 <p>Data types and sizes</p>
@@ -44,7 +45,7 @@
 <p>Function stacks</p>
 </li>
 <li>
-<p>Basic arrays</p>
+<p>Arrays</p>
 </li>
 </ul>
 </div>
@@ -55,10 +56,10 @@ to give feedback on your responses.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_practice_questions">Practice questions</h2>
+<h2 id="_exercises">Exercises</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>1) What is the minimum size of the following structures and variables? If the variable is a pointer, give the size of the memory that the pointer points to.</p>
+<p>1) What sizes are each of the variables below? If the variable is a pointer, give the size of the memory that the pointer points to. If the variable is a struct, give the minimum size.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -216,13 +217,7 @@ following questions:</p>
 <p>Where are variables val1 and val2 located on the stack?</p>
 </li>
 <li>
-<p>Where are the parameter values located?</p>
-</li>
-<li>
 <p>What value does each parameter get?</p>
-</li>
-<li>
-<p>What variables are in scope of <code>arg_modifier</code>?</p>
 </li>
 </ul>
 </div>
@@ -257,24 +252,7 @@ void main()
 </div>
 </div>
 <div class="paragraph">
-<p>10) Write code that implements a power function (for positive integer exponents only).
-A call to your function should compute \(base^{exp}\) and might look like:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>result = power(base, exp);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>11) Write code that implements a function <code>void removeLetter(char* str, char letter)</code> that removes all occurrences of <code>letter</code>
-from <code>str</code>. Your function should modify the contents of str. (To check your work, implement your program and test it from <code>main</code>).</p>
-</div>
-<div class="paragraph">
-<p>12) Write code that implements a function <code>isPalindrome</code> that returns 1 if a given string is a palindrome and 0 otherwise.
-Your function can be iterative or recursive. Test your function from <code>main</code>.</p>
-</div>
-<div class="paragraph">
-<p>13) Draw the directory hierarchy that corresponds to the following commands</p>
+<p>10) Draw the directory hierarchy that corresponds to the following commands</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -291,7 +269,7 @@ $ touch sing.c</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>14) Consider the following directory structure</p>
+<p>11) Consider the following directory structure</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -323,10 +301,128 @@ $ touch sing.c</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_coding">Coding</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Implement a program, <code>ask_matrix.c</code>, that asks the user for a number of rows and columns, creates a 2D matrix, and then asks the user for its values.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Enter a number of rows: 3
+Enter a number of cols: 4
+Please enter a value for matrix[0][0]: 0
+Please enter a value for matrix[0][1]: 1
+Please enter a value for matrix[0][2]: 2
+Please enter a value for matrix[0][3]: 4
+Please enter a value for matrix[1][0]: 5
+Please enter a value for matrix[1][1]: 6
+Please enter a value for matrix[1][2]: 7
+Please enter a value for matrix[1][3]: 8
+Please enter a value for matrix[2][0]: 9
+Please enter a value for matrix[2][1]: -1
+Please enter a value for matrix[2][2]: -2
+Please enter a value for matrix[2][3]: -3
+Here is your matrix!
+0 1 2 4
+5 6 7 8
+9 -1 -2 -3</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Write code to reverse an array</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ ./reverse_numbers
+Enter the size of the array: 4
+Enter a number: 2
+Enter a number: 4
+Enter a number: 6
+Enter a number: 8
+
+The array in reverse order is: 8 6 4 2</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Write code that implements a power function (for positive integer exponents only).
+A call to your function should compute \(base^{exp}\) and might look like:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>result = power(base, exp);</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Write code that implements a function <code>void removeLetter(char* str, char letter)</code> that removes all occurrences of <code>letter</code>
+from <code>str</code>. Your function should modify the contents of str. (To check your work, implement your program and test it from <code>main</code>).</p>
+</li>
+<li>
+<p>Write code that implements a function <code>isPalindrome</code> that returns 1 if a given string is a palindrome and 0 otherwise.
+Your function can be iterative or recursive. Test your function from <code>main</code>.</p>
+</li>
+<li>
+<p>Write a program, <code>countsort.c</code>, that asks the user for a series of digits and then
+prints the digits in sorted order. Your program should count the number of times
+each digit appears in the input and then use these counts to print the sorted list.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./countsort</strong>
+Enter digits: <strong>034567139432</strong>
+0 1 2 3 3 3 4 4 5 6 7 9
+$ <strong>./countsort</strong>
+Enter digits: <strong>3212</strong>
+1 2 2 3</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements/Hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You can assume that inputs will be less than 31 characters</p>
+</li>
+<li>
+<p>Your program should not have memory errors and have good style.</p>
+</li>
+<li>
+<p>You cannot assume that inputs will be digits only</p>
+</li>
+<li>
+<p>Use the ASCII values of the input to convert from a character to an integer.</p>
+</li>
+<li>
+<p>Your algorithm should be O(n)</p>
+</li>
+<li>
+<p>Write a program that takes a list of words as command line arguments and outputs the largest one.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-02-16 14:07:19 -0500
+Last updated 2026-01-19 18:51:48 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">

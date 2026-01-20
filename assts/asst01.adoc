@@ -1,5 +1,4 @@
 include::header.adoc[]
-include::../dates.adoc[]
 
 :CLASS: CS223
 :title: Assignment 01: Hello {CLASS}!

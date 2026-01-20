@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.18">
+<meta name="generator" content="Asciidoctor 2.0.20">
 <title>Academic Integrity</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -208,13 +208,10 @@ table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
 .admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
 .exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
-.exampleblock>.content>:first-child{margin-top:0}
-.exampleblock>.content>:last-child{margin-bottom:0}
 .sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
-.sidebarblock>:first-child{margin-top:0}
-.sidebarblock>:last-child{margin-bottom:0}
 .sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
-.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
 .literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
@@ -393,7 +390,7 @@ b.conum *{color:inherit!important}
 dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
 h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
 p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
-p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
 p{margin-bottom:1.25rem}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
 .exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
@@ -447,129 +444,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>At Bryn Mawr, we assume students are trustworthy and work with honesty and
 integrity.
 <a href="https://www.brynmawr.edu/deans/academic-and-community-integrity">Look here
-for information about Bryn Mawr&#8217;s Honor Code.</a>. Obviously, quizzes and exams must
-be your own work. However, you will be allowed to work with others on assignments;
-although <strong>everyone must still submit their own work.</strong></p>
-</div>
-<div class="paragraph">
-<p>Programming is a creative skill that takes practice and effort to develop.  It&#8217;s
-<em>essential</em> that you develop your own skills for developing algorithms and
-implementing them through programs.</p>
-</div>
-<div class="paragraph">
-<p>Quizzes and exams will be <em>closed book</em>. You will be able to bring a
-single cheat sheet with you.</p>
-</div>
-<div class="paragraph">
-<p>The goal of assignments and labs is to help you prepare for quizzes and exams.
-The goals of quizzes and exams are to help you internalize the material (and
-provide feedback on how well you understand the material) so that you can grow
-towards your full potential as someone who can solve technical problems and who
-can create their own systems and devices.  If you can sit down, focus, and
-answer questions within a time limit, you understand the material and can
-communicate that understanding to someone else.
-<strong>If you are doing worksheets and assignments but not doing well on quizzes,
-you need to re-think how you are approaching assignments.</strong> You can assess
-whether you&#8217;re  effectively using assignments to learn if you can do the
-following after completing it:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Explain how your code works to someone else, without looking at your code</p>
-</li>
-<li>
-<p>Explain the system calls necessary to complete your assignment without looking them up online</p>
-</li>
-<li>
-<p>Write a similar program within a few minutes, without looking up help online</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Here is advice that has worked well for me.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Most beneficial: writing my own programs from scratch, followed by stepping line by line using a debugger to make sure it worked as intended</p>
-</li>
-<li>
-<p>When stuck, debugging the program with the help of a more experienced developer</p>
-</li>
-<li>
-<p>Comparing my solutions with others <em>after I finished my own solution</em></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>I do not recommend relying on stack overflow, copying old solutions, and using Chat-GPT.
-<strong>The absolute worst way to program is by cutting and pasting code you don&#8217;t understand, guessing your
-way to something that kind of works.</strong></p>
-</div>
-<div class="paragraph">
-<p>I am not going to police how you study and develop skills.  If you&#8217;re not doing
-well, you need to figure out how to work differently.</p>
-</div>
-<div class="paragraph">
-<p>Do&#8217;s:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>DO discuss ideas and approaches with your classmates.</p>
-</li>
-<li>
-<p>DO discuss ideas and approaches with your TAs and instructor.</p>
-</li>
-<li>
-<p>DO search for documentation and sample programs for built-in C functions and C syntax.</p>
-</li>
-<li>
-<p>DO use code from our text books and class (with attribution).</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Don&#8217;ts:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>DON&#8217;T use Chat-GPT (or other LLMs) to generate solutions.</p>
-</li>
-<li>
-<p>DON&#8217;T copy full solutions, from online tutorials, previous students, etc</p>
-</li>
-<li>
-<p>DON&#8217;T use functions and C syntax that is disallowed by the Makefile. We are deliberately using simple and portable C.</p>
-</li>
-<li>
-<p>DON&#8217;T modify any basecode that comes with your assignment.</p>
-</li>
-<li>
-<p>DON&#8217;T ever share your code with other students.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>It&#8217;s ultimately up to you to learn from your assignments! No one is
-going to hire you to do work that they can easily do themselves using a search
-or AI program generator. You can only build expertise with experience and practice.</p>
-</div>
-<div class="paragraph">
-<p>One final point: we will be using open-source repositories for homeworks in this
-class.  Thus, it will be possible to see what other students (and previous
-students) have submitted.  If you copy from others' repositories, it will be
-obvious, including potential employers! Only look at other solutions after you
-have finished your own first!</p>
+for information about Bryn Mawr&#8217;s Honor Code.</a>. Midterms and the final will be
+closed book. Lab coding challenges will be open-book and closed-internet.
+Thus, you cannot use VS Code, internet browsers, and other programming aids.
+However, you can use the text book, <em>Dive into Systems</em>, the Linux Programming
+Manual (available with <code>man</code>), and your class notes.  You may work with others and
+with online materials for assignments, but you will be expected to explain and reproduce your submitted assignment on your own.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-01-16 12:50:52 -0500
+Last updated 2026-01-19 19:07:47 -0500
 </div>
 </div>
 </body>
