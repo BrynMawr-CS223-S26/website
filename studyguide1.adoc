@@ -8,22 +8,22 @@ include::header.adoc[]
 
 = {title}
 
-Quizzes will be closed book. You can bring one written cheat sheet. 30 minutes in class.
+Exams will be closed book. Lab coding challenges will be closed-internet.
 
 Topics:
 
 * UNIX commands
-* Programming in C
+* Basic C programs
 * Data types and sizes
 * Function stacks
-* Basic arrays
+* Arrays
 
 Write C programs to check your answers. Or you can ask a TA or instructor 
 to give feedback on your responses.
 
-= Practice questions
+= Exercises
 
-1) What is the minimum size of the following structures and variables? If the variable is a pointer, give the size of the memory that the pointer points to.
+1) What sizes are each of the variables below? If the variable is a pointer, give the size of the memory that the pointer points to. If the variable is a struct, give the minimum size.
 
 [source]
 ----
@@ -155,9 +155,7 @@ right before the return from the arg_modifier function, and consider the
 following questions:
 
 * Where are variables val1 and val2 located on the stack?
-* Where are the parameter values located?
 * What value does each parameter get?
-* What variables are in scope of `arg_modifier`?
 
 9) Consider the following code. Find and fix the errors in the associated stack diagram.
 
@@ -185,21 +183,7 @@ void main()
 
 image::studyguide01-badstack.png[]
 
-10) Write code that implements a power function (for positive integer exponents only). 
-A call to your function should compute stem:[base^{exp}] and might look like:
-
-[source]
-----
-result = power(base, exp);
-----
-
-11) Write code that implements a function `void removeLetter(char* str, char letter)` that removes all occurrences of `letter` 
-from `str`. Your function should modify the contents of str. (To check your work, implement your program and test it from `main`).
-
-12) Write code that implements a function `isPalindrome` that returns 1 if a given string is a palindrome and 0 otherwise. 
-Your function can be iterative or recursive. Test your function from `main`. 
-
-13) Draw the directory hierarchy that corresponds to the following commands
+10) Draw the directory hierarchy that corresponds to the following commands
 
 [source]
 ----
@@ -215,7 +199,7 @@ $ cd
 $ touch sing.c
 ----
 
-14) Consider the following directory structure
+11) Consider the following directory structure
 
 [source]
 ----
@@ -233,3 +217,81 @@ root
 * What is the absolute path of hello.txt?
 * If we are in the directory A, what is the relative path of hello.txt?
 * If we are in the directory B, what is the relative path of hello.txt?
+
+= Coding 
+
+* Implement a program, `ask_matrix.c`, that asks the user for a number of rows and columns, creates a 2D matrix, and then asks the user for its values.
+
+[source]
+----
+Enter a number of rows: 3
+Enter a number of cols: 4
+Please enter a value for matrix[0][0]: 0
+Please enter a value for matrix[0][1]: 1
+Please enter a value for matrix[0][2]: 2
+Please enter a value for matrix[0][3]: 4
+Please enter a value for matrix[1][0]: 5
+Please enter a value for matrix[1][1]: 6
+Please enter a value for matrix[1][2]: 7
+Please enter a value for matrix[1][3]: 8
+Please enter a value for matrix[2][0]: 9
+Please enter a value for matrix[2][1]: -1
+Please enter a value for matrix[2][2]: -2
+Please enter a value for matrix[2][3]: -3
+Here is your matrix!
+0 1 2 4
+5 6 7 8
+9 -1 -2 -3
+----
+
+* Write code to reverse an array
+
+[source]
+----
+$ ./reverse_numbers
+Enter the size of the array: 4
+Enter a number: 2
+Enter a number: 4
+Enter a number: 6
+Enter a number: 8
+
+The array in reverse order is: 8 6 4 2
+----
+
+* Write code that implements a power function (for positive integer exponents only). 
+A call to your function should compute stem:[base^{exp}] and might look like:
+
+[source]
+----
+result = power(base, exp);
+----
+
+* Write code that implements a function `void removeLetter(char* str, char letter)` that removes all occurrences of `letter` 
+from `str`. Your function should modify the contents of str. (To check your work, implement your program and test it from `main`).
+
+* Write code that implements a function `isPalindrome` that returns 1 if a given string is a palindrome and 0 otherwise. 
+Your function can be iterative or recursive. Test your function from `main`. 
+
+* Write a program, `countsort.c`, that asks the user for a series of digits and then
+prints the digits in sorted order. Your program should count the number of times
+each digit appears in the input and then use these counts to print the sorted list.
+                                                                                
+[source, subs="quotes"]                                                         
+----                                                                            
+$ **./countsort**                                                               
+Enter digits: **034567139432**                                                  
+0 1 2 3 3 3 4 4 5 6 7 9                                                         
+$ **./countsort**                                                               
+Enter digits: **3212**                                                          
+1 2 2 3                                                                         
+----                                                                                                                                                                   
+                                                                                                                                                                       
+Requirements/Hints:                                                                                                                                                    
+                                                                                                                                                                       
+* You can assume that inputs will be less than 31 characters                                                                                                           
+* Your program should not have memory errors and have good style.                                                                                                      
+* You cannot assume that inputs will be digits only                                                                                                                    
+* Use the ASCII values of the input to convert from a character to an integer.       
+* Your algorithm should be O(n)
+
+* Write a program that takes a list of words as command line arguments and outputs the largest one.

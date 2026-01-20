@@ -5,7 +5,7 @@ include::header.adoc[]
 
 :course: CMSC 223
 :title: Systems Programming
-:term: Spring 2025
+:term: Spring 2026
 
 = {course}: {title} 
 
@@ -15,12 +15,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* link:assts/asst12.html[Assignment 12]: Due April 18th
-* link:assts/asst13.html[Assignment 13]: Due April 25th *Written portion dur April 24*
-* Lab April 22: Individual coding challenge (Code Jam 06)
-* **NO QUIZ April 25**
-* **NO LAB/Office Hours April 29**
-* Final Exam: 9:30am - 12:30pm, Tuesday, May 6th, BYC 127
+* For those of you about to start Systems Programming, I salute you!
 
 == Course Info
 
@@ -48,10 +43,10 @@ will be introduced at the end of the course.
 |===
 | Activity | Location | Time
 
-| Lecture | Park 337 | Tuesday and Thursday 10:10 AM - 11:30 AM 
-| Lab | Park 231 | Tuesdays 2:40 PM - 4:00 PM 
-| Office Hours - Prof. Aline Normoyle | Park 200B | Tuesdays, 4-5 PM 
-| Office Hours - Tianyun Song | Park 231 | Thursdays, 5-6PM
+| Lecture | Park 159 | Tuesday and Thursday 10:10 AM - 11:30 AM 
+| Lab | Park 230 | Tuesdays 2:40 PM - 4:00 PM 
+| Office Hours - Prof. Aline Normoyle | Park 230/231/200A | Tuesdays-Thursdays, 4-5 PM, by appointment 
+| Office Hours - Rebecca Lassman | Park 231 | TBD
 
 |===
 
@@ -122,8 +117,6 @@ as a weighted average of all grades according to the following weights:
 |===
 
 include::quizzes.adoc[]
-
-include::labPolicy.adoc[]
 
 include::latePolicy.adoc[]
 

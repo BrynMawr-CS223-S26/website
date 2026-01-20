@@ -1,6 +1,8 @@
 include::header.adoc[]
+include::../dates.adoc[]
 
-:title: Assignment 01: Hello CS223!
+:CLASS: CS223
+:title: Assignment 01: Hello {CLASS}!
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
@@ -8,196 +10,137 @@ include::header.adoc[]
 
 = {title}
 
-**Due Friday, January 24, before midnight**
+**Due {ASST01_DUE}, before midnight**
 
 The goals for this assignment are:
 
-* Try slack
-* Sign-up for Github
-* Look at the website
-* Write a simple C program
-* (Optional) Setup your development environment on your own machine
+* Sign into a lab computer
+* Setup an SSH key for github
+* Clone your classwork repository
+* Using either Vim, Emacs, or Nano, write a simple C program
+* Sign into slack
 
 :sectnums:
 
-= Try slack
+= Sign into a lab computer
 
-I will be inviting you all to join the course slack channel. In the
-`#social` channel, say and introduce yourself:
+As a CS students, you should have received a username and password from our IT
+administrator, David Diaz.  Use this account information to log into one of the
+desktops in our lab while they are running Linux.
 
-* What is your preferred name and pronouns?
-* Share with us your favorite emojji. :)
+NOTE: To log into Ubuntu, you should use your CS username and password.
 
-We will use Slack for 
+Our lab machines are _dual boot_. This means that they can boot either Windows
+or Ubuntu Linux. For class, you will need to boot them with Ubuntu. 
 
-* Course announcements
-* Links to zoom and calend.ly
-* Questions and errata for assignments and labs
-
-You can also use Slack to talk directly to me and the TAs, or even to each other.
+//NOTE: To log into Windows, you should use your college username and password.
 
 = Sign-up for Github
 
-Please go to github.com and register. We will use github for assignments.  *Email
-the instructor (anormoyle at brynmawr.edu) with your github username.* 
+If you do not have one already, please link:https://github.com[create a github account].
 
-*You will need to setup an SSH key for Github. link:https://docs.github.com/en/authentication/connecting-to-github-with-ssh[Click here for instructions].
+= Setup an SSH Key for github
 
-We have made the decision to open-source our assignments and projects for this 
-class. The benefit of this decision is that you will have a portfolio of work that 
-you can easily keep and share.
+SSH refers to "Secure Shell Protocol" and it ensures that the information transferred between 
+your local machines and github are secure.
 
-Having open-source assignments means that your work is publicly viewable, should 
-someone search for it. It also means that if you copy other people's work, it is 
-in plain view for anyone to see! We will compare assignments and expect everyone to 
-adhere to the honor code at Bryn Mawr and Haverford.
+If you have not done this before, follow link:ssh-setup.html[the instructions here].
 
-You will discover that there are many open-source coding resources for 
-online. Some of it is boiler plate and intended to be re-used, such as when 
-we use API documentation in order to use a function. Any non-trivial code (longer than a 
-single statement) that you re-use in your own program should be attributed. In this class, 
-99% of all code should be your own.
+= Setup your classwork repository
 
-= Read the class web pages 
+link:https://classroom.github.com/a/j7KZkNhy[Click here to get the repository link]
 
-Start by reading through **all** of the link:../index.html[class webpage]!
-Bookmark this page on your browser, or use some other method that helps you 
-keep this information handy. All course materials will be 
-posted on the course webpage! 
+== Get the download link
 
-Pay special attention to the link:../index.html#_schedule[Schedule]. 
+From your github account, copy the repository url from Github. It should look 
+similar to the following (note that URLs and repository names may be different!)
 
-= Hello C
+image::github-code-url-ssh.png[height=300px] 
 
-Verify that you can use Github, git, and C. You can try this using a lab machine, or your own 
-machine if you have setup your development environment there. 
+WARNING: Make sure you have SSH selected for the URL type
 
-[discrete]
-== Fork the repository 
-
-Fork the repository from here: 
-
-link:{repo}/cs223-{semester}-assignments[]
-
-Fork is a button located on the top, right on Github.
-
-[discrete]
 == Clone the repository
 
-From _your own account_, clone the repository you just forked. The URL should look 
-something like the following
+From the terminal, use `git clone <download_url>` to download your class repository.
+If everything is setup correctly, you should see output similar to the following.
 
-[source, subs="attributes"]
+[source, subs="attributes,quotes"]
 ----
-git@github.com:<YOURUSERNAME>/cs223-{semester}-assignments[]
-----
-
-Use the "Code" button on Github to copy the URL. Then run the following command
-from terminal.
-
-[source, subs="attributes"]
-----
-git clone git@github.com:<YOURUSERNAME>/cs223-{semester}-assignments[]
+$ **git clone git@github.com:BrynMawr-{CLASS}-{SEMESTER}/{repo}-alinen.git**
+Cloning into '{repo}-alinen'...
+remote: Enumerating objects: 9, done.
+remote: Counting objects: 100% (9/9), done.
+remote: Compressing objects: 100% (8/8), done.
+remote: Total 9 (delta 0), reused 8 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (9/9), 13.83 KiB | 2.30 MiB/s, done.
 ----
 
-This will download a local account of the repository to your computer.
+= Simple C programs
 
-[discrete]
-== Build hello.c
+You will need to learn one of the following terminal editors for this course.
 
-In the directory `{ASST}`, you will have a sample file, `hello.c` and makefile `Makefile`. Try building and running.
+* Nano: link:https://www.nano-editor.org/dist/v4/nano.pdf[Documentation]
+* Vim: link:https://openvim.com/[Interactive Tutorial], link:https://www.vim.org/docs.php[Documentation and Tutorials]
+* Emacs: link:http://gnuemacs.org/[Documentation]
+
+Open a terminal and complete the following exercises with one of the above editors.
+
+== hello.c
+
+In the directory `{ASST}`, edit the file, `hello.c`, to print the string "Hello World".
 
 [source]
 ----
-$ make hello
+$ vi hello.c
+$ gcc hello.c
+$ ./a.out
+Hello World
+----
+ 
+The above directly calls the C compiler to build the executable `a.out`.
+However, it is better to use a Makefile for building. A Makefile allows us 
+to avoid re-writing complex build rules as our executables become more complicated. 
+ 
+Try writing the following Makefile. 
+
+WARNING: Make sure to use _indent_ and not spaces!
+
+[source]
+----
+CC=gcc                                                                          
+SOURCES=$(wildcard *.c)                                                         
+FILES := $(subst .c,,$(SOURCES))                                                
+FLAGS=-g -Wall -Wvla -Werror -Wno-unused-variable -Wno-unused-but-set-variable  
+                                                                                
+all: $(FILES)                                                                   
+                                                                                
+% :: %.c                                                                        
+  $(CC) $(FLAGS) $< -o $@                                                       
+                                                                                
+clean:                                                                          
+  rm -rf $(FILES)                                                               
+----
+
+Now, run the following to build.
+
+[source]
+----
+$ make hello 
 $ ./hello
 Hello World
 ----
 
-[discrete]
-== Math Game
+Notice that we use `make` and not `gcc`. Also notice that the executable is named `hello` and not `a.out` anymore.
 
-In the directory, `{ASST}`, implement a simple math game that asks a user a series of addition problems 
-and keeps track of the number of correct responses. 
+== Cool hello.c
 
-[source]
-----
-$ make mathgame
-gcc -g mathgame.c -o mathgame
-$ ./mathgame
-Welcome to Math Game!
-How many rounds do you want to play? 3
-
-2 + 8 = ? 10
-Correct!
-
-1 + 8 = ? 5
-Incorrect :(
-
-6 + 8 = ? 14
-Correct!
-You answered 2/3 correctly.
-----
+Extend the program, `hello.c`, to implement a small demo of your choosing. 
+For example, you might implement a simple game, a puzzle generator, or a fortune generator.
 
 Requirements:
 
-* Ask the user for the number of questions
-* Use printf and scanf for interactions with the user
-* Use a loop to ask each question
-* Maintain the number of correct questions
-* Generate random questions. Use rand() to generate random integers between 1 and 9.
-* Print a welcome message 
-* Print a completion message 
-* Compiles with `make`
-* No memory errors using `valgrind`
-* Your program should include a header comment with your name and brief file description 
-* Your program should adhere to the following link:../codingstandard.htm[coding style].
-
-NOTE: To check for valgrind errors, run your program like so. Look for the 
-message "no leaks are possible". Make sure there are no errors reported. We will talk 
-more about valgrind in week 2 and 3.
-
-[source, subs="quotes"]
-----
-$ valgrind ./mathgame
-==5184== Memcheck, a memory error detector
-==5184== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==5184== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==5184== Command: ./mathgame
-==5184== 
-Welcome to Math Game!
-How many rounds do you want to play? 3
-
-2 + 8 = ? 10
-Correct!
-
-1 + 8 = ? 5
-Incorrect :(
-
-6 + 8 = ? 14
-Correct!
-You answered 2/3 correctly.
-==5184== 
-==5184== HEAP SUMMARY:
-==5184==     in use at exit: 0 bytes in 0 blocks
-==5184==   total heap usage: 2 allocs, 2 frees, 2,048 bytes allocated
-==5184== 
-==5184== All heap blocks were freed -- no leaks are possible
-==5184== 
-==5184== For lists of detected and suppressed errors, rerun with: -s
-==5184== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-----
-
-NOTE: Below is an example of a header comment
-
-[source]
-----
-/***************************************************                            
- * mathgame.c                                                                   
- * Author: Jimmy Wonderful
- * Implements a math game                                                       
- */       
-----
+* Your demo should build with `make` without errors
+* Your demo should include a comment at the top that contains sample output from your program
 
 [discrete]
 == Submit your work to Github
@@ -208,7 +151,7 @@ Run the following command inside your `{ASST}` directory.
 [source, subs="attributes"]
 ----
 $ cd {ASST}
-$ git add *.c
+$ git add *.c Makefile
 $ git commit -m "Descriptive message"
 $ git push
 ----
@@ -216,96 +159,28 @@ $ git push
 Run `git status` to check the result of the previous git command.
 Check the Github website to make sure that your program uploaded correctly. 
 
-= (Optional) Set up a remote development environment with our server goldengate
+= Join the slack group
 
-A remote development environment will allow you to run code from goldengate, a remote 
-server, from within an integrated development environment.
+I will be inviting you all to join the course slack channel. In the
+`#social` channel, say and introduce yourself:
 
-For this option, your need to use VS Code with the Remote-SSH extension to VS Code.
+* What is your preferred name and pronouns?
+* Share with us your favorite emojji. :)
 
-* link:https://code.visualstudio.com/[VS Code]
-* link:https://code.visualstudio.com/docs/remote/ssh[Remote SSH Tutorial]
+We will use Slack for 
 
-= (Optional) Set up your own local development environment
+* Course announcements
+* Questions and errata for assignments and labs
 
-A local development environment allows you to write code on your own desktop or
-laptop. With a local development environment, you will be able to run your code even 
-after you graduate from college. 
+You can also use Slack to talk directly to me and the TAs, or even to each other.
 
-NOTE: All programs must run on the lab's Linux environment. Make sure you test
-your work on the lab machines if you work on your laptop! 
-
-== Windows
-
-. Open PowerShell and install wsl2: `wsl --install`. See link:https://docs.microsoft.com/en-us/windows/wsl/install[documentation]. Note that you may need to open powershell as an administrator.
-. From the windows store, link:https://ubuntu.com/wsl[install `Ubuntu`].
-
-Once installed, you can setup your development environment from a bash shell. 
-
-. Open PowerShell
-. Type `wsl` to start the windows subsystem for linux. This will give your a bash prompt
-. Then install your development tools
-.. `sudo apt-get install cmake`
-.. `sudo apt-get install git`
-.. `sudo apt-get install g++`
-.. `sudo apt-get install vim`
-.. `sudo apt-get install libc6-dev-i386`
-.. `sudo apt-get install gcc-multilib`
-.. `sudo apt-get install hexedit`
-.. `sudo apt-get install valgrind`
-.. `sudo apt-get install gdb`
-
-For example, you get something like the following
-
-[source]
-----
-Windows PowerShell
-Copyright (C) Microsoft Corporation. All rights reserved.
-
-PS C:\Users\alinen> wsl
-WSL alinen@Balthazar:~$ sudo apt-get install make
-
-etc
-----
-
-NOTE: A quick way to open powershell is to type <WindowsKey>-'Q' and type 'powershell'.
-
-== MacOS
-
-From terminal, run command `xcode-select --install`
-
-You can follow the instructions link:https://www.ics.uci.edu/~pattis/common/handouts/macclion/clang.html[here]
-
-Then, to install additional dependencies, execute the following commands form terminal
-
-[source]
-----
-$ brew install vim
-$ brew install git
-$ brew install cmake
-----
-
-NOTE: A quick way to open terminal is to use spotlight. From the keyboard, type the <cmd> and <spacebar>. Then type terminal at the popup edit field.
-
-Unfortunately, `valgrind` and `gdb` cannot be run natively on mac. However, you may try running `leaks` or `lldb` which are similar. However, we recommend you still test on goldengate or a lab machine.
-
+[discrete]
 = Grading Rubric
 
 *Assignment rubrics*
 
 Grades are out of 4 points.
 
-* Github setup (0.5 points)
+* Github setup (1 points)
 * Slack setup and introduction (0.5 points)
-* C program (3 points)
-
-*Code rubrics*
-
-For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
-have good style.
-
-* Some credit lost for missing features or bugs, depending on severity of error
-* -12.5% for style errors. See the link:../codingstandard.html[class coding style] here.
-* -50% for memory errors
-* -100% for failure to checkin work to Github
-* -100% for failure to compile on linux using make
+* C program and Makefile (2.5 points)

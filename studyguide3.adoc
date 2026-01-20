@@ -66,29 +66,6 @@ to give feedback on your responses.
 {nbsp} +
 //|yes/no
 
-|2 + 7
-|{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-//|yes/no
-
-|9 + 7
-|{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-//|yes/no
-
-|11-9
-|{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-//|yes/no
 |=== 
 
 5) Compute the results of the following decimal expressions using 4-bit signed integers. Express your final answer in hexadecimal. Show your answer.
@@ -115,43 +92,14 @@ to give feedback on your responses.
 {nbsp} +
 //|yes/no
 
-|2 + 7
-|{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-//|yes/no
-
-|5 - 7
-|{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-//|yes/no
-
-|-4-1
-|{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-{nbsp} +
-//|yes/no
 |=== 
 
-6) Convert the following hexadecimal number `0x 3f c0 00 00`
+6) Convert the following hexadecimal number `0x 3f c0 00 00` to a floating point number
 
-* to a floating point number
-* to an unsigned integer
-* to a signed integer
-* to an 32-bit RGBA color, e.g. consider each byte as a value for red, green, blue, and alpha
+6) Convert the following hexadecimal number `0x42`
 
-6) Convert the following hexadecimal number `0x 3f 6a 42`
-
-* to an unsigned integer
-* to a signed integer
-* to an 24-bit RGB color, e.g. consider each byte as a value for red, green, and blue
+* to an unsigned integer (write an expresssion for it -- you do not need to calculate it)
+* to a signed integer (write an expression for it)
 * to an ASCII character string
 
 8) Consider the following struct. 

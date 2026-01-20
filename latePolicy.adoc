@@ -1,19 +1,4 @@
 
 === Late Policy
 
-Because practice is so important for learning skills, we will do frequent 
-exercises, assignments, and quizzes throughout the term.
-
-The purpose of this work is to give you hands on experience with the topics
-from class. Most of this work will be due in lecture or labs. *The  
-weekly time commitment for this course is aimed to be approximately 10 hours per week, 
-including lectures and labs.*
-
-Assignments will generally be due on Fridays. However, you may request up to *one* late 
-day (until Saturday) if necessary. No submissions beyond Saturday will be accepted.
-This allows us time to grade assignments. And it helps prevent you from falling 
-behind. Note that with weekly assignments, you can miss a week or two without losing 
-much credit on a final grade. 
-
-If you require an accommodation for exams and quizzes, this must be submitted 
-to the instructor within the first two weeks or class.
+You may always request 1 late day for any assignment. 

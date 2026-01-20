@@ -29,6 +29,8 @@ Can you answer the following?
 . What is a register? 
 . What do the registers %rsp and %rbp represent? How do they relate to functions?
 . What the do the registers %rax and %eax typically represent? When do we use one versus the other? 
+. What does the CMP function do?
+. What does the TEST function do?
 . What two steps occur when the CPU executes the instruction `push %rbp`?
 . What two steps occur when the CPU executes the instruction `pop %rbp`?
 . What does `callq` do?
