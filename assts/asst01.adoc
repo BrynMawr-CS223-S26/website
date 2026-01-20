@@ -87,11 +87,11 @@ Open a terminal and complete the following exercises with one of the above edito
 
 == hello.c
 
-In the directory `{ASST}`, edit the file, `hello.c`, to print the string "Hello World".
+In the directory `{ASST}`, try editing the file, `hello.c`, using _vi_ to print the string "Hello World".
 
 [source]
 ----
-$ nano hello.c
+$ vi hello.c
 $ gcc hello.c
 $ ./a.out
 Hello World
