@@ -19,6 +19,7 @@
 * link:assts/ssh-setup.html[SSH Setup]
 * link:http://linuxcommand.org/lc3_learning_the_shell.php[Learning the shell]
 * link:https://pythontutor.com/c.html#mode=edit[C Tutor]
+* link:lectures/Lecture-Week01-Jan20-Intro.pdf[Lecture - Jan 20]
 
 //-----------------------------
 | 2 
