@@ -38,6 +38,8 @@ or Ubuntu Linux. For class, you will need to boot them with Ubuntu.
 
 If you do not have one already, please link:https://github.com[create a github account].
 
+*Email the instructor (anormoyle at brynmawr.edu) with your github username.*
+
 = Setup an SSH Key for github
 
 SSH refers to "Secure Shell Protocol" and it ensures that the information transferred between 
