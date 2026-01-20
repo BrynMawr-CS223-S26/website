@@ -8,6 +8,6 @@
 :leveloffset: +1
 :toc: left
 :csweb: https://www.cs.brynmawr.edu/~alinen
-:repo: https://github.com/BrynMawr-CS223-S25
+:repo: https://github.com/BrynMawr-CS223-S26
 :semester: s25
 :stem: mathjax

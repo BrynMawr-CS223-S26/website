@@ -10,7 +10,7 @@ include::../dates.adoc[]
 
 = {title}
 
-**Due {ASST01_DUE}, before midnight**
+**Due Jan 23, before midnight**
 
 The goals for this assignment are:
 
@@ -48,7 +48,7 @@ If you have not done this before, follow link:ssh-setup.html[the instructions he
 
 = Setup your classwork repository
 
-link:https://classroom.github.com/a/j7KZkNhy[Click here to get the repository link]
+link:https://classroom.github.com/a/uUEUQ481[Click here to get the repository link]
 
 == Get the download link
 
@@ -91,7 +91,7 @@ In the directory `{ASST}`, edit the file, `hello.c`, to print the string "Hello 
 
 [source]
 ----
-$ vi hello.c
+$ nano hello.c
 $ gcc hello.c
 $ ./a.out
 Hello World
@@ -101,9 +101,9 @@ The above directly calls the C compiler to build the executable `a.out`.
 However, it is better to use a Makefile for building. A Makefile allows us 
 to avoid re-writing complex build rules as our executables become more complicated. 
  
-Try writing the following Makefile. 
+Try writing the following Makefile using _nano_. 
 
-WARNING: Make sure to use _indent_ and not spaces!
+WARNING: Make sure to use _indent_ and not spaces! If you are using vi or emacs, indents might get replaced with spaces!
 
 [source]
 ----
