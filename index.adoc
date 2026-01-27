@@ -15,7 +15,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* For those of you about to start Systems Programming, I salute you!
+* link:assts/code01-s26.html[Lab Jan 17 - Code Jam 01]
 
 == Course Info
 
