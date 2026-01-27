@@ -20,6 +20,7 @@
 * link:http://linuxcommand.org/lc3_learning_the_shell.php[Learning the shell]
 * link:https://pythontutor.com/c.html#mode=edit[C Tutor]
 * link:lectures/Lecture-Week01-Jan20-Intro.pdf[Lecture - Jan 20]
+* link:lectures/Lecture-Week01-Jan22-C.pdf[Lecture - Jan 22]
 
 //-----------------------------
 | 2 
@@ -30,9 +31,11 @@
 * Read: link:https://diveintosystems.org/singlepage/#_a_deeper_dive_into_c_programming[Sections 2.1-2.8, 2.9 (Command line arguments only)] 
 * Read: link:https://diveintosystems.org/singlepage/#_c_debugging_tools[Sections 3.1-3.3]
 * link:assts/asst02.[Assignment 02]: Due Jan 30
-* Lab Jan 27: Code Jam 01
+* Lab Jan 27: link:assts/code01-s26.html[Code Jam 01]
 
 |
+* link:lectures/Lecture-Week02-Jan27-Intro.pdf[Lecture - Jan 27]
+//* link:lectures/Lecture-Week02-Jan29-C.pdf[Lecture - Jan 22]
 
 //-----------------------------
 |3

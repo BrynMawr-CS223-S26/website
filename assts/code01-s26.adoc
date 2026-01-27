@@ -1,0 +1,70 @@
+include::header.adoc[]
+
+:title: Code Jam 01: Drills!
+:Author Initials: ASN
+:Date:    2020-08-15
+:Revision: 0.1
+
+[discrete]
+= {title}
+
+[discrete]
+= Question 1
+
+In the file, `hello.c`, write a C program that prints "Hello World" in under 5 minutes
+
+[source, subs="quotes"]
+----
+$ **./make**
+gcc -g -Wno-unused-variable -Wno-unused-but-set-variable   -Wl,-rpath=. hello.c -o hello 
+$ **./hello**
+Hello World
+----
+
+[discrete]
+= Question 2
+
+In the file, `input.c`, write a C program that reads in a string, float, and integer 
+and prints them out. You can assume that input strings are less than 32 bytes. Time Limit: 10 minutes. 
+
+[source, subs="quotes"]
+----
+$ **./make**
+gcc -g -Wno-unused-variable -Wno-unused-but-set-variable   -Wl,-rpath=. hello.c -o hello 
+$ **./hello**
+Hello World
+----
+
+[discrete]
+= Question 2
+
+In the file, `input.c`, write a C program that reads in a string, float, and integer 
+and prints them out. You can assume that input strings are less than 32 bytes. Time Limit: 10 minutes. 
+
+[source, subs="quotes"]
+----
+$ **./input**
+String: apple
+Float: 3.14
+Int: -3
+Your output is: apple, 3.14, -3
+----
+
+= Question 3
+
+In the file, `volume.c`, write a C program that defines a struct called `Box` that holds 
+its width, height, and depth. Then define a function called `volume` that takes a Box 
+as a parameter and returns its volume (width * height * depth). In main, define 
+a variable with type `struct Box` and initialize its values using command line 
+arguments. Then call `volume` and print its returned values. If the user does not 
+provide the correct number of command line arguments, print a usage message.
+
+Time Limit: 40 minutes
+
+[source, subs="quotes"]
+----
+$ **./volume 1 2 0.5**
+volume: 1 
+$ **./volume**
+usage: ./volume width height depth
+----

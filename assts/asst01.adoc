@@ -51,6 +51,12 @@ If you have not done this before, follow link:ssh-setup.html[the instructions he
 
 link:https://classroom.github.com/a/uUEUQ481[Click here to get the repository link]
 
+After clicking the link, you should receive an email from Github that invites you 
+to the repository. Please check your email and accept the invitation. Afterward acepting 
+the invitation, you should be able to see your repository and clone it.
+
+NOTE: Do you see the error: "Repository Access Issue: You no longer have access to your assignment repository. Contact your teacher for support."? If yes, check your email and accept the invitation for your account. 
+
 == Get the download link
 
 From your github account, copy the repository url from Github. It should look 
@@ -104,7 +110,12 @@ to avoid re-writing complex build rules as our executables become more complicat
  
 Try writing the following Makefile using _nano_. 
 
-WARNING: Make sure to use _indent_ and not spaces! If you are using vi or emacs, indents might get replaced with spaces!
+[source]
+----
+$ nano Makefile
+----
+
+WARNING: Make sure to use _indent_ (e.g. tab) and not spaces! Copy the code below into your Makefile and replace the indented lines with tabs. 
 
 [source]
 ----
