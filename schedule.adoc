@@ -34,8 +34,8 @@
 * Lab Jan 27: link:assts/code01-s26.html[Code Jam 01]
 
 |
-* link:lectures/Lecture-Week02-Jan27-Intro.pdf[Lecture - Jan 27]
-//* link:lectures/Lecture-Week02-Jan29-C.pdf[Lecture - Jan 22]
+* link:lectures/Lecture-Week02-Jan27-Pointers.pdf[Lecture - Jan 27]
+//* link:lectures/Lecture-Week02-Jan29-Pointers.pdf[Lecture - Jan 22]
 
 //-----------------------------
 |3
