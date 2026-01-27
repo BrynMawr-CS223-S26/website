@@ -15,7 +15,7 @@ In the file, `hello.c`, write a C program that prints "Hello World" in under 5 m
 
 [source, subs="quotes"]
 ----
-$ **./make**
+$ **./make hello**
 gcc -g -Wno-unused-variable -Wno-unused-but-set-variable   -Wl,-rpath=. hello.c -o hello 
 $ **./hello**
 Hello World
@@ -29,6 +29,7 @@ and prints them out. You can assume that input strings are less than 32 bytes. T
 
 [source, subs="quotes"]
 ----
+$ **make input**
 $ **./input**
 String: apple
 Float: 3.14
@@ -50,6 +51,7 @@ Time Limit: 40 minutes
 
 [source, subs="quotes"]
 ----
+$ **make volume**
 $ **./volume 1 2 0.5**
 volume: 1 
 $ **./volume**
