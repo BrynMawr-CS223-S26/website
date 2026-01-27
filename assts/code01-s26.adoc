@@ -29,20 +29,6 @@ and prints them out. You can assume that input strings are less than 32 bytes. T
 
 [source, subs="quotes"]
 ----
-$ **./make**
-gcc -g -Wno-unused-variable -Wno-unused-but-set-variable   -Wl,-rpath=. hello.c -o hello 
-$ **./hello**
-Hello World
-----
-
-[discrete]
-= Question 2
-
-In the file, `input.c`, write a C program that reads in a string, float, and integer 
-and prints them out. You can assume that input strings are less than 32 bytes. Time Limit: 10 minutes. 
-
-[source, subs="quotes"]
-----
 $ **./input**
 String: apple
 Float: 3.14
@@ -50,6 +36,7 @@ Int: -3
 Your output is: apple, 3.14, -3
 ----
 
+[discrete]
 = Question 3
 
 In the file, `volume.c`, write a C program that defines a struct called `Box` that holds 
