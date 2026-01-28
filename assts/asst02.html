@@ -17,10 +17,9 @@
 <li><a href="#_assignment_2_learn_to_c">Assignment 2: Learn to C</a></li>
 <li><a href="#_update_your_repository">1. Update your repository</a></li>
 <li><a href="#_bad_password">2. Bad password</a></li>
-<li><a href="#_snackbar">3. Snackbar</a></li>
-<li><a href="#_shift_cypher">4. Shift Cypher</a></li>
-<li><a href="#_submit_your_work">5. Submit your Work</a></li>
-<li><a href="#_grading_rubric">6. Grading Rubric</a></li>
+<li><a href="#_shift_cypher">3. Shift Cypher</a></li>
+<li><a href="#_submit_your_work">4. Submit your Work</a></li>
+<li><a href="#_grading_rubric">5. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
@@ -29,7 +28,7 @@
 <h2 id="_assignment_2_learn_to_c">Assignment 2: Learn to C</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, January 31, before midnight</strong></p>
+<p><strong>Due Friday, January 30, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -53,39 +52,10 @@
 <h2 id="_update_your_repository">1. Update your repository</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
-</div>
-<div class="paragraph">
-<p>The first time you do a <code>fetch</code>, you need to set the URL of the upstream repository.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>git remote add upstream <a href="mailto:git@github.com">git@github.com</a>:brynmawr-cs223-s25/cs223-s25-assignments.git</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Using the command line</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Open terminal and change your current directory to your assignment repository.</p>
-</li>
-<li>
-<p>Run the command <code>git fetch upstream</code></p>
-</li>
-<li>
-<p>Run the command <code>git merge upstream/main</code></p>
-</li>
-</ul>
+<p>Do a <strong>git pull</strong> to obtain the basecode for this assignment.</p>
 </div>
 <div class="paragraph">
 <p>Your repository should now contain a new folder named <code>A02</code>.</p>
-</div>
-<div class="paragraph">
-<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
 </div>
 </div>
 </div>
@@ -130,74 +100,7 @@ Your bad password is rhythm</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_snackbar">3. Snackbar</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Write a program, <code>snackbar.c</code>, that maintains a list of snacks available for purchase.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make snackbar</strong>
-gcc snackbar.c -o snackbar
-
-$ <strong>./snackbar</strong>
-Welcome to Steven Struct's Snack Bar.
-
-How much money do you have? <strong>5</strong>
-
-0) Coco Puffs           cost: $1.50     quantity: 4
-1) Manchego cheese      cost: $15.50    quantity: 6
-2) Magic beans          cost: $0.50     quantity: 0
-
-What snack would you like to buy? [0,1,2] <strong>1</strong>
-You can't afford it!
-
-$ <strong>./snackbar</strong>
-Welcome to Steven Struct's Snack Bar.
-
-How much money do you have? <strong>5</strong>
-
-0) Coco Puffs           cost: $1.50     quantity: 4
-1) Manchego cheese      cost: $15.50    quantity: 6
-2) Magic beans          cost: $0.50     quantity: 0
-
-What snack would you like to buy? [0,1,2] <strong>2</strong>
-Sorry, we are out of Magic beans
-
-$ <strong>./snackbar</strong>
-Welcome to Steven Struct's Snack Bar.
-
-How much money do you have? <strong>5</strong>
-
-0) Coco Puffs           cost: $1.50     quantity: 4
-1) Manchego cheese      cost: $15.50    quantity: 6
-2) Magic beans          cost: $0.50     quantity: 0
-
-What snack would you like to buy? [0,1,2] <strong>0</strong>
-You bought Coco Puffs
-You have $3.50 left</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Your program should define a <code>struct snack</code> that stores a name, cost, and quantity</p>
-</li>
-<li>
-<p>Your program should define at least three snacks and store them in an array</p>
-</li>
-<li>
-<p>Your program should be similar to the given output but feel free to customize it!</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_shift_cypher">4. Shift Cypher</h2>
+<h2 id="_shift_cypher">3. Shift Cypher</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Write a program, <code>cypher.c</code>, that asks the user for a word and then encodes it
@@ -245,7 +148,7 @@ Your cypher is b</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">5. Submit your Work</h2>
+<h2 id="_submit_your_work">4. Submit your Work</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Push you work to Github to submit your work.</p>
@@ -261,7 +164,7 @@ $ git push</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">6. Grading Rubric</h2>
+<h2 id="_grading_rubric">5. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -272,7 +175,7 @@ $ git push</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(1 point) password</p>
+<p>(2 point) password</p>
 <div class="ulist">
 <ul>
 <li>
@@ -288,7 +191,7 @@ $ git push</code></pre>
 </div>
 </li>
 <li>
-<p>(1 point) cypher</p>
+<p>(2 point) cypher</p>
 <div class="ulist">
 <ul>
 <li>
@@ -299,22 +202,6 @@ $ git push</code></pre>
 </li>
 <li>
 <p>(0.5 points) no memory errors</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>(2 points) snackbar</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.2 points) style and header comment</p>
-</li>
-<li>
-<p>(0.8 points) correct behavior</p>
-</li>
-<li>
-<p>(1.0 points) no memory errors</p>
 </li>
 </ul>
 </div>
@@ -352,7 +239,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-19 20:28:28 -0500
+Last updated 2026-01-27 18:32:08 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">
