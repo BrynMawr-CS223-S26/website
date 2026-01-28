@@ -8,7 +8,7 @@ include::header.adoc[]
 
 = {title}
 
-**Due Friday, January 31, before midnight**
+**Due Friday, January 30, before midnight**
 
 The goals for this assignment are:
 
@@ -20,21 +20,9 @@ The goals for this assignment are:
 
 = Update your repository
 
-Do a *fetch upstream* to obtain the basecode for this assignment. 
-
-The first time you do a `fetch`, you need to set the URL of the upstream repository.
-
-* `git remote add upstream git@github.com:brynmawr-cs223-{semester}/cs223-{semester}-assignments.git`
-
-Using the command line
-
-* Open terminal and change your current directory to your assignment repository.
-* Run the command `git fetch upstream`
-* Run the command `git merge upstream/main`
+Do a *git pull* to obtain the basecode for this assignment. 
 
 Your repository should now contain a new folder named `{ASST}`.
-
-The `fetch` and `merge` commands update your repository with any changes from the original.
 
 = Bad password
 
@@ -61,59 +49,6 @@ Your bad password algorithm should
 * Replace 'e's with '3's
 * Replace 'l's with '1's
 * Replace 'a's with '@'s
-
-= Snackbar
-
-Write a program, `snackbar.c`, that maintains a list of snacks available for purchase.
-
-[source,subs="quotes"]
-----
-$ **make snackbar**
-gcc snackbar.c -o snackbar
-
-$ **./snackbar**
-Welcome to Steven Struct's Snack Bar.
-
-How much money do you have? **5**
-
-0) Coco Puffs           cost: $1.50     quantity: 4
-1) Manchego cheese      cost: $15.50    quantity: 6
-2) Magic beans          cost: $0.50     quantity: 0
-
-What snack would you like to buy? [0,1,2] **1**
-You can't afford it!
-
-$ **./snackbar**
-Welcome to Steven Struct's Snack Bar.
-
-How much money do you have? **5**
-
-0) Coco Puffs           cost: $1.50     quantity: 4
-1) Manchego cheese      cost: $15.50    quantity: 6
-2) Magic beans          cost: $0.50     quantity: 0
-
-What snack would you like to buy? [0,1,2] **2**
-Sorry, we are out of Magic beans
-
-$ **./snackbar**
-Welcome to Steven Struct's Snack Bar.
-
-How much money do you have? **5**
-
-0) Coco Puffs           cost: $1.50     quantity: 4
-1) Manchego cheese      cost: $15.50    quantity: 6
-2) Magic beans          cost: $0.50     quantity: 0
-
-What snack would you like to buy? [0,1,2] **0**
-You bought Coco Puffs
-You have $3.50 left
-----
-
-Requirements:
-
-* Your program should define a `struct snack` that stores a name, cost, and quantity 
-* Your program should define at least three snacks and store them in an array
-* Your program should be similar to the given output but feel free to customize it!
 
 = Shift Cypher
 
@@ -153,7 +88,6 @@ Hints:
 
 * Recall that characters as represented as digits in ASCII. A straight-forward implementation can add offsets to each character of the word. 
 
-
 = Submit your Work
 
 Push you work to Github to submit your work.
@@ -172,18 +106,14 @@ $ git push
 
 Grades are out of 4 points.
 
-* (1 point) password
+* (2 point) password
 ** (0.1 points) style and header comment
 ** (0.4 points) correct behavior: asks the user for input and creates the new string
 ** (0.5 points) no memory errors
-* (1 point) cypher 
+* (2 point) cypher 
 ** (0.1 points) style and header comment
 ** (0.4 points) correct behavior: asks the user for input and creates the new string
 ** (0.5 points) no memory errors
-* (2 points) snackbar
-** (0.2 points) style and header comment
-** (0.8 points) correct behavior
-** (1.0 points) no memory errors
 
 *Code rubrics*
 

@@ -30,7 +30,7 @@
 * Topics: More pointers, malloc/free, heap, file I/O, gdb, valgrind, hexedit 
 * Read: link:https://diveintosystems.org/singlepage/#_a_deeper_dive_into_c_programming[Sections 2.1-2.8, 2.9 (Command line arguments only)] 
 * Read: link:https://diveintosystems.org/singlepage/#_c_debugging_tools[Sections 3.1-3.3]
-* link:assts/asst02.[Assignment 02]: Due Jan 30
+* link:assts/asst02.html[Assignment 02]: Due Jan 30
 * Lab Jan 27: link:assts/code01-s26.html[Code Jam 01]
 
 |

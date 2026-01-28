@@ -15,7 +15,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* link:assts/code01-s26.html[Lab Jan 17 - Code Jam 01]
+* link:assts/asst02.html[Assignment 02]: Due Friday, Jan 30
 
 == Course Info
 
