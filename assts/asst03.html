@@ -16,10 +16,9 @@
 <ul class="sectlevel1">
 <li><a href="#_assignment_3_if_you_malloc_something_set_it_free">Assignment 3: If you malloc something, set it free</a></li>
 <li><a href="#_update_your_repository">1. Update your repository</a></li>
-<li><a href="#_repeat_repeat_repeat">2. Repeat! Repeat! Repeat!</a></li>
-<li><a href="#_dynamic_snackbar">3. Dynamic snackbar</a></li>
-<li><a href="#_wampus">4. Wampus</a></li>
-<li><a href="#_grading_rubric">5. Grading Rubric</a></li>
+<li><a href="#_minesweeper">2. Minesweeper</a></li>
+<li><a href="#_ncurses">3. NCurses</a></li>
+<li><a href="#_grading_rubric">4. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
@@ -28,7 +27,7 @@
 <h2 id="_assignment_3_if_you_malloc_something_set_it_free">Assignment 3: If you malloc something, set it free</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, February 7th, before midnight</strong></p>
+<p><strong>Due Friday, February 6th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -36,13 +35,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Work with pointers</p>
-</li>
-<li>
 <p>Work with malloc/free</p>
 </li>
 <li>
 <p>Work with arrays</p>
+</li>
+<li>
+<p>Work with a C-style systems API</p>
 </li>
 </ul>
 </div>
@@ -52,110 +51,40 @@
 <h2 id="_update_your_repository">1. Update your repository</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
-</div>
-<div class="paragraph">
-<p>Using the command line</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Open terminal and change your current directory to your assignment repository.</p>
-</li>
-<li>
-<p>Run the command <code>git fetch upstream</code></p>
-</li>
-<li>
-<p>Run the command <code>git merge upstream/main</code></p>
-</li>
-</ul>
+<p>Do a <strong>git pull</strong> to obtain the basecode for this assignment.</p>
 </div>
 <div class="paragraph">
 <p>Your repository should now contain a new folder named <code>A03</code>.</p>
 </div>
-<div class="paragraph">
-<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_repeat_repeat_repeat">2. Repeat! Repeat! Repeat!</h2>
+<h2 id="_minesweeper">2. Minesweeper</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a program, <code>repeat.c</code>, that asks the user for a string <code>s</code> and an integer <code>n</code> and
-then creates a new string that repeats <code>s</code> <code>n</code> times.  For example, if the user inputs <code>"ha"</code> and
-the number <code>3</code>, the program creates a string <code>"hahaha"</code>.</p>
+<p>Implement a program, <code>minesweeper.c</code>, that generates a minesweeper board.
+In <a href="https://minesweeperonline.com/#">Minesweeper</a>, each cell can either
+contain a bomb or not. Cells without bombs are called safe cells.</p>
+</div>
+<div class="paragraph">
+<p>Your program should take three command line arguments&#8201;&#8212;&#8201;m, n, and p&#8201;&#8212;&#8201;and
+generate a m x n grid of cells where each cell has probability p of containing a
+bomb. Then, you program shoul print out the grid using X for bombs and . (period)
+for safe cells. Finally, your program should output an additional 2D grid with the
+number of neighboring bombs for each cell (above, below, left, right, NW, NE, SW, SE).</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make repeat</strong>
-gcc repeat.c -o repeat
-$ <strong>./repeat</strong>
-Enter a word: <strong>ha</strong>
-Enter a count: <strong>3</strong>
-Your word is hahaha
-$ <strong>./repeat</strong>
-Enter a word: <strong>ha</strong>
-Enter a count: <strong>1000</strong>
-hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
-hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
-hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
-hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
-hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
-hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
-[truncated]
-$ <strong>./repeat</strong>
-Enter a word: <strong>hi</strong>
-Enter a count: <strong>1000000000000</strong>
-Cannot allocate new string. Exiting...</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements/Hints:
-* Your program can assume that the user enters words that are smaller than 32 characters.
-* Your program should use <code>malloc</code> and <code>free</code>.
-* Your program should check that <code>malloc</code> is successful.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_dynamic_snackbar">3. Dynamic snackbar</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Implement a program, <code>dynamic_snackbar.c</code>, that allows users to add snacks to the snackbar.
-Unlike last week&#8217;s snackbar, your program only needs two features:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The ability to add a new snack to the list of snacks</p>
-</li>
-<li>
-<p>The ability to print out the current list of snacks</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make dynamic_snackbar</strong>
-gcc dynamic_snackbar.c -o dynamic_snackbar
-$ <strong>./dynamic_snackbar</strong>
-Enter a number of snacks: <strong>3</strong>
-Enter a name: <strong>Slurm</strong>
-Enter a cost: <strong>1.50</strong>
-Enter a quantity: <strong>3</strong>
-Enter a name: <strong>Beans</strong>
-Enter a cost: <strong>5</strong>
-Enter a quantity: <strong>1</strong>
-Enter a name: <strong>Carrots</strong>
-Enter a cost: <strong>2</strong>
-Enter a quantity: <strong>10</strong>
+<pre class="highlight"><code>$ <strong>make minesweeper</strong>
+gcc -g -Wall -Wvla -Werror minesweeper.c -o minesweeper
+$ <strong>./minesweeper 3 5 0.4</strong>
+X X . . .
+. . . . .
+. X . . .
 
-Welcome to Dynamic Donna's Snack Bar.
-
-0) Slurm                cost: $1.50     quantity: 3
-1) Beans                cost: $5.00     quantity: 1
-2) Carrots              cost: $2.00     quantity: 10</code></pre>
+X X 1 0 0
+3 3 2 0 0
+1 X 1 0 0</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -164,91 +93,90 @@ Welcome to Dynamic Donna's Snack Bar.
 <div class="ulist">
 <ul>
 <li>
-<p>You must use malloc to create an array large enough to hold all the snacks</p>
+<p>Use malloc and free to allocate a 2D array to store the grid.</p>
 </li>
 <li>
-<p>Use scanf to get the number of snacks and their attributes</p>
+<p>Use rand() and srand(time(0)) to create random boards</p>
+</li>
+<li>
+<p>Your program must use command line arguments!</p>
 </li>
 </ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-You do not need to type in the attributes every time. You can put the inputs in a file and then use redirection to load it.
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_wampus">4. Wampus</h2>
+<h2 id="_ncurses">3. NCurses</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the file, <code>wampus.c</code>, implement a program that randomly places a Wampus within a NxM grid.
-Then, fill in the remaining cells with their distance from the Wampus (using the Manhattan distance).</p>
+<p>NCurses is a library for setting text in the terminal. Usually, when we write to terminal,
+we sequentially append text to the lines that have been output before. However, with the NCurses
+library, we can easily write and erase characters anywhere on the screen.</p>
+</div>
+<div class="paragraph">
+<p>In the file, <code>ascii.c</code>, write an NCurses program that draws an animated scene, character, or pattern.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/bee-demo.gif" alt="bee demo" width="600px">
+</div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>./wampus</strong>
-Number of rows: 2
-Number of columns: 3
-3 2 1
-2 1 W
-$ <strong>./wampus</strong>
-Number of rows: 1
-Number of columns: 1
-W
-$ <strong>./wampus</strong>
-Number of rows: 3
-Number of columns: 4
-1 W 1 2
-2 1 2 3
-3 2 3 4
-$ <strong>./wampus</strong>
-Number of rows: 6
-Number of columns: 3
-1 W 1
-2 1 2
-3 2 3
-4 3 4
-5 4 5
-6 5 6</code></pre>
+<pre class="highlight"><code>$ make ascii
+$ ./ascii</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements/Hints:</p>
+<p>Requirements:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Use rand() to generate a cell (i,j) for the Wampus.</p>
+<p>Your program must include multiple colors</p>
 </li>
 <li>
-<p>Set a seed so that rand() produces different boards each time.</p>
+<p>Your program should include some animation</p>
 </li>
 <li>
-<p>Your program should ask the user for a width and height for the grid</p>
-</li>
-<li>
-<p>Your program should print the grid with its values</p>
-</li>
-<li>
-<p>Your program should use malloc/free to create the grid</p>
-</li>
-<li>
-<p>You can assume that the user will only enter positive values for rows and columns</p>
+<p>Search for ASCII art to get some ideas. Make sure your credit any art that you do not make yourself!</p>
 </li>
 </ul>
+</div>
+<h3 id="_getting_started_with_ncurses" class="discrete">Getting started with NCurses</h3>
+<div class="paragraph">
+<p>We will the ncurses library to render text to the screen and respond to user
+input.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://tldp.org/HOWTO/NCURSES-Programming-HOWTO/helloworld.html" class="bare">https://tldp.org/HOWTO/NCURSES-Programming-HOWTO/helloworld.html</a></p>
+</div>
+<div class="paragraph">
+<p>The program below initializes a terminal screen, prints "Hello World!",
+and exits when the user presses any key. All ncurses applications need to
+initialize (<code>initscr</code>) and cleanup (<code>endwin</code>) the terminal at the start and end
+of the program.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#include &lt;ncurses.h&gt;
+
+int main()
+{
+  initscr();      /* Start curses mode      */
+  printw("Hello World !!!");  /* Print Hello World      */
+  refresh();      /* Print it on to the real screen */
+  getch();      /* Wait for user input */
+  endwin();     /* End curses mode      */
+
+  return 0;
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">5. Grading Rubric</h2>
+<h2 id="_grading_rubric">4. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -259,52 +187,33 @@ Number of columns: 3
 <div class="ulist">
 <ul>
 <li>
-<p>(1 point) repeat</p>
+<p>(2 point) repeat</p>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.1 points) style and header comment</p>
+<p>(0.2 points) style</p>
 </li>
 <li>
-<p>(0.5 points) no memory errors</p>
+<p>(1.0 points) no memory errors</p>
 </li>
 <li>
-<p>(0.4 points) correct behavior: asks the user for input and creates the new string</p>
+<p>(0.8 points) correct behavior: accepts command line arguments and produces good output</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>(1 point) wampus</p>
+<p>(2 points) ncurses</p>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.1 points) style and header comment</p>
+<p>(0.2 points) style</p>
 </li>
 <li>
-<p>(0.5 points) no memory errors</p>
+<p>(1.0 points) no memory errors</p>
 </li>
 <li>
-<p>(0.4 points) correct behavior: uses a command line argument to get the size and outputs the correct board</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>(2 points) dynamic snackbar</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.15 points) style and header comment</p>
-</li>
-<li>
-<p>(0.05 points) defines a struct to hold the information for each snack</p>
-</li>
-<li>
-<p>(0.8 points) correctly loads data and prints results in a table</p>
-</li>
-<li>
-<p>(1 points) creates an array using malloc to hold the data from the file (No memory errors)</p>
+<p>(0.8 points) correct behavior: draws ASCII art using multiple text styles and colors</p>
 </li>
 </ul>
 </div>
@@ -342,7 +251,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-19 20:28:28 -0500
+Last updated 2026-02-02 20:24:34 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">

@@ -35,7 +35,7 @@
 
 |
 * link:lectures/Lecture-Week02-Jan27-Pointers.pdf[Lecture - Jan 27]
-//* link:lectures/Lecture-Week02-Jan29-Pointers.pdf[Lecture - Jan 22]
+* link:lectures/Lecture-Week02-Jan29-Pointers.pdf[Lecture - Jan 22]
 
 //-----------------------------
 |3
@@ -44,7 +44,7 @@
 
 * Topics: linked lists, trees, editor design and implementation
 * Read: link:https://diveintosystems.org/book/C2-C_depth/structs.html#_self_referential_structs[2.7.5. Self-Referential Structs]
-* link:assts/asst03.[Assignment 03]: Due Feb 6
+* link:assts/asst03.html[Assignment 03]: Due Feb 6
 * Lab Feb 3: Practice Quiz 01, link:studyguide1.html[Study Guide: Quiz 01]
 
 |

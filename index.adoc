@@ -15,7 +15,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* link:assts/asst02.html[Assignment 02]: Due Friday, Jan 30
+* link:assts/asst03.html[Assignment 03]: Due Friday, Feb 6
 
 == Course Info
 
@@ -46,7 +46,7 @@ will be introduced at the end of the course.
 | Lecture | Park 159 | Tuesday and Thursday 10:10 AM - 11:30 AM 
 | Lab | Park 230 | Tuesdays 2:40 PM - 4:00 PM 
 | Office Hours - Prof. Aline Normoyle | Park 230/231/200A | Tuesdays-Thursdays, 4-5 PM, by appointment 
-| Office Hours - Rebecca Lassman | Park 231 | TBD
+| Office Hours - Rebecca Lassman | Park 231 | Mondays 6-8 PM
 
 |===
 

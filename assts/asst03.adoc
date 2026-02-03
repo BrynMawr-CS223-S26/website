@@ -8,144 +8,105 @@ include::header.adoc[]
 
 = {title}
 
-**Due Friday, February 7th, before midnight**
+**Due Friday, February 6th, before midnight**
 
 The goals for this assignment are:
 
-* Work with pointers
 * Work with malloc/free
 * Work with arrays
+* Work with a C-style systems API
 
 :sectnums:
 
 = Update your repository
 
-Do a *fetch upstream* to obtain the basecode for this assignment. 
-
-Using the command line
-
-* Open terminal and change your current directory to your assignment repository.
-* Run the command `git fetch upstream`
-* Run the command `git merge upstream/main`
+Do a *git pull* to obtain the basecode for this assignment. 
 
 Your repository should now contain a new folder named `{ASST}`.
 
-The `fetch` and `merge` commands update your repository with any changes from the original.
+= Minesweeper
 
-= Repeat! Repeat! Repeat!
+Implement a program, `minesweeper.c`, that generates a minesweeper board.
+In link:https://minesweeperonline.com/#[Minesweeper], each cell can either 
+contain a bomb or not. Cells without bombs are called safe cells. 
 
-Implement a program, `repeat.c`, that asks the user for a string `s` and an integer `n` and 
-then creates a new string that repeats `s` `n` times.  For example, if the user inputs `"ha"` and 
-the number `3`, the program creates a string `"hahaha"`.  
-
-[source,subs="quotes"]
-----
-$ **make repeat**
-gcc repeat.c -o repeat
-$ **./repeat**
-Enter a word: **ha**
-Enter a count: **3**
-Your word is hahaha
-$ **./repeat**
-Enter a word: **ha**
-Enter a count: **1000**
-hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
-hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
-hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
-hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
-hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
-hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
-[truncated]
-$ **./repeat**
-Enter a word: **hi**
-Enter a count: **1000000000000**
-Cannot allocate new string. Exiting...
-----
-
-Requirements/Hints:
-* Your program can assume that the user enters words that are smaller than 32 characters.
-* Your program should use `malloc` and `free`.
-* Your program should check that `malloc` is successful.
-
-= Dynamic snackbar
-
-Implement a program, `dynamic_snackbar.c`, that allows users to add snacks to the snackbar. 
-Unlike last week's snackbar, your program only needs two features: 
-
-* The ability to add a new snack to the list of snacks
-* The ability to print out the current list of snacks
+Your program should take three command line arguments -- m, n, and p -- and 
+generate a m x n grid of cells where each cell has probability p of containing a 
+bomb. Then, you program shoul print out the grid using X for bombs and . (period) 
+for safe cells. Finally, your program should output an additional 2D grid with the 
+number of neighboring bombs for each cell (above, below, left, right, NW, NE, SW, SE). 
 
 [source,subs="quotes"]
 ----
-$ **make dynamic_snackbar**
-gcc dynamic_snackbar.c -o dynamic_snackbar
-$ **./dynamic_snackbar**
-Enter a number of snacks: **3**
-Enter a name: **Slurm**
-Enter a cost: **1.50**
-Enter a quantity: **3**
-Enter a name: **Beans**
-Enter a cost: **5**
-Enter a quantity: **1**
-Enter a name: **Carrots**
-Enter a cost: **2**
-Enter a quantity: **10**
+$ **make minesweeper**
+gcc -g -Wall -Wvla -Werror minesweeper.c -o minesweeper
+$ **./minesweeper 3 5 0.4**
+X X . . .
+. . . . .
+. X . . .
 
-Welcome to Dynamic Donna's Snack Bar.
-
-0) Slurm                cost: $1.50     quantity: 3
-1) Beans                cost: $5.00     quantity: 1
-2) Carrots              cost: $2.00     quantity: 10
+X X 1 0 0
+3 3 2 0 0
+1 X 1 0 0
 ----
 
 Requirements/Hints:
 
-* You must use malloc to create an array large enough to hold all the snacks
-* Use scanf to get the number of snacks and their attributes
+* Use malloc and free to allocate a 2D array to store the grid.
+* Use rand() and srand(time(0)) to create random boards
+* Your program must use command line arguments!
 
-NOTE: You do not need to type in the attributes every time. You can put the inputs in a file and then use redirection to load it. 
+= NCurses
 
-= Wampus
+NCurses is a library for setting text in the terminal. Usually, when we write to terminal, 
+we sequentially append text to the lines that have been output before. However, with the NCurses
+library, we can easily write and erase characters anywhere on the screen.
 
-In the file, `wampus.c`, implement a program that randomly places a Wampus within a NxM grid. 
-Then, fill in the remaining cells with their distance from the Wampus (using the Manhattan distance).   
+In the file, `ascii.c`, write an NCurses program that draws an animated scene, character, or pattern.
+
+image::bee-demo.gif[width=600px]
 
 [source, subs="quotes"]
 ----
-$ **./wampus**
-Number of rows: 2
-Number of columns: 3
-3 2 1
-2 1 W
-$ **./wampus**
-Number of rows: 1
-Number of columns: 1
-W
-$ **./wampus**
-Number of rows: 3
-Number of columns: 4
-1 W 1 2
-2 1 2 3
-3 2 3 4
-$ **./wampus**
-Number of rows: 6
-Number of columns: 3
-1 W 1
-2 1 2
-3 2 3
-4 3 4
-5 4 5
-6 5 6
+$ make ascii
+$ ./ascii 
 ----
 
-Requirements/Hints:
+Requirements:
 
-* Use rand() to generate a cell (i,j) for the Wampus.
-* Set a seed so that rand() produces different boards each time.
-* Your program should ask the user for a width and height for the grid
-* Your program should print the grid with its values
-* Your program should use malloc/free to create the grid 
-* You can assume that the user will only enter positive values for rows and columns
+* Your program must include multiple colors
+* Your program should include some animation
+* Search for ASCII art to get some ideas. Make sure your credit any art that you do not make yourself!
+
+[discrete]
+== Getting started with NCurses                                                           
+                                                                                
+We will the ncurses library to render text to the screen and respond to user    
+input.                                                                          
+                                                                                
+https://tldp.org/HOWTO/NCURSES-Programming-HOWTO/helloworld.html                
+                                                                                
+The program below initializes a terminal screen, prints "Hello World!",         
+and exits when the user presses any key. All ncurses applications need to       
+initialize (`initscr`) and cleanup (`endwin`) the terminal at the start and end 
+of the program.                                                                 
+                                                                                
+[source]                                                                        
+----                                                                            
+#include <ncurses.h>                                                            
+                                                                                
+int main()                                                                      
+{                                                                               
+  initscr();      /* Start curses mode      */                                  
+  printw("Hello World !!!");  /* Print Hello World      */                      
+  refresh();      /* Print it on to the real screen */                          
+  getch();      /* Wait for user input */                                       
+  endwin();     /* End curses mode      */                                      
+                                                                                
+  return 0;                                                                     
+}                                                                               
+----                            
+
 
 = Grading Rubric
 
@@ -153,19 +114,14 @@ Requirements/Hints:
 
 Grades are out of 4 points.
 
-* (1 point) repeat
-** (0.1 points) style and header comment
-** (0.5 points) no memory errors
-** (0.4 points) correct behavior: asks the user for input and creates the new string
-* (1 point) wampus
-** (0.1 points) style and header comment
-** (0.5 points) no memory errors
-** (0.4 points) correct behavior: uses a command line argument to get the size and outputs the correct board
-* (2 points) dynamic snackbar
-** (0.15 points) style and header comment
-** (0.05 points) defines a struct to hold the information for each snack
-** (0.8 points) correctly loads data and prints results in a table 
-** (1 points) creates an array using malloc to hold the data from the file (No memory errors)
+* (2 point) repeat
+** (0.2 points) style
+** (1.0 points) no memory errors
+** (0.8 points) correct behavior: accepts command line arguments and produces good output
+* (2 points) ncurses
+** (0.2 points) style
+** (1.0 points) no memory errors
+** (0.8 points) correct behavior: draws ASCII art using multiple text styles and colors
 
 *Code rubrics*
 
