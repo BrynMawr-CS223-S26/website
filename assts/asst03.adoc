@@ -76,6 +76,7 @@ Requirements:
 
 * Your program must include multiple colors
 * Your program should include some animation
+* Pressing ESCAPE should exit the application
 * Search for ASCII art to get some ideas. Make sure your credit any art that you do not make yourself!
 
 [discrete]
@@ -114,7 +115,7 @@ int main()
 
 Grades are out of 4 points.
 
-* (2 point) repeat
+* (2 point) Minesweeper
 ** (0.2 points) style
 ** (1.0 points) no memory errors
 ** (0.8 points) correct behavior: accepts command line arguments and produces good output

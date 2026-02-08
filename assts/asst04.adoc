@@ -1,123 +1,198 @@
 include::header.adoc[]
 
-:title: Assignment 4: Watch where you point!
+:title: Assignment 6: Watch where you point II 
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
-:ASST: A04
+:ASST: A06
 
 = {title}
 
-**Due Friday, February 14th, before midnight**
+**Due Friday, February 13th, before midnight**
 
 The goals for this assignment are:
 
-* Use malloc and free
 * Work with pointer-based data structures
-* Use gdb and valgrind. 
-
-**All programs must run without memory errors and leaks!**
+* Strengthen C programming with strings and files
 
 :sectnums:
 
 = Update your repository
 
-Do a *fetch upstream* to obtain the basecode for this assignment. 
-
-Using the command line
-
-* Open terminal and change your current directory to your assignment repository.
-* Run the command `git fetch upstream`
-* Run the command `git merge upstream/main`
+Do a *git pull* to obtain the basecode for this assignment. 
 
 Your repository should now contain a new folder named `{ASST}`.
 
-The `fetch` and `merge` commands update your repository with any changes from the original.
+= Matching braces 
 
-= Magic Square
-
-Implement a program, `magic_square.c`, that tests whether a given matrix is a magic square. 
-A link:https://en.wikipedia.org/wiki/Magic_square[magic square] is an N by N matrix where each 
-row, column, and diagonal has the same sum, called the _magic constant_. 
-
-image::https://mathworld.wolfram.com/images/gifs/melencol.jpg[height=200]
+Implement a program, `match_braces.c`, that takes a C file as a command line
+argument and uses a stack to check for matched braces. If not all braces are matched, 
+print the line where a mis-matched brace occurs.
 
 [source,subs="quotes"]
 ----
-$ **make magic_square**
-gcc -g magic_square.c -o magic_square
-$ **./magic_square < magic1.txt**
-8 1 6
-3 5 7
-4 9 2
-M is a magic square (magic constant = 15)
-$ **./magic_square < magic2.txt**
-9 1 6
-3 5 7
-4 8 2
-M is NOT a magic square!
-$ **./magic_square < magic3.txt**
-1
-M is a magic square (magic constant = 1)
+$ **make match_braces**
+gcc -g -Wall -Wvla -Werror match_braces.c -o match_braces
+$ **./match_braces**
+usage: ./match_braces <filename>
+$ **./match_braces prog.c**
+Cannot open file: prog.c
+$ **./match_braces prog1.c**
+Found matching braces: (21, 32) -> (23, 5)
+Found matching braces: (25, 30) -> (28, 9)
+Found matching braces: (17, 53) -> (29, 5)
+Unmatched brace on Line 31 and Column 1
+Found matching braces: (40, 47) -> (43, 5)
+Found matching braces: (36, 18) -> (47, 1)
+Unmatched brace on Line 34 and Column 34
 ----
 
 Requirements/Hints:
 
-* Read in the matrix from stdin using `scanf(" %d", &val);`. The first two values are the dimensions of the matrix. All subsequent integers are the values of the matrix. 
-* Use malloc and free to allocate a 2D array to store the inputs.
+* Use a linked list implementation as a starting point.
+* Implement the functions `push`, `pop`, `clear`. Implementing `print` is also recommended to help you debug your assignment.
+* Use command line arguments to input the filename. 
+* Print the usage if the user inputs an incorrect number of command line arguments
+* Print an error if your program cannot open the file
+* Recommended algorithm: Use `fgetc` to read the file one character at a time. 
+** Update the current line number when you encounter `\n`. 
+** Update the current column as you read in each character. 
+** Push to the stack when you encounter a '{' 
+** Pop from the stack when you encounter '}'. If the symbols pushed and popped do not match, there is an error. 
+* The output of the program should match the line and column numbers that your editor (such as VS Code) reports when you check for matched braces. 
 
-= Sorted Snacks
+= Tree
 
-Implement a program, `sorted_snackbar.c`, that allows users to add snacks to the snackbar and displays 
-them in alphabetical order. Your program should have the same features as last week's snackbar, but should 
-use a _linked list_ to store the snacks, rather than an array. 
+In the file, `tree.c`, implement a binary search tree. Do not change the header
+`tree.h`, nor the function declarations in `tree.c`. But you can add functions to `tree.c`! 
+I recommend the book
+"Data Structures and Algorithm Analysis in C" by Mark Allen Weiss, which has classic C 
+implementations of C data structures.
 
-[source,subs="quotes"]
+[code,subs="quotes"]
 ----
-$ **make sorted_snackbar**
-gcc sorted_snackbar.c -o sorted_snackbar
-$ **./sorted_snackbar**
-Enter a number of snacks: **3**
-Enter a name: **Slurm**
-Enter a cost: **1.50**
-Enter a quantity: **3**
-Enter a name: **Beans**
-Enter a cost: **5**
-Enter a quantity: **1**
-Enter a name: **Carrots**
-Enter a cost: **2**
-Enter a quantity: **10**
-
-Welcome to Sorted Sally's Snack Bar.
-
-0) Beans                cost: $5.00     quantity: 1
-1) Carrots              cost: $2.00     quantity: 10
-2) Slurm                cost: $1.50     quantity: 3
+$ **make ./tree_tests**
+gcc -g -Wall -Wvla -Werror -Wno-unused-variable -Wno-unused-but-set-variable tree_tests.c tree.c -o tree_tests -lpthread
+$ **./tree_tests** 
+Running tests...
+test 1: insert for empty tree: PASSED
+test 2: name set correctly: PASSED
+test 3: left is null: PASSED
+test 4: right is null: PASSED
+test 5: name set correctly: PASSED
+test 6: right is null: PASSED
+test 7: name set correctly: PASSED
+test 8: item not in tree: PASSED
+test 9: item in tree: PASSED
+test 10: found correct object: PASSED
+M
+ l:A
+ r:X
+  l:P
+A
+M
+P
+X
 ----
 
-Requirements/Hints:
+Requirements:
 
-* Implement the function `insert_first`. This function should create a new snack struct and insert it at the beginning of the list. 
-* Implement the function `clear`. This function should clear and free all items in the list.
-* Implement the function `printList`. This function should print the contents of the list.
-* Implement three sort functions: `sortCost` and `sortName` and `sortQuantity`. These functions should sort by the given attribute. 
+* You must not modify the basecode for `tree.h` or `tree.c`. You may add functions to `tree.c`
+* Your output should match the above and pass all tests
 
-= Submit your Work
+= Dependencies
 
-Before submitting, check that
+A _dependency_ is a general software term for any software required by another. In this question, 
+we will store files in a binary search tree so we can list their file dependencies, 
+as determined by `#include` statements. For example, 
+the file "Animal.h" depends on "Locomotion.h". 
 
-* Your programs run on goldengate using the `make` command!
-* valgrind does not report any errors!
+In the file, `dependency.c`, implement a program that builds a binary search tree of a 
+given set of files. After building the tree, the program should give the user a prompt where they 
+can list the processed files in alphabetical order and then query the dependencies of the file by 
+giving the filename.  
+
+[code, subs="quotes"]
+----
+$ **./dependency `` ` ``find code -name "\*.h" -o -name "*.cpp"`` ` ``**
+Processing 11 files
+$ list
+code/Animal.h
+code/Bird.h
+code/Duck.h
+code/Fish.h
+code/Fly.h
+code/Locomotion.h
+code/Seal.h
+code/Swim.h
+code/Walk.h
+code/Whale.h
+code/Zoo.cpp
+$ code/Animal.cpp
+code/Animal.cpp not found
+$ code/Animal.h
+code/Animal.h has the following dependencies
+  string
+  vector
+  Locomotion.h
+$ code/Zoo.cpp
+code/Zoo.cpp has the following dependencies
+  Animal.h
+  Bird.h
+  Duck.h
+  Fish.h
+  Seal.h
+  Whale.h
+  Locomotion.h
+  Walk.h
+  Fly.h
+  Swim.h
+$ apple
+apple not found
+$ quit
+----
+
+Requirements:
+
+* Check that a file is valid before adding it to the tree
+* Support the commands: quit, list, <filename>
+* Your program should take a list of files as command line arguments. The `find` command computes this list of files. 
+* Use `strstr` and `fgets` to parse the source file and find lines containing `#include`
+* Strip the filenames from the `#include` lines when printing dependencies.
+
+== Implementing a console command program with a prompt
+
+Your program should use `readline` and `history` to build your command loop. 
+One possible implementation is below.
+
+NOTE: Read the man page to get documentation for readline, e.g. `man readline`
+
+[source]
+----
+while (1) {
+  // Get input from the user
+  // if the user types "exit", break from the loop
+  // else if the user types a command, execute it
+}
+----
+
+Requirements:
+
+* Use the `readline()` function to get user input. This function supports backspace, tab completion, and more. link:https://www.man7.org/linux/man-pages/man3/readline.3.html[Documentation for readline can be found here].
+* Use the `add_history()` function to save user history. This will allow arrow keys to work. link:https://www.man7.org/linux/man-pages/man3/readline.3.html[Documentation for readline can be found here].
+* Your program should quit if the users types `exit`.
+
+= Submit your work
 
 Push you work to github to submit your work.
 
-[subs="attributes"]
+[source]
 ----
 $ cd {ASST}
 $ git status
 $ git add *.c 
 $ git status
-$ git commit -m "{ASST} complete"
+$ git commit -m "assignment complete"
 $ git status
 $ git push
 $ git status
@@ -129,16 +204,18 @@ $ git status
 
 Grades are out of 4 points.
 
-* (2 points) Magic Square
+* (2 points) matched braces
+** (0.2 points) style and header comment
+** (0.8 points) correct output and behavior, supports command line arguments
+** (1.0 points) no memory errors
+* (1 points) Tree
 ** (0.1 points) style and header comment
-** (0.4 points) reads in matrix from stdin
-** (0.5 points) creates/deletes 2D matrix using malloc/free
-** (1.0 points) No memory errors
-* (2 points) Sorted Snacks
+** (0.4 points) implements all functions, passes all tests and does not modify basecode
+** (0.5 points) no memory errors
+* (1 points) Dependencies
 ** (0.1 points) style and header comment
-** (0.4 points) defines a struct correctly handles deletion and insertion to a linked list
-** (0.5 points) correctly sorts and displays snacks based on name, cost, or quantity
-** (1.0 points) handles file and linked list nodes correctly (no memory errors!)
+** (0.4 points) Correct behavior
+** (0.5 points) no memory errors
 
 *Code rubrics*
 

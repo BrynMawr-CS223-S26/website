@@ -1,0 +1,374 @@
+include::header.adoc[]
+
+:title: Assignment 5: Image conscious
+:Author Initials: ASN
+:Date:    2020-08-15
+:Revision: 0.1
+:ASST: A05
+
+= {title}
+
+**Due Friday, Feb 21, before midnight**
+
+The goals for this assignment are:
+
+* Work with 2D arrays of images
+* Read and write files
+
+**All programs must run without memory errors and leaks!**
+
+NOTE: Install the VS Code extension, "PBM/PPM/PGM Viewer" by ngtystr, so you can easily view your PPM files!
+
+[discrete]
+= Update your repository
+
+Do a *fetch upstream* to obtain the basecode for this assignment. 
+
+Using the command line
+
+* Open terminal and change your current directory to your assignment repository.
+* Run the command `git fetch upstream`
+* Run the command `git merge upstream/main`
+
+Your repository should now contain a new folder named `{ASST}`.
+
+The `fetch` and `merge` commands update your repository with any changes from the original.
+
+= PPM
+
+Implement two functions, `read_ppm` and `write_ppm`, that read and write binary PPM files. 
+This functions are implemented in the file `load_ppm.h` and tested using code in `test_ppm.c`.
+
+== Background
+
+link:http://netpbm.sourceforge.net/doc/ppm.html[PPM (Portable Pix Map)]
+ is an image file format that stores the colors of an image as a 2D array of 
+colors. Each color is represented as a RGB triplet, representing red, green and blue respectively. 
+The properties of the image, such as its size and color format, are specified at the start of the 
+file (called its "header information"). PPM supports both ASCII (plain text) and binary data (raw). 
+
+NOTE: We will write a function that *reads PPM files in binary format*!
+
+For example, consider the following image
+
+image::https://www.cs.swarthmore.edu/~soni/cs35/f13/Labs/images/01/example5000.png[]
+
+//In ASCII format, the above image is stored as follows. To see for yourself, do `cat feep-ascii.ppm`.
+//[source]
+//----
+//P3
+//# This is a comment
+//4 4
+//255
+//0  0  0   100 0  0       0  0  0    255   0 255
+//0  0  0    0 255 175     0  0  0     0    0  0
+//0  0  0    0  0  0       0 15 175    0    0  0
+//255 0 255  0  0  0       0  0  0    255  255 255
+//----
+
+The above image contains a 4x4 grid of colored pixels. Each pixel is a triplet of red-blue-green (RGB) color 
+values, each stored as an `unsigned char`. Unsigned chars have values which range from 0 to 255, where 
+smaller values correspond to darker colors. The triplet (0,0,0) corresponds to black. The triplet 
+(255,255,255) corresponds to white. The triplet (255,0,0) corresponds to red. This system of colors is called 
+the link:https://en.wikipedia.org/wiki/RGB_color_model[RGB Color Model] and it is a common standard for 
+representing colors on a computer. 
+
+The RGB colors for the pixels in the above image are as follows
+
+[source]
+----
+(0,0,0)      (100,0,0)    (0,0,0)     (255,0,255)
+(0,0,0)      (0,255,175)  (0,0,0)     (0,0,0)
+(0,0,0)      (0,0,0)      (0,15,175)  (0,0,0)
+(255,0,255)  (0,0,0)      (0,0,0)     (255,255,255)
+----
+
+In binary format (also called _raw_ format), the image is stored as follows. 
+To see for yourself, do `hexedit feep-raw.ppm`.
+
+[source]
+----
+00000000   50 36 0A 23  20 43 72 65  61 74 65 64  20 62 79 20  47 49 4D 50  20 76 65 72  P6.# Created by GIMP ver 
+00000018   73 69 6F 6E  20 32 2E 31  30 2E 32 34  20 50 4E 4D  20 70 6C 75  67 2D 69 6E  sion 2.10.24 PNM plug-in
+00000030   0A 34 20 34  0A 32 35 35  0A 00 00 00  64 00 00 00  00 00 FF 00  FF 00 00 00  .4 4.255....d...........
+00000048   00 FF AF 00  00 00 00 00  00 00 00 00  00 00 00 00  0F AF 00 00  00 FF 00 FF  ........................
+00000060   00 00 00 00  00 00 FF FF  FF                                                  .........
+----
+
+The leftmost column is byte number in hexadecimal. For example, 0x18 is 24 in decimal. There are 24 bytes
+on the first row on output. The rightmost column displays the raw data in ASCII, using `.` for non-visible 
+ASCII codes, such as '\0' and 'Escape'.
+
+Regardless of format, every PPM file starts the following information in its header. 
+
+* A "magic number" indicating the type of PPM. Binary types start with "P6".
+* Whitespace  (blanks, tabs, \n, \r, etc)
+* Width and height as ASCII decimal integers (separated by whitespace)
+* Maximum color value as an ASCII decimal integer. *You can assume the Maxval is less than 256, meaning each RGB value is 1 byte.*
+* A single whitespace character
+* A raster (e.g. the array of pixels) of Height number of rows and Width number of columns, in order from top to bottom. 
+
+PPM images may contain comments in their header. These must be on their own line and start with the symbol `#`.
+
+NOTE: The header information is always in plain text. It is only the pixel data that differs between ASCII and raw formats. 
+
+NOTE: PPM files can be viewed using tools such as Photoshop and Gimp.
+
+== Read PPM
+
+For this question, you will implement a function, `read_ppm()`, that can read
+PPM files stored in _binary_ format. This function should take a filename as input
+and return a 2D array of `struct pixel`. A `struct pixel` has the following definition
+
+[source]
+----
+struct ppm_pixel {
+    unsigned char red;
+    unsigned char green;
+    unsigned char blue;
+};
+----
+
+The user of the function `read_ppm` is responsible for freeing the memory allocated by this function.
+
+You will re-use this function throughout the semester. For this reason, we place its implementation
+in it's own file, `read_ppm.c`, and use a header file, `read_ppm.h`, to include it in our main application.
+
+You may implement your 2D array of pixels as either a flat array or an array or
+arrays. For example, if you return a flat array, your function should be defined
+as follows.
+
+[source]
+----
+// filename is the image PPM to open and read
+// width should point to a variable for storing the width
+// height should point to a variable for storing the height
+struct ppm_pixel* read_ppm(const char* filename, int* width, int* height)
+----
+
+If you return an array or arrays, your function should be defined as follows
+
+[source]
+----
+// filename is the image PPM to open and read
+// width should point to a variable for storing the width
+// height should point to a variable for storing the height
+struct ppm_pixel** read_ppm(const char* filename, int* width, int* height)
+----
+
+In both cases, 
+use the parameters `width` and `height` to return the width and height of the image.
+
+In the file, `test_read.c`, write a short test that calls your function and prints the
+contents of `feep-raw.ppm` like so:
+
+[source,subs="quotes"]
+----
+$ **make test_read**
+gcc -g -Wall -Wvla -Werror test_read.c read_ppm.c -o test_read
+$ **./test_read**
+Testing file feep-raw.ppm: 4 4
+(0,0,0) (100,0,0) (0,0,0) (255,0,255)
+(0,0,0) (0,255,175) (0,0,0) (0,0,0)
+(0,0,0) (0,0,0) (0,15,175) (0,0,0)
+(255,0,255) (0,0,0) (0,0,0) (255,255,255)
+----
+
+Requirements/Hints:
+
+* Your function should return NULL if the filename is invalid
+* Your function should return NULL if memory cannot be allocated for the image data
+* Your function should return a pointer to the array you create in read_ppm
+* You can assume that it is safe to read the header line by line (e.g. using `fgets`).
+* Don't forget to free your data!
+* Do not modify read_ppm.h. And do not remove the version of the function you do not implement!
+* Make sure your program compiles using the Makefile
+* You can assume the PPM file has a single comment line, starting with `#`
+
+
+== Write PPM
+
+Implement a new function, `write_ppm`, defined in `write_ppm.c`. 
+Similarly to `read_ppm`, you should choose one definition of `write_ppm` to 
+implement, depending on whether you use either a "flat array" or an "array of arrays" to store your pixels. 
+
+In the file, `test_write.c`, write a short test that reads in `feep_raw.ppm` and then writes it to 
+a file `test.ppm` by calling your function. Then, read in `test.ppm` and print the contents. 
+If it is working correctly, you will see the following pixel values.
+
+[source,subs="quotes"]
+----
+$ **make test_write**
+gcc -g -Wall -Wvla -Werror test_write.c write_ppm.c read_ppm.c -o test_write
+$ **./test_write**
+Testing file feep-raw.ppm: 4 4
+(0,0,0) (100,0,0) (0,0,0) (255,0,255)
+(0,0,0) (0,255,175) (0,0,0) (0,0,0)
+(0,0,0) (0,0,0) (0,15,175) (0,0,0)
+(255,0,255) (0,0,0) (0,0,0) (255,255,255)
+----
+
+Requirements/Hints:
+
+* Use `fprintf` to write the header and `fwrite` to write the binary Data to your file.
+* Do not modify write_ppm.h. And do not remove the version of the function you do not implement!
+* Make sure your program compiles using the Makefile
+* Don't forget to write the header comment!
+
+= ASCII Image
+
+When I was a kid, my mom used to bring home dot-matrix printouts of ascii art for my sister and I to use as coloring books. 
+For this question, write a program, `ascii_image.c`, that takes a PPM image as a 
+command line argument and displays it as 
+link:https://en.wikipedia.org/wiki/ASCII_art[ASCII Art].  
+
+[source,subs="quotes"]
+----
+$ **make ascii_image**
+gcc -g -Wall -Wvla -Werror ascii_image.c read_ppm.c -o ascii_image
+$ **./ascii_image feep-raw.ppm**
+Reading feep-raw.ppm with width 4 and height 4
+@#@:
+@;@@
+@@%@
+:@@
+$ **./ascii_image smile-raw.ppm**
+Reading smile.ppm with width 14 and height 19
+@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@
+@@          @@
+@@          @@
+@@          @@
+@@   @  @   @@
+@@          @@
+@@ @      @ @@
+@@  @@@@@@  @@
+@@          @@
+@@          @@
+@@          @@
+@@          @@
+@@          @@
+@@          @@
+@@          @@
+@@          @@
+@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@
+----
+
+[discrete]
+== Algorithm
+
+Step 1: For each RGB pixel in the image, compute the average intensity as follows
+
+[stem]
+++++
+I = \frac{1}{3}(R + G + B)
+++++
+
+Step 2: Then, assign an ASCII character based on the intensity
+
+[.center,options="header,autowidth"]
+|===
+| Intensity | Symbol
+
+| 0-25 | @
+| 26-50 | #
+| 51-75 | %
+| 76-100 | *
+| 101-125 | o
+| 126-150 | ;
+| 151-175 | :
+| 176-200 | ,
+| 201-225 | .
+| 226-255 | <space>
+|===
+
+= Glitch
+
+link:https://en.wikipedia.org/wiki/Glitch_art[Glitch Art] is the practice of leveraging technological errors for artistic purposes. 
+
+image::https://www.joelatimer.com/wp-content/uploads/2019/09/JoeLatimer.com-Blog-Featured-Image-Landscape-08-31-19.jpg[height=300px]
+
+First, implement a new function, `write_ppm`, defined in `read_ppm.c`. Similarly to link:asst04.html[Assignment 04], you should change the definition of `write_ppm` if you use an "array of arrays" to store your pixels. **Be careful that you do not change the definition of ppm_pixel!**
+
+Then write a program, `glitch.c`, that reads in a PPM file and "glitches" it. Your program should save the modified PPM in a new file with the suffix "-glitch". For example, if you load in the file 
+"monalisa.ppm", you should output a file named "monalisa-glitch.ppm".
+
+[source,subs="quotes"]
+----
+$ **./glitch monalisa.ppm**
+Reading monalisa.ppm with width 606 and height 771
+Writing file monalisa-glitch.ppm
+----
+
+[cols="1a,1a"]  
+|=== 
+|Original Image | Glitched Image
+|image::monalisa.png[height=300px]
+|image::monalisa-glitch-v2.0.png[height=300]
+|=== 
+
+Requirements/Hints:
+
+* Implement a function to write your PPM as a _binary_ file, e.g. with the option "wb".
+* Use `fwrite` to write to your file.
+* Save the result to `<filename>-glitch.ppm`
+* To start, implement a minimal glitch, which shifts each color value by either 1 or 2 bits, choosen at random, e.g. `newcolorvalue = oldcolorvalue << (rand() % 2);`. Your result should look like
+* Submit your glitched images as part of your submission!
+
+[cols="1a,1a"]  
+|=== 
+|Original Image | Result of random bit shift
+|image::monalisa.png[height=300px]
+|image::monalisa-glitch-simple.png[height=300]
+|=== 
+
+Feel free to be creative with your glitches. You can use a combination of bit operations, switching colors, adding colors, etc.  Anything goes! Also, feel free to use your own images. PPM images can be exported using link:https://www.gimp.org[Gimp] or Photoshop.
+
+= Submit your work
+
+Push you work to github to submit your work.
+
+[subs="attributes"]
+----
+$ cd {ASST}
+$ git status
+$ git add *.c 
+$ git commit -m "assignment complete"
+$ git status
+$ git push
+----
+
+= Grading Rubric
+
+*Assignment rubrics*
+
+Grades are out of 4 points.
+
+* (1 points) Read PPM
+** (0.1 points) style
+** (0.4 points) correct behavior: reads the PPM file in binary format
+** (0.5 points) no memory errors
+* (1 points) Write PPM
+** (0.1 points) style
+** (0.4 points) correct behavior: write the PPM file in binary format
+** (0.5 points) no memory errors
+* (1 points) ascii_image
+** (0.1 points) style and header comment
+** (0.4 points) correct behavior: displays ascii image for input
+** (0.5 points) no memory errors
+* (1 points) glitch
+** (0.1 points) style and header comment
+** (0.4 points) correct behavior: computes and saves a glitched image 
+** (0.5 points) no memory errors
+
+*Code rubrics*
+
+For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
+have good style.
+
+* Some credit lost for missing features or bugs, depending on severity of error
+* -5% for style errors. See the link:../codingstandard.html[class coding style] here.
+* -50% for memory errors
+* -100% for failure to checkin work to Github
+* -100% for failure to compile on linux using make

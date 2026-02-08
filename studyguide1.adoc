@@ -199,24 +199,15 @@ $ cd
 $ touch sing.c
 ----
 
-11) Consider the following directory structure
+11) The following code has an error. What is wrong and how can we fix it?
 
 [source]
 ----
-root
-> home
->> ren
->>> A    
->> stimpy
->>> B
->>> C
->>>> hello.txt   
-----
+int age;
 
-* Draw the directory hierarchy above as a tree.
-* What is the absolute path of hello.txt?
-* If we are in the directory A, what is the relative path of hello.txt?
-* If we are in the directory B, what is the relative path of hello.txt?
+printf("Enter your age: ");
+scanf("%d", age);
+----
 
 = Coding 
 
@@ -271,27 +262,5 @@ from `str`. Your function should modify the contents of str. (To check your work
 
 * Write code that implements a function `isPalindrome` that returns 1 if a given string is a palindrome and 0 otherwise. 
 Your function can be iterative or recursive. Test your function from `main`. 
-
-* Write a program, `countsort.c`, that asks the user for a series of digits and then
-prints the digits in sorted order. Your program should count the number of times
-each digit appears in the input and then use these counts to print the sorted list.
-                                                                                
-[source, subs="quotes"]                                                         
-----                                                                            
-$ **./countsort**                                                               
-Enter digits: **034567139432**                                                  
-0 1 2 3 3 3 4 4 5 6 7 9                                                         
-$ **./countsort**                                                               
-Enter digits: **3212**                                                          
-1 2 2 3                                                                         
-----                                                                                                                                                                   
-                                                                                                                                                                       
-Requirements/Hints:                                                                                                                                                    
-                                                                                                                                                                       
-* You can assume that inputs will be less than 31 characters                                                                                                           
-* Your program should not have memory errors and have good style.                                                                                                      
-* You cannot assume that inputs will be digits only                                                                                                                    
-* Use the ASCII values of the input to convert from a character to an integer.       
-* Your algorithm should be O(n)
 
 * Write a program that takes a list of words as command line arguments and outputs the largest one.

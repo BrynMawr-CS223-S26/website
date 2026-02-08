@@ -269,35 +269,15 @@ $ touch sing.c</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>11) Consider the following directory structure</p>
+<p>11) The following code has an error. What is wrong and how can we fix it?</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>root
-&gt; home
-&gt;&gt; ren
-&gt;&gt;&gt; A
-&gt;&gt; stimpy
-&gt;&gt;&gt; B
-&gt;&gt;&gt; C
-&gt;&gt;&gt;&gt; hello.txt</code></pre>
+<pre class="highlight"><code>int age;
+
+printf("Enter your age: ");
+scanf("%d", age);</code></pre>
 </div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Draw the directory hierarchy above as a tree.</p>
-</li>
-<li>
-<p>What is the absolute path of hello.txt?</p>
-</li>
-<li>
-<p>If we are in the directory A, what is the relative path of hello.txt?</p>
-</li>
-<li>
-<p>If we are in the directory B, what is the relative path of hello.txt?</p>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -376,43 +356,6 @@ from <code>str</code>. Your function should modify the contents of str. (To chec
 Your function can be iterative or recursive. Test your function from <code>main</code>.</p>
 </li>
 <li>
-<p>Write a program, <code>countsort.c</code>, that asks the user for a series of digits and then
-prints the digits in sorted order. Your program should count the number of times
-each digit appears in the input and then use these counts to print the sorted list.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>./countsort</strong>
-Enter digits: <strong>034567139432</strong>
-0 1 2 3 3 3 4 4 5 6 7 9
-$ <strong>./countsort</strong>
-Enter digits: <strong>3212</strong>
-1 2 2 3</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements/Hints:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>You can assume that inputs will be less than 31 characters</p>
-</li>
-<li>
-<p>Your program should not have memory errors and have good style.</p>
-</li>
-<li>
-<p>You cannot assume that inputs will be digits only</p>
-</li>
-<li>
-<p>Use the ASCII values of the input to convert from a character to an integer.</p>
-</li>
-<li>
-<p>Your algorithm should be O(n)</p>
-</li>
-<li>
 <p>Write a program that takes a list of words as command line arguments and outputs the largest one.</p>
 </li>
 </ul>
@@ -422,7 +365,7 @@ Enter digits: <strong>3212</strong>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-19 20:28:28 -0500
+Last updated 2026-02-03 13:42:35 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">

@@ -15,7 +15,8 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* link:assts/asst03.html[Assignment 03]: Due Friday, Feb 6
+* Quiz 1: Tuesday, Feb 10, 50 minutes in lab. link:studyguide1.html[Study Guide 1], link:studyguide2.html[Study Guide 2]
+* link:assts/asst04.html[Assignment 04]: Due Friday, Feb 13
 
 == Course Info
 

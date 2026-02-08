@@ -56,7 +56,7 @@
 
 * Topics: number systems, integer/float/char binary formats, struct layouts, endianess
 * Read: link:https://diveintosystems.org/singlepage/#_binary_and_data_representation[Chapter 4.1-4.9] 
-* link:assts/asst04.[Assignment 04]: Due Feb 13
+* link:assts/asst04.html[Assignment 04]: Due Feb 13
 * Lab Feb 10: **Quiz 01**: 50 minutes 
 
 |

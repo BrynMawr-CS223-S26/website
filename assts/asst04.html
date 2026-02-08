@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 4: Watch where you point!</title>
+<title>Assignment 6: Watch where you point II</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,21 +14,26 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_4_watch_where_you_point">Assignment 4: Watch where you point!</a></li>
+<li><a href="#_assignment_6_watch_where_you_point_ii">Assignment 6: Watch where you point II</a></li>
 <li><a href="#_update_your_repository">1. Update your repository</a></li>
-<li><a href="#_magic_square">2. Magic Square</a></li>
-<li><a href="#_sorted_snacks">3. Sorted Snacks</a></li>
-<li><a href="#_submit_your_work">4. Submit your Work</a></li>
-<li><a href="#_grading_rubric">5. Grading Rubric</a></li>
+<li><a href="#_matching_braces">2. Matching braces</a></li>
+<li><a href="#_tree">3. Tree</a></li>
+<li><a href="#_dependencies">4. Dependencies</a>
+<ul class="sectlevel2">
+<li><a href="#_implementing_a_console_command_program_with_a_prompt">4.1. Implementing a console command program with a prompt</a></li>
+</ul>
+</li>
+<li><a href="#_submit_your_work">5. Submit your work</a></li>
+<li><a href="#_grading_rubric">6. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_4_watch_where_you_point">Assignment 4: Watch where you point!</h2>
+<h2 id="_assignment_6_watch_where_you_point_ii">Assignment 6: Watch where you point II</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, February 14th, before midnight</strong></p>
+<p><strong>Due Friday, February 13th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -36,18 +41,12 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Use malloc and free</p>
-</li>
-<li>
 <p>Work with pointer-based data structures</p>
 </li>
 <li>
-<p>Use gdb and valgrind.</p>
+<p>Strengthen C programming with strings and files</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p><strong>All programs must run without memory errors and leaks!</strong></p>
 </div>
 </div>
 </div>
@@ -55,62 +54,37 @@
 <h2 id="_update_your_repository">1. Update your repository</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
+<p>Do a <strong>git pull</strong> to obtain the basecode for this assignment.</p>
 </div>
 <div class="paragraph">
-<p>Using the command line</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Open terminal and change your current directory to your assignment repository.</p>
-</li>
-<li>
-<p>Run the command <code>git fetch upstream</code></p>
-</li>
-<li>
-<p>Run the command <code>git merge upstream/main</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Your repository should now contain a new folder named <code>A04</code>.</p>
-</div>
-<div class="paragraph">
-<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
+<p>Your repository should now contain a new folder named <code>A06</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_magic_square">2. Magic Square</h2>
+<h2 id="_matching_braces">2. Matching braces</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a program, <code>magic_square.c</code>, that tests whether a given matrix is a magic square.
-A <a href="https://en.wikipedia.org/wiki/Magic_square">magic square</a> is an N by N matrix where each
-row, column, and diagonal has the same sum, called the <em>magic constant</em>.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="https://mathworld.wolfram.com/images/gifs/melencol.jpg" alt="melencol" height="200">
-</div>
+<p>Implement a program, <code>match_braces.c</code>, that takes a C file as a command line
+argument and uses a stack to check for matched braces. If not all braces are matched,
+print the line where a mis-matched brace occurs.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make magic_square</strong>
-gcc -g magic_square.c -o magic_square
-$ <strong>./magic_square < magic1.txt</strong>
-8 1 6
-3 5 7
-4 9 2
-M is a magic square (magic constant = 15)
-$ <strong>./magic_square < magic2.txt</strong>
-9 1 6
-3 5 7
-4 8 2
-M is NOT a magic square!
-$ <strong>./magic_square < magic3.txt</strong>
-1
-M is a magic square (magic constant = 1)</code></pre>
+<pre class="highlight"><code>$ <strong>make match_braces</strong>
+gcc -g -Wall -Wvla -Werror match_braces.c -o match_braces
+$ <strong>./match_braces</strong>
+usage: ./match_braces <filename>
+$ <strong>./match_braces prog.c</strong>
+Cannot open file: prog.c
+$ <strong>./match_braces prog1.c</strong>
+Found matching braces: (21, 32) -> (23, 5)
+Found matching braces: (25, 30) -> (28, 9)
+Found matching braces: (17, 53) -> (29, 5)
+Unmatched brace on Line 31 and Column 1
+Found matching braces: (40, 47) -> (43, 5)
+Found matching braces: (36, 18) -> (47, 1)
+Unmatched brace on Line 34 and Column 34</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -119,102 +93,242 @@ M is a magic square (magic constant = 1)</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Read in the matrix from stdin using <code>scanf(" %d", &amp;val);</code>. The first two values are the dimensions of the matrix. All subsequent integers are the values of the matrix.</p>
+<p>Use a linked list implementation as a starting point.</p>
 </li>
 <li>
-<p>Use malloc and free to allocate a 2D array to store the inputs.</p>
+<p>Implement the functions <code>push</code>, <code>pop</code>, <code>clear</code>. Implementing <code>print</code> is also recommended to help you debug your assignment.</p>
+</li>
+<li>
+<p>Use command line arguments to input the filename.</p>
+</li>
+<li>
+<p>Print the usage if the user inputs an incorrect number of command line arguments</p>
+</li>
+<li>
+<p>Print an error if your program cannot open the file</p>
+</li>
+<li>
+<p>Recommended algorithm: Use <code>fgetc</code> to read the file one character at a time.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Update the current line number when you encounter <code>\n</code>.</p>
+</li>
+<li>
+<p>Update the current column as you read in each character.</p>
+</li>
+<li>
+<p>Push to the stack when you encounter a '{'</p>
+</li>
+<li>
+<p>Pop from the stack when you encounter '}'. If the symbols pushed and popped do not match, there is an error.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The output of the program should match the line and column numbers that your editor (such as VS Code) reports when you check for matched braces.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_sorted_snacks">3. Sorted Snacks</h2>
+<h2 id="_tree">3. Tree</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a program, <code>sorted_snackbar.c</code>, that allows users to add snacks to the snackbar and displays
-them in alphabetical order. Your program should have the same features as last week&#8217;s snackbar, but should
-use a <em>linked list</em> to store the snacks, rather than an array.</p>
+<p>In the file, <code>tree.c</code>, implement a binary search tree. Do not change the header
+<code>tree.h</code>, nor the function declarations in <code>tree.c</code>. But you can add functions to <code>tree.c</code>!
+I recommend the book
+"Data Structures and Algorithm Analysis in C" by Mark Allen Weiss, which has classic C
+implementations of C data structures.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>make sorted_snackbar</strong>
-gcc sorted_snackbar.c -o sorted_snackbar
-$ <strong>./sorted_snackbar</strong>
-Enter a number of snacks: <strong>3</strong>
-Enter a name: <strong>Slurm</strong>
-Enter a cost: <strong>1.50</strong>
-Enter a quantity: <strong>3</strong>
-Enter a name: <strong>Beans</strong>
-Enter a cost: <strong>5</strong>
-Enter a quantity: <strong>1</strong>
-Enter a name: <strong>Carrots</strong>
-Enter a cost: <strong>2</strong>
-Enter a quantity: <strong>10</strong>
-
-Welcome to Sorted Sally's Snack Bar.
-
-0) Beans                cost: $5.00     quantity: 1
-1) Carrots              cost: $2.00     quantity: 10
-2) Slurm                cost: $1.50     quantity: 3</code></pre>
+<pre>$ <strong>make ./tree_tests</strong>
+gcc -g -Wall -Wvla -Werror -Wno-unused-variable -Wno-unused-but-set-variable tree_tests.c tree.c -o tree_tests -lpthread
+$ <strong>./tree_tests</strong>
+Running tests...
+test 1: insert for empty tree: PASSED
+test 2: name set correctly: PASSED
+test 3: left is null: PASSED
+test 4: right is null: PASSED
+test 5: name set correctly: PASSED
+test 6: right is null: PASSED
+test 7: name set correctly: PASSED
+test 8: item not in tree: PASSED
+test 9: item in tree: PASSED
+test 10: found correct object: PASSED
+M
+ l:A
+ r:X
+  l:P
+A
+M
+P
+X</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements/Hints:</p>
+<p>Requirements:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Implement the function <code>insert_first</code>. This function should create a new snack struct and insert it at the beginning of the list.</p>
+<p>You must not modify the basecode for <code>tree.h</code> or <code>tree.c</code>. You may add functions to <code>tree.c</code></p>
 </li>
 <li>
-<p>Implement the function <code>clear</code>. This function should clear and free all items in the list.</p>
-</li>
-<li>
-<p>Implement the function <code>printList</code>. This function should print the contents of the list.</p>
-</li>
-<li>
-<p>Implement three sort functions: <code>sortCost</code> and <code>sortName</code> and <code>sortQuantity</code>. These functions should sort by the given attribute.</p>
+<p>Your output should match the above and pass all tests</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">4. Submit your Work</h2>
+<h2 id="_dependencies">4. Dependencies</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Before submitting, check that</p>
+<p>A <em>dependency</em> is a general software term for any software required by another. In this question,
+we will store files in a binary search tree so we can list their file dependencies,
+as determined by <code>#include</code> statements. For example,
+the file "Animal.h" depends on "Locomotion.h".</p>
+</div>
+<div class="paragraph">
+<p>In the file, <code>dependency.c</code>, implement a program that builds a binary search tree of a
+given set of files. After building the tree, the program should give the user a prompt where they
+can list the processed files in alphabetical order and then query the dependencies of the file by
+giving the filename.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ <strong>./dependency <code> ` </code>find code -name "*.h" -o -name "*.cpp"<code> ` </code></strong>
+Processing 11 files
+$ list
+code/Animal.h
+code/Bird.h
+code/Duck.h
+code/Fish.h
+code/Fly.h
+code/Locomotion.h
+code/Seal.h
+code/Swim.h
+code/Walk.h
+code/Whale.h
+code/Zoo.cpp
+$ code/Animal.cpp
+code/Animal.cpp not found
+$ code/Animal.h
+code/Animal.h has the following dependencies
+  string
+  vector
+  Locomotion.h
+$ code/Zoo.cpp
+code/Zoo.cpp has the following dependencies
+  Animal.h
+  Bird.h
+  Duck.h
+  Fish.h
+  Seal.h
+  Whale.h
+  Locomotion.h
+  Walk.h
+  Fly.h
+  Swim.h
+$ apple
+apple not found
+$ quit</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Your programs run on goldengate using the <code>make</code> command!</p>
+<p>Check that a file is valid before adding it to the tree</p>
 </li>
 <li>
-<p>valgrind does not report any errors!</p>
+<p>Support the commands: quit, list, &lt;filename&gt;</p>
+</li>
+<li>
+<p>Your program should take a list of files as command line arguments. The <code>find</code> command computes this list of files.</p>
+</li>
+<li>
+<p>Use <code>strstr</code> and <code>fgets</code> to parse the source file and find lines containing <code>#include</code></p>
+</li>
+<li>
+<p>Strip the filenames from the <code>#include</code> lines when printing dependencies.</p>
 </li>
 </ul>
 </div>
+<div class="sect2">
+<h3 id="_implementing_a_console_command_program_with_a_prompt">4.1. Implementing a console command program with a prompt</h3>
+<div class="paragraph">
+<p>Your program should use <code>readline</code> and <code>history</code> to build your command loop.
+One possible implementation is below.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Read the man page to get documentation for readline, e.g. <code>man readline</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>while (1) {
+  // Get input from the user
+  // if the user types "exit", break from the loop
+  // else if the user types a command, execute it
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the <code>readline()</code> function to get user input. This function supports backspace, tab completion, and more. <a href="https://www.man7.org/linux/man-pages/man3/readline.3.html">Documentation for readline can be found here</a>.</p>
+</li>
+<li>
+<p>Use the <code>add_history()</code> function to save user history. This will allow arrow keys to work. <a href="https://www.man7.org/linux/man-pages/man3/readline.3.html">Documentation for readline can be found here</a>.</p>
+</li>
+<li>
+<p>Your program should quit if the users types <code>exit</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">5. Submit your work</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Push you work to github to submit your work.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ cd A04
+<pre class="highlight"><code>$ cd {ASST}
 $ git status
 $ git add *.c
 $ git status
-$ git commit -m "A04 complete"
+$ git commit -m "assignment complete"
 $ git status
 $ git push
-$ git status</pre>
+$ git status</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">5. Grading Rubric</h2>
+<h2 id="_grading_rubric">6. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -225,39 +339,49 @@ $ git status</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(2 points) Magic Square</p>
+<p>(2 points) matched braces</p>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.1 points) style and header comment</p>
+<p>(0.2 points) style and header comment</p>
 </li>
 <li>
-<p>(0.4 points) reads in matrix from stdin</p>
+<p>(0.8 points) correct output and behavior, supports command line arguments</p>
 </li>
 <li>
-<p>(0.5 points) creates/deletes 2D matrix using malloc/free</p>
-</li>
-<li>
-<p>(1.0 points) No memory errors</p>
+<p>(1.0 points) no memory errors</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>(2 points) Sorted Snacks</p>
+<p>(1 points) Tree</p>
 <div class="ulist">
 <ul>
 <li>
 <p>(0.1 points) style and header comment</p>
 </li>
 <li>
-<p>(0.4 points) defines a struct correctly handles deletion and insertion to a linked list</p>
+<p>(0.4 points) implements all functions, passes all tests and does not modify basecode</p>
 </li>
 <li>
-<p>(0.5 points) correctly sorts and displays snacks based on name, cost, or quantity</p>
+<p>(0.5 points) no memory errors</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>(1.0 points) handles file and linked list nodes correctly (no memory errors!)</p>
+<p>(1 points) Dependencies</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style and header comment</p>
+</li>
+<li>
+<p>(0.4 points) Correct behavior</p>
+</li>
+<li>
+<p>(0.5 points) no memory errors</p>
 </li>
 </ul>
 </div>
@@ -295,7 +419,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-19 20:28:28 -0500
+Last updated 2026-02-08 16:47:12 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">
