@@ -48,6 +48,8 @@
 * Lab Feb 3: Practice Quiz 01, link:studyguide1.html[Study Guide: Quiz 01]
 
 |
+* link:lectures/Lecture-Week03-Feb3-NCurses.pdf[Lecture Feb 3 - NCurses]
+* link:lectures/Lecture-Week03-Feb5-DataStructures.pdf[Lecture Feb 5 - Data Structures]
 
 //-----------------------------
 |4
@@ -60,6 +62,8 @@
 * Lab Feb 10: **Quiz 01**: 50 minutes 
 
 |
+* link:lectures/Lecture-Week03-Feb5-DataStructures.pdf[Lecture Feb 10 - Data Structures]
+* link:lectures/Lecture-Week04-Feb12-Binary.pdf[Lecture Feb 12 - Binary]
 
 //-----------------------------
 |5
@@ -73,6 +77,7 @@
 * Lan Feb 17: Code Jam 02
 
 |
+* link:lectures/Lecture-Week04-Feb12-Binary.pdf[Lecture Feb 17 - Binary]
 
 //-----------------------------
 |6
