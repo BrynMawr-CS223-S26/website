@@ -1,158 +1,546 @@
 include::header.adoc[]
 
-:title: Assignment 9: Trust the Process
+:title: Assignment 8: Some Assembly Required
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
-:stem: latexmath
-:ASST: A09
+:ASST: A08
 
 = {title}
 
-**Due Friday, March 21, at midnight**
+**Due (Hardcopy) Thursday, March 20th**
+
+**This is a written assignment, not a coding assignment!**
 
 The goals for this assignment are:
 
-* Gain experience working with `fork()`.
-* Use OS system calls in your C program. 
-* Implement a multi-process program
+* Understand basic x86_64 assembly instructions, especially memory addressing
+* Visualize the execution of x86_64 assembly instructions
 
-[discrete]
-== Update your repository
-
-Do a *fetch upstream* to obtain the basecode for this assignment. 
-
-Using the command line
-
-* Open terminal and change your current directory to your assignment repository.
-* Run the command `git fetch upstream`
-* Run the command `git merge upstream/main`
-
-Your repository should now contain a new folder named `{ASST}`.
-
-The `fetch` and `merge` commands update your repository with any changes from the original.
 
 :sectnums:
 
-= Warm-up
+= Operand practice
 
-In the file, `warmup.c`, implement a program that spawns processes according to the following diagram.
+[cols="1a,1a"]
+|===
+|Suppose memory has the following values:
+[cols="1,1"]
+!===
+!Address ! Value
+!0xf08 ! 0x10
+!0xf0a ! 0x3c
+!0xf0c ! 0x14
+!0xf0e ! 0x04
+!0xf10 ! 0x34
+!0xf12 ! 0xe4
+!===
 
-image::processes.png[]
+|And suppose our registers have the following values:
+[cols="1,1"]
+!===
+!Register ! Value
+!%rax ! 0xf08
+!%rbx ! 0x44
+!%rsi ! 0x08
+!%r8  ! 0x01
+!===
+|===
 
-[source, subs="quotes"]
+Fill in the following table with the corresponding form, translation, and 
+value for each of the given operands.
+
+[cols="1,1,4,1"]
+|===
+|Operand
+|Form
+|Translation
+|Value
+
+|%rax
+|
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+|
+
+|0x4(%rax)
+|
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+|
+
+|0x4(%rax, %r8, 4)
+|
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+|
+
+|0xf00(,%rsi,2)
+|
+|{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+|
+|===
+
+= The answer is 42
+
+Recall the following example from class and
+link:https://diveintosystems.org/book/C7-x86_64/functions.html[_Dive into
+Systems_]. This mysterious program reliably produces the output `42`. In this
+question, you will trace the assembly to understand why.
+
+[source]
 ----
-$ **make warmup**
-gcc -g -Wall -Wvla -Werror warmup.c -o warmup
-$ **./warmup**
-17300] A0
-17300] B0
-17301] B1
-17301] Bye
-17300] C0
-17300] Bye
-17302] C1
-17302] Bye
+#include <stdio.h>
+
+int assign(void) {
+    int y = 40;
+    return y;
+}
+
+int adder(void) {
+    int a;
+    return a + 2;
+}
+
+int main(void) {
+    int x;
+    assign();
+    x = adder();
+    printf("x is: %d\n", x);
+    return 0;
+}
+---- 
+
+Suppose that compiling the above program results in the following assembly 
+instructions (x86_64)
+
+[source]
+----
+0000000000001149 <assign>:
+    114d: 55                    push   %rbp
+    114e: 48 89 e5              mov    %rsp,%rbp
+    1151: c7 45 fc 28 00 00 00  movl   $0x28,-0x4(%rbp)
+    1158: 8b 45 fc              mov    -0x4(%rbp),%eax
+    115b: 5d                    pop    %rbp
+    115c: c3                    retq
+
+000000000000115d <adder>:
+    1161: 55                    push   %rbp
+    1162: 48 89 e5              mov    %rsp,%rbp
+    1165: 8b 45 fc              mov    -0x4(%rbp),%eax
+    1168: 83 c0 02              add    $0x2,%eax
+    116b: 5d                    pop    %rbp
+    116c: c3                    retq
+
+000000000000116d <main>:
+    1171: 55                    push   %rbp
+    1172: 48 89 e5              mov    %rsp,%rbp
+    1175: 48 83 ec 10           sub    $0x10,%rsp
+    1179: e8 cb ff ff ff        callq  1149 <assign>
+    117e: e8 da ff ff ff        callq  115d <adder>
+    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
+    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
+    1189: 89 c6                 mov    %eax,%esi
+    118b: 48 8d 3d 72 0e 00 00  lea    0xe72(%rip),%rdi     
+    1192: b8 00 00 00 00        mov    $0x0,%eax
+    1197: e8 b4 fe ff ff        callq  1050 <printf@plt>
+    119c: b8 00 00 00 00        mov    $0x0,%eax
+    11a1: c9                    leaveq
+    11a2: c3                    retq
 ----
 
-Requirements:
+NOTE: In _The Hitchhiker's Guide to the Galaxy_ by Douglas Adams, the "Answer to the
+Ultimate Question of Life, the Universe, and Everything," calculated by an
+enormous supercomputer named Deep Thought over a period of 7.5 million years.
 
-* Your program should print the messages as shown above.
-* Your program should use fork() to spawn processes.
-* Call `getpid()` to show the process ids for each print message.
+1) Suppose this is the state of the stack immediately prior to executing `main`
+Please show the before and after state (cross out old values).
 
-= Grep
-
-In the file, `grep.c`, implement a program that uses N processes to search for a keyword 
-in a set of files. 
-
-Your program implements a simplified version of the bash command `grep`. Grep searches a list of files 
-for a given keyword or expression. For example, the following command searches for the keyword `public` 
-in a list of source files. We use the `find` command to generate the list of source files to search.
-For example:
-
-image::grep.png[width=500px]
-
-NOTE: Make sure you include the backticks, e.g. `` ` ``. This adds the filenames found by `find` as command line arguments to `grep`.
-
-
-[source, subs="quotes"]
+[source]
 ----
-$ **make grep**
-gcc -g -Wall -Wvla -Werror grep.c -o grep 
-$ **./grep**
-usage: ./grep ``<``NumProcesses``>`` ``<``Keyword``>`` ``<``Files``>``
-$ **./grep 1 class missing.txt**
-Searching 1 files for keyword: class
-Process [613] searching 1 files (3 to 4)
-Process [613] Error: Cannot open file
-Total occurances: 0
-Elapsed time is 0.000608
+000000000000116d <main>:
+--> 1171: 55                    push   %rbp
+    1172: 48 89 e5              mov    %rsp,%rbp
+    1175: 48 83 ec 10           sub    $0x10,%rsp
+    1179: e8 cb ff ff ff        callq  1149 <assign>
+    117e: e8 da ff ff ff        callq  115d <adder>
+    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
+    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
+    1189: 89 c6                 mov    %eax,%esi
 ----
 
-// Backticks can be written with `` ` ``
-image::grep_fork.png[width=500px]
+[cols="1a,4a"]
+|===
+|
+[cols="1,1"]
+!===
+!Register ! Value
+!%eax ! 379
+!%edi ! 1
+!%rsp ! 0xe68
+!%rbp  ! 0x1578
+!%rip  ! 0x1171
+!===
+| 
+"Stack top"
+[cols="1,4"]
+!===
+!Address ! Stack value
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} +  ! 
+!0xe68  ! 
+!===
+|===
 
-Requirements:
+2) What are the contents of registers and the stack after executing `mov %rsp, %rbp`?
+Please show the before and after state (cross out old values).
 
-* Your program should take the number of processes, keyword, and a list of files as command line arguments
-* Subdivide the files among the N processes. Note that the number of files may not divide evenly between processes.
-* Print the totals and sub-division of files similarly to the output above
-* Use the `fgets` function to process the lines in each file
-* Use the function `strstr` defined in `string.h` to search lines of text for the keyword. link:https://en.cppreference.com/w/c/string/byte/strstr[Documentation is here]
-* To compute the total count, each child process can return the number matching lines using its exitcode. Recall that the parent can use the status reported by `waitpid` to get the children's exit code. 
-* Your program should report the amount of time needed to search using `gettimeofday`
-
-NOTE: You can print with colors to the console using ANSI escape sequences (see below). 
-For example, `printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);` will print green text. link:https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html[Here is a good guide!]
-
-[code]
+[source]
 ----
-// Helpful macros for working with color
-#define ANSI_COLOR_RED     "\x1b[31m"
-#define ANSI_COLOR_GREEN   "\x1b[32m"
-#define ANSI_COLOR_YELLOW  "\x1b[33m"
-#define ANSI_COLOR_BLUE    "\x1b[34m"
-#define ANSI_COLOR_MAGENTA "\x1b[35m"
-#define ANSI_COLOR_CYAN    "\x1b[36m"
-#define ANSI_COLOR_RESET   "\x1b[0m"
+000000000000116d <main>:
+    1171: 55                    push   %rbp
+--> 1172: 48 89 e5              mov    %rsp,%rbp
+    1175: 48 83 ec 10           sub    $0x10,%rsp
+    1179: e8 cb ff ff ff        callq  1149 <assign>
+    117e: e8 da ff ff ff        callq  115d <adder>
+    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
+    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
+    1189: 89 c6                 mov    %eax,%esi
+----
+
+[cols="1a,4a"]
+|===
+|
+[cols="1,1"]
+!===
+!Register ! Value
+!%eax ! 
+!%edi ! 
+!%rsp ! 
+!%rbp  ! 
+!%rip  ! 
+!===
+| 
+"Stack top"
+[cols="1,4"]
+!===
+!Address ! Stack value
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} +  ! 
+!0xe68  ! 
+!===
+|===
+
+3) What is the state of registers and the stack after executing `sub $0x10, %rsp`?
+Please show the before and after state (cross out old values).
+
+[source]
+----
+000000000000116d <main>:
+    1171: 55                    push   %rbp
+    1172: 48 89 e5              mov    %rsp,%rbp
+--> 1175: 48 83 ec 10           sub    $0x10,%rsp
+    1179: e8 cb ff ff ff        callq  1149 <assign>
+    117e: e8 da ff ff ff        callq  115d <adder>
+    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
+    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
+    1189: 89 c6                 mov    %eax,%esi
+----
+
+[cols="1a,4a"]
+|===
+|
+[cols="1,1"]
+!===
+!Register ! Value
+!%eax ! 
+!%edi ! 
+!%rsp ! 
+!%rbp  ! 
+!%rip  ! 
+!===
+| 
+"Stack top"
+[cols="1,4"]
+!===
+!Address ! Stack value
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} +  ! 
+!0xe68  ! 
+!===
+|===
+
+4) What is the state of registers and the stack after executing `callq 0x1149 <assign>`?
+Please show the before and after state (cross out old values).
+
+[source]
+----
+000000000000116d <main>:
+    1171: 55                    push   %rbp
+    1172: 48 89 e5              mov    %rsp,%rbp
+    1175: 48 83 ec 10           sub    $0x10,%rsp
+--> 1179: e8 cb ff ff ff        callq  1149 <assign>
+    117e: e8 da ff ff ff        callq  115d <adder>
+    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
+    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
+    1189: 89 c6                 mov    %eax,%esi
+----
+
+[cols="1a,4a"]
+|===
+|
+[cols="1,1"]
+!===
+!Register ! Value
+!%eax ! 
+!%edi ! 
+!%rsp ! 
+!%rbp  ! 
+!%rip  ! 
+!===
+| 
+"Stack top"
+[cols="1,4"]
+!===
+!Address ! Stack value
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} +  ! 
+!0xe68  ! 
+!===
+|===
+
+5) Skipping ahead, what is the state of registers and the stack when the program executes `pop %rbp`?
+What two changes occur during `pop`?
+Please show the before and after state (cross out old values).
+
+[source]
+----
+0000000000001149 <assign>:
+    114d: 55                    push   %rbp
+    114e: 48 89 e5              mov    %rsp,%rbp
+    1151: c7 45 fc 28 00 00 00  movl   $0x28,-0x4(%rbp)
+    1158: 8b 45 fc              mov    -0x4(%rbp),%eax
+--> 115b: 5d                    pop    %rbp
+    115c: c3                    retq
+----
+
+[cols="1a,4a"]
+|===
+|
+[cols="1,1"]
+!===
+!Register ! Value
+!%eax ! 
+!%edi ! 
+!%rsp ! 
+!%rbp  ! 
+!%rip  ! 
+!===
+| 
+"Stack top"
+[cols="1,4"]
+!===
+!Address ! Stack value
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} +  ! 
+!0xe68  ! 
+!===
+|===
+
+6) What is the state of registers and the stack after executing `retq`?
+Please show the before and after state (cross out old values).
+
+[source]
+----
+0000000000001149 <assign>:
+    114d: 55                    push   %rbp
+    114e: 48 89 e5              mov    %rsp,%rbp
+    1151: c7 45 fc 28 00 00 00  movl   $0x28,-0x4(%rbp)
+    1158: 8b 45 fc              mov    -0x4(%rbp),%eax
+    115b: 5d                    pop    %rbp
+--> 115c: c3                    retq
+----
+
+[cols="1a,4a"]
+|===
+|
+[cols="1,1"]
+!===
+!Register ! Value
+!%eax ! 
+!%edi ! 
+!%rsp ! 
+!%rbp  ! 
+!%rip  ! 
+!===
+| 
+"Stack top"
+[cols="1,4"]
+!===
+!Address ! Stack value
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} +  ! 
+!0xe68  ! 
+!===
+|===
+
+7) Skipping ahead, what are the state of registers and the stack when executing `retq` in adder?
+Please show the before and after state (cross out old values).
+
+[source]
+----
+000000000000115d <adder>:
+    1161: 55                    push   %rbp
+    1162: 48 89 e5              mov    %rsp,%rbp
+    1165: 8b 45 fc              mov    -0x4(%rbp),%eax
+    1168: 83 c0 02              add    $0x2,%eax
+    116b: 5d                    pop    %rbp
+--> 116c: c3                    retq
+----
+
+[cols="1a,4a"]
+|===
+|
+[cols="1,1"]
+!===
+!Register ! Value
+!%eax ! 
+!%edi ! 
+!%rsp ! 
+!%rbp  ! 
+!%rip  ! 
+!===
+| 
+"Stack top"
+[cols="1,4"]
+!===
+!Address ! Stack value
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} + ! 
+!{nbsp} +  ! 
+!0xe68  ! 
+!===
+|===
+
+8) Consider the call the printf, `callq 1050 <printf@plt>`. The previous lines place the first 
+argument to printf into `%rdi`. Assume this contains "x is %d\n". The second argument will be 
+placed in `%esi`. What value will %esi containin?
+
+[source]
+----
+000000000000116d <main>:
+    1171: 55                    push   %rbp
+    1172: 48 89 e5              mov    %rsp,%rbp
+    1175: 48 83 ec 10           sub    $0x10,%rsp
+    1179: e8 cb ff ff ff        callq  1149 <assign>
+    117e: e8 da ff ff ff        callq  115d <adder>
+    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
+    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
+    1189: 89 c6                 mov    %eax,%esi
+    118b: 48 8d 3d 72 0e 00 00  lea    0xe72(%rip),%rdi
+    1192: b8 00 00 00 00        mov    $0x0,%eax
+    1197: e8 b4 fe ff ff        callq  1050 <printf@plt>
+    119c: b8 00 00 00 00        mov    $0x0,%eax
+    11a1: c9                    leaveq
+    11a2: c3                    retq
 ----
 
 = Submit your work
 
-Push your code to github to submit your work
+This is a written assignment. Please submit a hard-copy in either Lecture or
+Lab, or submit to either Nina Fichera's office (Park 348) or Aline Normoyle's
+office (Park 200B). 
 
-[source]
-----
-$ git status
-$ git add . 
-$ git status
-$ git commit -m "assignment complete"
-$ git status
-$ git push
-$ git status
-----
+= Extra Credit (0.3): Hackers
 
-= Grading Rubric
+In class, we looked at how we can cheat at a guessing game by overriding the
+return address of a function to jump to the `endGame` function.  In this question, 
+you can use the same techniques to 
 
-*Assignment rubrics*
+* Determine the secret codes of a program from the binary executable and partial source code.
+* Develop a buffer overrun exploit to call a function directly, without using the secret codes.
 
-Grades are out of 4 points.
 
-* (1 points) Warmup
-** (0.1 points) style and header comment
-** (0.4 points) prints correct messages, uses `fork()` and `getpid()`
-** (0.5 points) no memory errors
-* (3 points) Grep
+* link:secretGame-x86-64.tar.gz[Download the binary]
+* link:https://diveintosystems.org/book/C3-C_debug/gdb_assembly.html#_debugging_assembly_code[Dive into systems: Debugging assembly code]
+* link:https://diveintosystems.org/singlepage/#_real_world_buffer_overflow[Dive into systems: Buffer overflow]
 
-*Code rubrics*
+1) What is the secret number? 
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
 
-For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
-have good style.
+2) What is the secret string? 
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
 
-* Some credit lost for missing features or bugs, depending on severity of error
-* -5% for style errors. See the link:../codingstandard.html[class coding style] here.
-* -50% for memory errors
-* -100% for failure to checkin work to Github
-* -100% for failure to compile on linux using make
+3) Give the buffer contents that can be used to overwrite the stack and jump to the funtion, `endGame`. 
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
+{nbsp} +
 

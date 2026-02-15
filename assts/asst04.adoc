@@ -1,10 +1,10 @@
 include::header.adoc[]
 
-:title: Assignment 6: Watch where you point II 
+:title: Assignment 4: Watch where you point 
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
-:ASST: A06
+:ASST: A04
 
 = {title}
 

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 6: Watch where you point II</title>
+<title>Assignment 6: MyEditor Part 2</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,11 +14,11 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_6_watch_where_you_point_ii">Assignment 6: Watch where you point II</a></li>
+<li><a href="#_assignment_6_myeditor_part_2">Assignment 6: MyEditor Part 2</a></li>
 <li><a href="#_update_your_repository">1. Update your repository</a></li>
-<li><a href="#_matching_braces">2. Matching braces</a></li>
-<li><a href="#_tree">3. Tree</a></li>
-<li><a href="#_dependencies">4. Dependencies</a></li>
+<li><a href="#_editor">2. Editor</a></li>
+<li><a href="#_spell_checker">3. Spell checker</a></li>
+<li><a href="#_choose_your_own_adventure">4. Choose your own adventure</a></li>
 <li><a href="#_submit_your_work">5. Submit your work</a></li>
 <li><a href="#_grading_rubric">6. Grading Rubric</a></li>
 </ul>
@@ -26,10 +26,10 @@
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_6_watch_where_you_point_ii">Assignment 6: Watch where you point II</h2>
+<h2 id="_assignment_6_myeditor_part_2">Assignment 6: MyEditor Part 2</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, February 28, before midnight</strong></p>
+<p><strong>Due Friday, February 27, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -50,228 +50,96 @@
 <h2 id="_update_your_repository">1. Update your repository</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
-</div>
-<div class="paragraph">
-<p>Using the command line</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Open terminal and change your current directory to your assignment repository.</p>
-</li>
-<li>
-<p>Run the command <code>git fetch upstream</code></p>
-</li>
-<li>
-<p>Run the command <code>git merge upstream/main</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Your repository should now contain a new folder named <code>A06</code>.</p>
-</div>
-<div class="paragraph">
-<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
+<p>This assignment uses the same basecode as last week (folder A06).</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_matching_braces">2. Matching braces</h2>
+<h2 id="_editor">2. Editor</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a program, <code>match_braces.c</code>, that takes a C file as a command line
-argument and uses a stack to check for matched braces. If not all braces are matched,
-print the line where a mis-matched brace occurs.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make match_braces</strong>
-gcc -g -Wall -Wvla -Werror match_braces.c -o match_braces
-$ <strong>./match_braces</strong>
-usage: ./match_braces <filename>
-$ <strong>./match_braces prog.c</strong>
-Cannot open file: prog.c
-$ <strong>./match_braces prog1.c</strong>
-Found matching braces: (21, 32) -> (23, 5)
-Found matching braces: (25, 30) -> (28, 9)
-Found matching braces: (17, 53) -> (29, 5)
-Unmatched brace on Line 31 and Column 1
-Found matching braces: (40, 47) -> (43, 5)
-Found matching braces: (36, 18) -> (47, 1)
-Unmatched brace on Line 34 and Column 34</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements/Hints:</p>
+<p>In the file, <code>myeditor.c</code>, implement the following features.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Use your linked list implementation as a starting point.</p>
+<p>Pressing 'i' should go into edit mode and allow the user to edit the current line.</p>
 </li>
 <li>
-<p>Implement the functions <code>push</code>, <code>pop</code>, <code>clear</code>. Implementing <code>print</code> is also recommended to help you debug your assignment.</p>
-</li>
-<li>
-<p>Use command line arguments to input the filename.</p>
-</li>
-<li>
-<p>Print the usage if the user inputs an incorrect number of command line arguments</p>
-</li>
-<li>
-<p>Print an error if your program cannot open the file</p>
-</li>
-<li>
-<p>Use <code>fgetc</code> to read the file one character at a time. Update the current line number when you encounter <code>\n</code>. Update the current column as you read in each character.</p>
-</li>
-<li>
-<p>To check for matched braces, push to the stack when you encounter a '{' and then pop from the stack when you encounter '}'. If the symbols pushed and popped do not match, there is an error.</p>
-</li>
-<li>
-<p>The output of the program should match the line and column numbers that your editor (such as VS Code) reports when you check for matched braces.</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Unlike last week, you need to open the files as text data. See <a href="https://diveintosystems.org/book/C2-C_depth/IO.html#_file_inputoutput">File Input/Output</a> for examples.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_tree">3. Tree</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In the file, <code>tree.c</code>, implement a binary search tree. Do not change the header
-<code>tree.h</code>, nor the function declarations in <code>tree.c</code>. But you can add functions to <code>tree.c</code>!
-We recommend using the book
-"Data Structures and Algorithm Analysis in C" by Mark Allen Weiss. See the
-<a href="../index.html">course webpage for a link</a>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ <strong>make ./tree_tests</strong>
-gcc -g -Wall -Wvla -Werror -Wno-unused-variable -Wno-unused-but-set-variable tree_tests.c tree.c -o tree_tests -lpthread
-$ <strong>./tree_tests</strong>
-Running tests...
-test 1: insert for empty tree: PASSED
-test 2: name set correctly: PASSED
-test 3: left is null: PASSED
-test 4: right is null: PASSED
-test 5: name set correctly: PASSED
-test 6: right is null: PASSED
-test 7: name set correctly: PASSED
-test 8: item not in tree: PASSED
-test 9: item in tree: PASSED
-test 10: found correct object: PASSED
-M
- l:A
- r:X
-  l:P
-A
-M
-P
-X</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>You must not modify the basecode for <code>tree.h</code> or <code>tree.c</code>. You may add functions to <code>tree.c</code></p>
-</li>
-<li>
-<p>Your output should match the above and pass all tests</p>
+<p>Save the file with ':w'</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dependencies">4. Dependencies</h2>
+<h2 id="_spell_checker">3. Spell checker</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A <em>dependency</em> is a general software term for any software required by another. In this question,
-we will store files in a binary search tree so we can list their file dependencies,
-as determined by <code>#include</code> statements. For example,
-the file "Animal.h" depends on "Locomotion.h".</p>
-</div>
-<div class="paragraph">
-<p>In the file, <code>dependency.c</code>, implement a program that builds a binary search tree of a
-given set of files. After building the tree, the program should give the user a prompt where they
-can list the processed files in alphabetical order and then query the dependencies of the file by
-giving the filename.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>$ <strong>./dependency <code> ` </code>find code -name "*.h" -o -name "*.cpp"<code> ` </code></strong>
-Processing 11 files
-$ list
-code/Animal.h
-code/Bird.h
-code/Duck.h
-code/Fish.h
-code/Fly.h
-code/Locomotion.h
-code/Seal.h
-code/Swim.h
-code/Walk.h
-code/Whale.h
-code/Zoo.cpp
-$ code/Animal.cpp
-code/Animal.cpp not found
-$ code/Animal.h
-code/Animal.h has the following dependencies
-  string
-  vector
-  Locomotion.h
-$ code/Zoo.cpp
-code/Zoo.cpp has the following dependencies
-  Animal.h
-  Bird.h
-  Duck.h
-  Fish.h
-  Seal.h
-  Whale.h
-  Locomotion.h
-  Walk.h
-  Fly.h
-  Swim.h
-$ apple
-apple not found
-$ quit</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements:</p>
+<p>In the file, <code>myeditor.c</code>, implement a feature that highlights misspelled words. Your solution should</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Check that a file is valid before adding it to the tree</p>
+<p>Load the file <code>dictionary</code> into a large array of strings. Each row contains a single word.. The contents in dictionary are already in alphabetical order.</p>
 </li>
 <li>
-<p>Support the commands: quit, list, &lt;filename&gt;</p>
+<p>Implement a function that uses binary search to check the spelling of each word in the loaded file.</p>
 </li>
 <li>
-<p>Your program should take a list of files as command line arguments. The <code>find</code> command computes this list of files.</p>
+<p>Using the ncurses library, highlight misspelled words with either colors or a stylistic effect.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_choose_your_own_adventure">4. Choose your own adventure</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Choose two more Vim feature of your choice to implement. Below are some ideas.
+Be sure to document which features you implement, either in a README file or in a header comment!</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Show line numbers</p>
 </li>
 <li>
-<p>Use <code>strstr</code> and <code>fgets</code> to parse the source file and find lines containing <code>#include</code></p>
+<p>Goto line with the command ':&lt;linenum&gt;'</p>
 </li>
 <li>
-<p>Strip the filenames from the <code>#include</code> lines when printing dependencies.</p>
+<p>'Y' to copy a line</p>
+</li>
+<li>
+<p>'dd' to delete a line</p>
+</li>
+<li>
+<p>'x' to delete a character</p>
+</li>
+<li>
+<p>'I' to insert characters at the beginning of the line</p>
+</li>
+<li>
+<p>'A' to append characters at the end of the line</p>
+</li>
+<li>
+<p>'G' to go to the end of the file</p>
+</li>
+<li>
+<p>Show a welcome screen before editing</p>
+</li>
+<li>
+<p>Support creating new files</p>
+</li>
+<li>
+<p>Show the number of lines in the file in the banner bar</p>
+</li>
+<li>
+<p>Searching with '/', 'n', and 'p'.</p>
+</li>
+<li>
+<p>etc!</p>
 </li>
 </ul>
 </div>
@@ -389,7 +257,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-19 20:28:28 -0500
+Last updated 2026-02-15 14:24:26 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">

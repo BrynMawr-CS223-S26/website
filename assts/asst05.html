@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 4A: MyEditor Part 1</title>
+<title>Assignment 5: MyEditor Part 1</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,22 +14,20 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_4a_myeditor_part_1">Assignment 4A: MyEditor Part 1</a></li>
+<li><a href="#_assignment_5_myeditor_part_1">Assignment 5: MyEditor Part 1</a></li>
 <li><a href="#_background_ncurses">Background: NCurses</a></li>
-<li><a href="#_milestone_1">1. Milestone 1</a></li>
-<li><a href="#_milestone_2">2. Milestone 2</a></li>
-<li><a href="#_milestone_3">3. Milestone 3</a></li>
-<li><a href="#_extra_credit">4. Extra Credit</a></li>
-<li><a href="#_submit_your_work">5. Submit your Work</a></li>
+<li><a href="#_load">1. Load</a></li>
+<li><a href="#_view">2. View</a></li>
+<li><a href="#_submit_your_work">3. Submit your Work</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_4a_myeditor_part_1">Assignment 4A: MyEditor Part 1</h2>
+<h2 id="_assignment_5_myeditor_part_1">Assignment 5: MyEditor Part 1</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, February 13th, before midnight</strong></p>
+<p><strong>Due Friday, February 20th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>We will spend the next two weeks building your own VIM editor using the ncurses library.</p>
@@ -44,9 +42,6 @@
 </div>
 <div class="ulist">
 <ul>
-<li>
-<p>Work with pointer-based data structure</p>
-</li>
 <li>
 <p>Design a user application</p>
 </li>
@@ -66,8 +61,7 @@
 <p>We will use the same repository as <a href="asst01.html">Assignment 1</a></p>
 </div>
 <div class="paragraph">
-<p>First, you must accept the pull requst on your repository on <a href="{gitrepo}">Github</a>
-(<a href="PullRequest.png">screenshot</a>).</p>
+<p>Pull to get the basecode from you repository on <a href="https://github.com/BrynMawr-CS223-S26">Github</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -76,7 +70,7 @@ $ git pull</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Your repository should now contain a new folder named <code>A04</code>.</p>
+<p>Your repository should now contain a new folder named <code>A05-A06</code>.</p>
 </div>
 </div>
 </div>
@@ -115,14 +109,97 @@ int main()
 </div>
 </div>
 <div class="sect1">
-<h2 id="_milestone_1">1. Milestone 1</h2>
+<h2 id="_load">1. Load</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>You will design a C data structure for loading and saving a file from disk.
+In file, <code>myfile.h</code>, define a struct that contains information about a currently loaded file. At minimum,
+it should contain</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Due Tuesday, September 23rd*</p>
+<p>The FILE pointer for the file.</p>
+</li>
+<li>
+<p>The number of lines in the file</p>
+</li>
+<li>
+<p>A double linked list of lines. You can assume that all lines are shorter than 256 bytes.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>In the files, <code>myfile.h</code> and <code>myfile.c</code>, define functions that implement the following features. These functions should take your struct as an argument.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open a file and load its contents</p>
+</li>
+<li>
+<p>Save a file</p>
+</li>
+<li>
+<p>Close the file and cleanup its resources</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You should use the <code>extern</code> keyword in the header file to declare your functions. The implementations of your functions should be in the .c file. See the lecture notes for an example.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the file, <code>test_file.c</code>, implement a program that tests your functions. Your test program should load a file, save it
+to a different file, and then close and clean it up.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>cat ./test_file.c</strong>
+#include "myfile.h"
+
+int main() {
+  struct myfile file;
+  if (!load(&file, "tolstoy.txt")) {
+    printf("Could not open file\n");
+  }
+  if (save(&file, "test.txt")) {
+    printf("Could not save file\n");
+  }
+  close(file);
+  return 0;
+}
+$ <strong>valgrind ./test_file</strong>
+=8717== Memcheck, a memory error detector
+==8717== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==8717== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==8717== Command: ./test_file
+==8717==
+Loading file tolystoy.txt with 64941 lines.
+==8974==
+==8974== HEAP SUMMARY:
+==8974==     in use at exit: 0 bytes in 0 blocks
+==8974==   total heap usage: 2 allocs, 2 frees, 1,496 bytes allocated
+==8974==
+==8974== All heap blocks were freed -- no leaks are possible
+==8974==</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_view">2. View</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the file, <code>myeditor.c</code>, implement an application that can view text files loaded with a command line argument.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -139,133 +216,38 @@ $ ./myeditor tolstoy.txt</code></pre>
 <div class="ulist">
 <ul>
 <li>
+<p>Reuses your file data structure</p>
+</li>
+<li>
 <p>Loading a file from the command line</p>
 </li>
 <li>
 <p>Quitting with <code>:q</code></p>
 </li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_milestone_2">2. Milestone 2</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>Due on Friday, September 26</strong>
-<strong>Students must check-in with the TA during office hours for full credit</strong></p>
-</div>
-<div class="paragraph">
-<p>Features:</p>
-</div>
-<div class="ulist">
-<ul>
 <li>
 <p>Scrolling through the file using the arrow keys</p>
 </li>
 <li>
 <p>Displaying the current row, column, and filename in a banner on the last row</p>
 </li>
-<li>
-<p>Searching with '/'. Typing '/' will set the current search word. Pressing 'n' will go to the next match and pressing 'p' will go to the previous match.</p>
-</li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Feel free to extend your API from the previous question!</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_milestone_3">3. Milestone 3</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Due Friday, Oct 3rd*</p>
-</li>
-<li>
-<p>Students must check-in during lab and during TA office hours for full credit*</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Required features:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Pressing 'i' should go into edit mode and allow the user to edit the file.</p>
-</li>
-<li>
-<p>Saving the file with ':w'</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Choose your own adventure (Choose at least two additional VIM features to implement):</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Show line numbers</p>
-</li>
-<li>
-<p>Goto line with the command ':&lt;linenum&gt;'</p>
-</li>
-<li>
-<p>'Y' to copy a line</p>
-</li>
-<li>
-<p>'dd' to delete a line</p>
-</li>
-<li>
-<p>'x' to delete a character</p>
-</li>
-<li>
-<p>'I' to insert characters at the beginning of the line</p>
-</li>
-<li>
-<p>'A' to append characters at the end of the line</p>
-</li>
-<li>
-<p>'G' to go to the end of the file</p>
-</li>
-<li>
-<p>Show a welcome screen before editing</p>
-</li>
-<li>
-<p>Support creating new files</p>
-</li>
-<li>
-<p>Show the number of lines in the file in the banner bar</p>
-</li>
-<li>
-<p>etc!</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Be sure to document which features you implement</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_extra_credit">4. Extra Credit</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Highlight misspelled words. Use binary search to check spellings in the provided dictionary file.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_submit_your_work">5. Submit your Work</h2>
+<h2 id="_submit_your_work">3. Submit your Work</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Push you work to Github to submit your work.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ cd A04
+<pre class="highlight"><code>$ cd A05-A06
 $ git add *.c
-$ git commit -m "A04 milestone complete"
+$ git commit -m "A05-A06 milestone complete"
 $ git push</code></pre>
 </div>
 </div>
@@ -323,7 +305,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-08 16:29:20 -0500
+Last updated 2026-02-15 15:10:15 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">

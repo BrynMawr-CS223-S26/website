@@ -1,14 +1,14 @@
 include::header.adoc[]
 
-:title: Assignment 4A: MyEditor Part 1
+:title: Assignment 5: MyEditor Part 1
 :Author Initials: ASN
 :Date:    2021-01-29
 :Revision: 0.1
-:ASST: A04
+:ASST: A05-A06
 
 = {title}
 
-*Due Friday, February 13th, before midnight*
+*Due Friday, February 20th, before midnight*
 
 We will spend the next two weeks building your own VIM editor using the ncurses library.
 
@@ -16,7 +16,6 @@ image::editor.gif[height=300px]
 
 The goals for this assignment are:
 
-* Work with pointer-based data structure
 * Design a user application
 * Design data structures that support good performance 
 * Work with C: structs, malloc/free, etc
@@ -27,8 +26,7 @@ The goals for this assignment are:
 
 We will use the same repository as link:asst01.html[Assignment 1]
 
-First, you must accept the pull requst on your repository on link:{gitrepo}[Github] 
-(link:PullRequest.png[screenshot]). 
+Pull to get the basecode from you repository on link:{repo}[Github] 
 
 [source, subs="attributes,quotes"]
 ----
@@ -67,9 +65,62 @@ int main()
 ----
 
 :sectnums:
-= Milestone 1
+= Load
 
-* Due Tuesday, September 23rd*
+You will design a C data structure for loading and saving a file from disk. 
+In file, `myfile.h`, define a struct that contains information about a currently loaded file. At minimum, 
+it should contain
+
+* The FILE pointer for the file.
+* The number of lines in the file
+* A double linked list of lines. You can assume that all lines are shorter than 256 bytes.
+
+In the files, `myfile.h` and `myfile.c`, define functions that implement the following features. These functions should take your struct as an argument.
+
+* Open a file and load its contents
+* Save a file
+* Close the file and cleanup its resources
+
+NOTE: You should use the `extern` keyword in the header file to declare your functions. The implementations of your functions should be in the .c file. See the lecture notes for an example.
+
+In the file, `test_file.c`, implement a program that tests your functions. Your test program should load a file, save it 
+to a different file, and then close and clean it up. 
+
+[source, subs="quotes"]
+----
+$ *cat ./test_file.c*
+#include "myfile.h"                                                             
+                                                                                
+int main() {                                                                    
+  struct myfile file;                                                           
+  if (!load(&file, "tolstoy.txt")) {                                             
+    printf("Could not open file\n");                                            
+  }                                                                             
+  if (save(&file, "test.txt")) {                                                 
+    printf("Could not save file\n");                                            
+  }                                                                             
+  close(file);                                                                  
+  return 0;                                                                     
+}          
+$ *valgrind ./test_file*
+=8717== Memcheck, a memory error detector
+==8717== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==8717== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==8717== Command: ./test_file
+==8717==
+Loading file tolystoy.txt with 64941 lines.
+==8974== 
+==8974== HEAP SUMMARY:
+==8974==     in use at exit: 0 bytes in 0 blocks
+==8974==   total heap usage: 2 allocs, 2 frees, 1,496 bytes allocated
+==8974==
+==8974== All heap blocks were freed -- no leaks are possible
+==8974==
+----
+
+= View
+
+In the file, `myeditor.c`, implement an application that can view text files loaded with a command line argument. 
 
 [source]
 ----
@@ -78,55 +129,17 @@ usage: myeditor <filename>
 $ ./myeditor bee.xt
 bee.xt not found
 $ ./myeditor tolstoy.txt
-
 ----
 
 Features
 
+* Reuses your file data structure
 * Loading a file from the command line 
 * Quitting with `:q` 
-
-= Milestone 2
-
-*Due on Friday, September 26*
-*Students must check-in with the TA during office hours for full credit*
-
-Features:
-
 * Scrolling through the file using the arrow keys
 * Displaying the current row, column, and filename in a banner on the last row
-* Searching with '/'. Typing '/' will set the current search word. Pressing 'n' will go to the next match and pressing 'p' will go to the previous match. 
 
-= Milestone 3
-
-* Due Friday, Oct 3rd*
-* Students must check-in during lab and during TA office hours for full credit*
-
-Required features: 
-
-* Pressing 'i' should go into edit mode and allow the user to edit the file. 
-* Saving the file with ':w'
-
-Choose your own adventure (Choose at least two additional VIM features to implement):
-
-* Show line numbers 
-* Goto line with the command ':<linenum>'
-* 'Y' to copy a line
-* 'dd' to delete a line
-* 'x' to delete a character
-* 'I' to insert characters at the beginning of the line
-* 'A' to append characters at the end of the line
-* 'G' to go to the end of the file
-* Show a welcome screen before editing
-* Support creating new files
-* Show the number of lines in the file in the banner bar
-* etc!
-
-Be sure to document which features you implement
-
-= Extra Credit
-
-Highlight misspelled words. Use binary search to check spellings in the provided dictionary file.
+Feel free to extend your API from the previous question!
 
 = Submit your Work
 

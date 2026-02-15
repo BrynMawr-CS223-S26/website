@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.18">
+<title>Assignment 9: Trust the Process</title>
+<link rel="stylesheet" href="../style/cs21.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_assignment_9_trust_the_process">Assignment 9: Trust the Process</a></li>
+<li><a href="#_warm_up">1. Warm-up</a></li>
+<li><a href="#_grep">2. Grep</a></li>
+<li><a href="#_submit_your_work">3. Submit your work</a></li>
+<li><a href="#_grading_rubric">4. Grading Rubric</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_assignment_9_trust_the_process">Assignment 9: Trust the Process</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Due Friday, March 21, at midnight</strong></p>
+</div>
+<div class="paragraph">
+<p>The goals for this assignment are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Gain experience working with <code>fork()</code>.</p>
+</li>
+<li>
+<p>Use OS system calls in your C program.</p>
+</li>
+<li>
+<p>Implement a multi-process program</p>
+</li>
+</ul>
+</div>
+<h3 id="_update_your_repository" class="discrete">Update your repository</h3>
+<div class="paragraph">
+<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
+</div>
+<div class="paragraph">
+<p>Using the command line</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open terminal and change your current directory to your assignment repository.</p>
+</li>
+<li>
+<p>Run the command <code>git fetch upstream</code></p>
+</li>
+<li>
+<p>Run the command <code>git merge upstream/main</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Your repository should now contain a new folder named <code>A09</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_warm_up">1. Warm-up</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the file, <code>warmup.c</code>, implement a program that spawns processes according to the following diagram.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/processes.png" alt="processes">
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make warmup</strong>
+gcc -g -Wall -Wvla -Werror warmup.c -o warmup
+$ <strong>./warmup</strong>
+17300] A0
+17300] B0
+17301] B1
+17301] Bye
+17300] C0
+17300] Bye
+17302] C1
+17302] Bye</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Your program should print the messages as shown above.</p>
+</li>
+<li>
+<p>Your program should use fork() to spawn processes.</p>
+</li>
+<li>
+<p>Call <code>getpid()</code> to show the process ids for each print message.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_grep">2. Grep</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the file, <code>grep.c</code>, implement a program that uses N processes to search for a keyword
+in a set of files.</p>
+</div>
+<div class="paragraph">
+<p>Your program implements a simplified version of the bash command <code>grep</code>. Grep searches a list of files
+for a given keyword or expression. For example, the following command searches for the keyword <code>public</code>
+in a list of source files. We use the <code>find</code> command to generate the list of source files to search.
+For example:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/grep.png" alt="grep" width="500px">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Make sure you include the backticks, e.g. <code> ` </code>. This adds the filenames found by <code>find</code> as command line arguments to <code>grep</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make grep</strong>
+gcc -g -Wall -Wvla -Werror grep.c -o grep
+$ <strong>./grep</strong>
+usage: ./grep <code><</code>NumProcesses<code>></code> <code><</code>Keyword<code>></code> <code><</code>Files<code>></code>
+$ <strong>./grep 1 class missing.txt</strong>
+Searching 1 files for keyword: class
+Process [613] searching 1 files (3 to 4)
+Process [613] Error: Cannot open file
+Total occurances: 0
+Elapsed time is 0.000608</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/grep_fork.png" alt="grep fork" width="500px">
+</div>
+</div>
+<div class="paragraph">
+<p>Requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Your program should take the number of processes, keyword, and a list of files as command line arguments</p>
+</li>
+<li>
+<p>Subdivide the files among the N processes. Note that the number of files may not divide evenly between processes.</p>
+</li>
+<li>
+<p>Print the totals and sub-division of files similarly to the output above</p>
+</li>
+<li>
+<p>Use the <code>fgets</code> function to process the lines in each file</p>
+</li>
+<li>
+<p>Use the function <code>strstr</code> defined in <code>string.h</code> to search lines of text for the keyword. <a href="https://en.cppreference.com/w/c/string/byte/strstr">Documentation is here</a></p>
+</li>
+<li>
+<p>To compute the total count, each child process can return the number matching lines using its exitcode. Recall that the parent can use the status reported by <code>waitpid</code> to get the children&#8217;s exit code.</p>
+</li>
+<li>
+<p>Your program should report the amount of time needed to search using <code>gettimeofday</code></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can print with colors to the console using ANSI escape sequences (see below).
+For example, <code>printf(ANSI_COLOR_GREEN "Green Text" ANSI_COLOR_RESET);</code> will print green text. <a href="https://azrael.digipen.edu/~mmead/www/mg/ansicolors/index.html">Here is a good guide!</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// Helpful macros for working with color
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">3. Submit your work</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Push your code to github to submit your work</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ git status
+$ git add .
+$ git status
+$ git commit -m "assignment complete"
+$ git status
+$ git push
+$ git status</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_grading_rubric">4. Grading Rubric</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Assignment rubrics</strong></p>
+</div>
+<div class="paragraph">
+<p>Grades are out of 4 points.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(1 points) Warmup</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style and header comment</p>
+</li>
+<li>
+<p>(0.4 points) prints correct messages, uses <code>fork()</code> and <code>getpid()</code></p>
+</li>
+<li>
+<p>(0.5 points) no memory errors</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(3 points) Grep</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Code rubrics</strong></p>
+</div>
+<div class="paragraph">
+<p>For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and
+have good style.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Some credit lost for missing features or bugs, depending on severity of error</p>
+</li>
+<li>
+<p>-5% for style errors. See the <a href="../codingstandard.html">class coding style</a> here.</p>
+</li>
+<li>
+<p>-50% for memory errors</p>
+</li>
+<li>
+<p>-100% for failure to checkin work to Github</p>
+</li>
+<li>
+<p>-100% for failure to compile on linux using make</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2026-01-19 20:28:28 -0500
+</div>
+</div>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains("stemblock")) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+</body>
+</html>
