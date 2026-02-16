@@ -71,7 +71,6 @@ You will design a C data structure for loading and saving a file from disk.
 In file, `myfile.h`, define a struct that contains information about a currently loaded file. At minimum, 
 it should contain
 
-* The FILE pointer for the file.
 * The number of lines in the file
 * A double linked list of lines. You can assume that all lines are shorter than 256 bytes.
 
@@ -79,7 +78,7 @@ In the files, `myfile.h` and `myfile.c`, define functions that implement the fol
 
 * Open a file and load its contents
 * Save a file
-* Close the file and cleanup its resources
+* Cleanup the file's resources
 
 NOTE: You should use the `extern` keyword in the header file to declare your functions. The implementations of your functions should be in the .c file. See the lecture notes for an example.
 
