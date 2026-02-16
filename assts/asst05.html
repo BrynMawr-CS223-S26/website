@@ -164,14 +164,20 @@ to a different file, and then close and clean it up.</p>
 #include "myfile.h"
 
 int main() {
-  struct myfile file;
-  if (!load(&file, "tolstoy.txt")) {
+  const char* filename = "tolstoy.txt";
+
+  myfile file;
+  if (!load(&file, filename)) {
     printf("Could not open file\n");
   }
-  if (save(&file, "test.txt")) {
+  else {
+    printf("Loaded %s with %d lines\n", filename, file.num_lines);
+  }
+
+  if (!save(&file, "test.txt")) {
     printf("Could not save file\n");
   }
-  close(file);
+  close(&file);
   return 0;
 }
 $ <strong>valgrind ./test_file</strong>
@@ -180,7 +186,7 @@ $ <strong>valgrind ./test_file</strong>
 ==8717== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
 ==8717== Command: ./test_file
 ==8717==
-Loading file tolystoy.txt with 64941 lines.
+Loading file tolystoy.txt with 64942 lines.
 ==8974==
 ==8974== HEAP SUMMARY:
 ==8974==     in use at exit: 0 bytes in 0 blocks
@@ -302,7 +308,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-16 11:04:17 -0500
+Last updated 2026-02-16 11:40:16 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">
