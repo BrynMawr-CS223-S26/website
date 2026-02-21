@@ -15,8 +15,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* Coding Lab 2: Tuesday, Feb 17, 50 minutes in lab 
-* link:assts/asst05.html[Assignment 05]: Due Friday, Feb 20
+* link:assts/asst06.html[Assignment 06]: Due Friday, Feb 27
 
 == Course Info
 

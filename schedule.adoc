@@ -78,6 +78,7 @@
 
 |
 * link:lectures/Lecture-Week04-Feb12-Binary.pdf[Lecture Feb 17 - Binary]
+* link:lectures/Lecture-Week05-Feb17-BitOps.pdf[Lecture Feb 19 - Bitops]
 
 //-----------------------------
 |6
@@ -90,6 +91,8 @@
 * Lab Feb 24: Quiz 02 Practice, link:studyguide2.html[Study Guide: Quiz 02]
 
 |
+* link:lectures/Lecture-Week06-Feb24-IntroAssembly.pdf[Lecture Feb 24]
+* link:lectures/Lecture-Week06-Feb26-Assembly.pdf[Lecture Feb 26] 
 
 //-----------------------------
 |7

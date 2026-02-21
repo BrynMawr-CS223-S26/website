@@ -66,7 +66,7 @@
 <p>Pressing 'i' should go into edit mode and allow the user to edit the current line.</p>
 </li>
 <li>
-<p>Save the file with ':w'</p>
+<p>Save the file to <code>test.txt</code> with ':w'. We will save to a different filename to make debugging easier.</p>
 </li>
 </ul>
 </div>
@@ -81,15 +81,27 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Load the file <code>dictionary</code> into a large array of strings. Each row contains a single word, already in alphabetical order. You may hard-code the number of strings in the file.</p>
+<p>Load the file <code>dictionary</code> into a large array of strings. Each row contains a single word, already in alphabetical order. You may hard-code the number of strings in the file and assume no word is longer than 24 bytes (e.g. you can hardcode a 2D array with size NUMLINES and MAXWORDSIZE).</p>
 </li>
 <li>
-<p>Implement a function that uses binary search to check the spelling of each word in the loaded file.</p>
+<p>Refactor your code to highlight misspelled words (according to the dictionary).</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Implement a function that uses binary search to check the spelling. The loaded dictionary is already sorted, so you can search the array inline.</p>
 </li>
 <li>
 <p>Using the ncurses library, highlight misspelled words with either colors or a stylistic effect.</p>
 </li>
 </ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/spell-demo.gif" alt="spell demo" height="300px">
+</div>
 </div>
 </div>
 </div>
@@ -257,7 +269,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-16 11:52:02 -0500
+Last updated 2026-02-21 17:32:32 -0500
 </div>
 </div>
 <script type="text/x-mathjax-config">
