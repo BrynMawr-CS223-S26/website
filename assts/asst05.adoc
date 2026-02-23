@@ -165,12 +165,16 @@ $ git push
 
 Grades are out of 4 points.
 
-*Code rubrics*
+Features:
+* (2 points) Doubly-linked list for holding lines
+** adheres to API
+** test_file runs without memory errors
+* (0.5 points) Displaying the current row, column, and filename
+* (0.5 points) Quitting with :q
+* (0.75 points) Scrolling based on rows and cols
+* (0.25 points) Loading a file from the command line 
 
-* Code checkins
-* View features
-* Search features
-* Edit features
+*Code rubrics*
 
 For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and 
 have good style.

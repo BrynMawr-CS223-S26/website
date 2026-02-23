@@ -80,18 +80,11 @@ $ git status
 
 Grades are out of 4 points.
 
-* (2 points) matched braces
-** (0.2 points) style and header comment
-** (0.8 points) correct output and behavior, supports command line arguments
-** (1.0 points) no memory errors
-* (1 points) Tree
-** (0.1 points) style and header comment
-** (0.4 points) implements all functions, passes all tests and does not modify basecode
-** (0.5 points) no memory errors
-* (1 points) Dependencies
-** (0.1 points) style and header comment
-** (0.4 points) Correct behavior
-** (0.5 points) no memory errors
+* (1 points) Insert mode and save
+* (2 points) Spell checker
+** (0.5 points) loads dictionary and implements binary search
+** (0.5 points) highlights misspelled words (both in command and insert mode)
+* (1 points) Choose your own adventure: two features
 
 *Code rubrics*
 
