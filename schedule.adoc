@@ -88,7 +88,7 @@
 * Topics: instruction set architecture, machine code, memory forms, x86_64 instructions
 * Read: link:https://diveintosystems.org/singlepage/#_x64_assembly_chapter[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
 * link:assts/asst06.html[Assignment 06]: Due Feb 27
-* Lab Feb 24: Quiz 02 Practice, link:studyguide2.html[Study Guide: Quiz 02]
+* Lab Feb 24: Quiz 02 Practice, link:studyguide2.html[Study Guide 2], link:studyguide3.html[StudyGuide 3]
 
 |
 * link:lectures/Lecture-Week06-Feb24-IntroAssembly.pdf[Lecture Feb 24]
@@ -99,11 +99,12 @@
 |March 3,5 anchor:week07[]
 |*Assembly, The operating system* 
 
-* Topics: Tracing assembly, buffoer exploits, loops, conditionals
+* Topics: Tracing assembly, loops, conditionals
 * Topics: what is an operating system?, system calls
+* Read: link:https://diveintosystems.org/singlepage/#_x64_assembly_chapter[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
 * Read: link:https://diveintosystems.org/singlepage/#_the_operating_system[Chapter 13, skip section 13.3] 
-* Lab March 3: **Quiz 02*: 50 minutes
-* link:assts/asst07.html[Assignment 07]: Due March 5
+* Lab March 3: **Quiz 02**, link:studyguide2.html[Study Guide 2], link:studyguide3.html[StudyGuide 3]
+* link:assts/asst07.html[Assignment 07]: Due March 17th in class, no extensions
 
 |
 

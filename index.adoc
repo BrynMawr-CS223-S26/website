@@ -15,7 +15,8 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* link:assts/asst06.html[Assignment 06]: Due Friday, Feb 27
+* 
+* link:assts/asst07.html[Assignment 07]: Hardcopy is due Tuesday, March 17th, in class. No late homeworks will be accepted.
 
 == Course Info
 

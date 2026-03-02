@@ -14,7 +14,7 @@ include::header.adoc[]
 The goals for this assignment are:
 
 * Implement a program that uses signals to coordinate between two processes
-* Implement an embarrassingly parallel multi-threades algorithms using the pthread library
+* Implement an embarrassingly parallel multi-threaded algorithms using the pthread library
 
 
 [discrete]
