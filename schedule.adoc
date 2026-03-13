@@ -107,6 +107,7 @@
 * link:assts/asst07.html[Assignment 07]: Due March 17th in class, no extensions
 
 |
+* link:lectures/Lecture-Week07-March3-AssemblyBranch.pdf[Lectures March 3,5] 
 
 //-----------------------------
 |8
@@ -123,7 +124,6 @@
 |*Processes* 
 
 * Topics: Processes, fork, signals
-* link:assts/asst08.[Assignment 08]: 
 * Lab March 17: **Code Jam 03**
 * link:assts/asst08.html[Assignment 08]: Image Conscious. Due March 20th at midnight
 
