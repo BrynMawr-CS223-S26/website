@@ -18,19 +18,9 @@ The goals for this assignment are:
 [discrete]
 == Update your repository
 
-Do a *fetch upstream* to obtain the basecode for this assignment. 
-
-Using the command line
-
-* Open terminal and change your current directory to your assignment repository.
-* Run the command `git fetch upstream`
-* Run the command `git merge upstream/main`
+Do a *git pull* to obtain the basecode for this assignment. 
 
 Your repository should now contain a new folder named `{ASST}`.
-
-The `fetch` and `merge` commands update your repository with any changes from the original.
-
-
 
 = Mandelbrot Set
 
@@ -148,10 +138,15 @@ image::mandelbrot-480-subregion.png[]
 
 = Multi-threaded 
 
-Implement a multi-threaded version of the mandelbrot set that you implemented for the previous question.
+Implement a multi-threaded version of the mandelbrot set that you implemented for the previous question. 
+Unlike the single threaded version, you will subdivide the rows of the image among N threads, thus 
+computing the image (ideally) N times faster.
 
-In the file, `multi_mandelbrot.c`, compute a program that outputs a PPM image of the mandelbrot 
-set. You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
+In the file, `multi_mandelbrot.c`, compute a program that outputs a PPM image of
+the mandelbrot set. You have been given basecode that initializes the following
+values from command line arguments. This code uses the
+link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt
+function].
 
 Arguments:
 
@@ -160,6 +155,7 @@ Arguments:
 * `-r <xmax>` the rightmost coordinate, e.g. maximum x value
 * `-t <ymin>` the topmost coordinate, e.g. minimum y value
 * `-b <ymax>` the bottommost coordinate, e.g. maximum y value
+* `-n <num_threads>` the number of threads
 
 When you run your program, you should get the output such as the following
 
@@ -170,10 +166,10 @@ $ **./multi_mandelbrot**
 Generating mandelbrot with size 480x480
   X range = [-2.0000,0.4700]
   Y range = [-1.1200,1.1200]
-Thread 140392055985920) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140392047593216) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140392039200512) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140392030807808) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140392055985920) sub-image block: rows (0, 120)
+Thread 140392047593216) sub-image block: rows (120, 240) 
+Thread 140392039200512) sub-image block: rows (240, 360) 
+Thread 140392030807808) sub-image block: rows (360, 480) 
 Thread 140392055985920) finished
 Thread 140392047593216) finished
 Thread 140392039200512) finished

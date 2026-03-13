@@ -88,12 +88,12 @@ Received item: 5
 <div class="sectionbody">
 <div class="paragraph">
 <p>In the file, <code>buddhabrot.c</code>, compute a program that outputs a PPM image of
-the Buddhabrot using multiple threads.</p>
+the Buddhabrot using multiple threads. Each thread will compute a subset of rows in the final image.</p>
 </div>
 <div class="paragraph">
 <p>The <a href="https://en.wikipedia.org/wiki/Buddhabrot">Buddhabrot</a> visualizes the trajectory of each point (x,y)
-as it escapes the mandelbrot set. The color of each pixel represents the probability of a point (x,y)
-visiting it while we calculate whether or not it belongs to the mandelbrot set.</p>
+as it escapes the Mandelbrot set. The color of each pixel represents the probability of a point (x,y)
+visiting it while we calculate whether or not it belongs to the Mandelbrot set.</p>
 </div>
 <div class="paragraph">
 <p>Computing the Buddhabrot set requires three steps:</p>
@@ -101,7 +101,7 @@ visiting it while we calculate whether or not it belongs to the mandelbrot set.<
 <div class="ulist">
 <ul>
 <li>
-<p>First, determine whether a point is in the mandelbrot set. Recall the points within the set remain less than 2*2 and are given a black color. Store whether a point escapes as a boolean in its own 2D array.</p>
+<p>First, determine whether a point is in the Mandelbrot set. Recall the points within the set remain less than 2*2 and are given a black color. Store whether a point escapes as a boolean in its own 2D array.</p>
 </li>
 <li>
 <p>Second, for the points that <em>do</em> escape, you must update counts for each (x,y) coordinate visited. Store these counts in its own 2D array. Also keep track of the max count for any pixel.</p>
@@ -116,7 +116,7 @@ visiting it while we calculate whether or not it belongs to the mandelbrot set.<
 computing each step.</p>
 </div>
 <div class="paragraph">
-<p><strong>Step 1: Determine mandelbrot set membership</strong></p>
+<p><strong>Step 1: Determine Mandelbrot set membership</strong></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -149,7 +149,7 @@ computing each step.</p>
 <div class="content">
 <pre class="highlight"><code>for each row in the image
    for each col in the image
-      if (row,col) belongs to the mandelbrot set, continue
+      if (row,col) belongs to the Mandelbrot set, continue
 
       xfrac = row / image_size
       yfrac = col / image_size
@@ -221,10 +221,10 @@ Generating buddhabrot with size 480x480
   Generating mandelbrot with size 480x480
   X range = [-2.0000,1.0000]
   Y range = [-1.1200,1.1200]
-Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140583141971712) sub-image block: rows (0, 120)
+Thread 140583133579008) sub-image block: rows (120, 240)
+Thread 140583125186304) sub-image block: rows (240, 360)
+Thread 140583116793600) sub-image block: rows (360, 480)
 Thread 140583141971712) finished
 Thread 140583133579008) finished
 Thread 140583125186304) finished
@@ -370,7 +370,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-03-13 14:47:10 -0400
+Last updated 2026-03-13 18:43:25 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

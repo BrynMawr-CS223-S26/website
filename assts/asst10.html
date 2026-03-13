@@ -42,29 +42,10 @@
 </div>
 <h3 id="_update_your_repository" class="discrete">Update your repository</h3>
 <div class="paragraph">
-<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
-</div>
-<div class="paragraph">
-<p>Using the command line</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Open terminal and change your current directory to your assignment repository.</p>
-</li>
-<li>
-<p>Run the command <code>git fetch upstream</code></p>
-</li>
-<li>
-<p>Run the command <code>git merge upstream/main</code></p>
-</li>
-</ul>
+<p>Do a <strong>git pull</strong> to obtain the basecode for this assignment.</p>
 </div>
 <div class="paragraph">
 <p>Your repository should now contain a new folder named <code>A10</code>.</p>
-</div>
-<div class="paragraph">
-<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
 </div>
 </div>
 </div>
@@ -252,11 +233,16 @@ Writing file: mandelbrot-480-1649001071.ppm</code></pre>
 <h2 id="_multi_threaded">2. Multi-threaded</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Implement a multi-threaded version of the mandelbrot set that you implemented for the previous question.</p>
+<p>Implement a multi-threaded version of the mandelbrot set that you implemented for the previous question.
+Unlike the single threaded version, you will subdivide the rows of the image among N threads, thus
+computing the image (ideally) N times faster.</p>
 </div>
 <div class="paragraph">
-<p>In the file, <code>multi_mandelbrot.c</code>, compute a program that outputs a PPM image of the mandelbrot
-set. You have been given basecode that initializes the following values from command line arguments. This code uses the <a href="https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/">getopt function</a>.</p>
+<p>In the file, <code>multi_mandelbrot.c</code>, compute a program that outputs a PPM image of
+the mandelbrot set. You have been given basecode that initializes the following
+values from command line arguments. This code uses the
+<a href="https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/">getopt
+function</a>.</p>
 </div>
 <div class="paragraph">
 <p>Arguments:</p>
@@ -278,6 +264,9 @@ set. You have been given basecode that initializes the following values from com
 <li>
 <p><code>-b &lt;ymax&gt;</code> the bottommost coordinate, e.g. maximum y value</p>
 </li>
+<li>
+<p><code>-n &lt;num_threads&gt;</code> the number of threads</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -290,10 +279,10 @@ $ <strong>./multi_mandelbrot</strong>
 Generating mandelbrot with size 480x480
   X range = [-2.0000,0.4700]
   Y range = [-1.1200,1.1200]
-Thread 140392055985920) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140392047593216) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140392039200512) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140392030807808) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140392055985920) sub-image block: rows (0, 120)
+Thread 140392047593216) sub-image block: rows (120, 240)
+Thread 140392039200512) sub-image block: rows (240, 360)
+Thread 140392030807808) sub-image block: rows (360, 480)
 Thread 140392055985920) finished
 Thread 140392047593216) finished
 Thread 140392039200512) finished
@@ -445,7 +434,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-03-13 16:54:32 -0400
+Last updated 2026-03-13 18:41:45 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

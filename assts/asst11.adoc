@@ -49,22 +49,22 @@ Requirements:
 = Buddhabrot
 
 In the file, `buddhabrot.c`, compute a program that outputs a PPM image of
-the Buddhabrot using multiple threads.  
+the Buddhabrot using multiple threads. Each thread will compute a subset of rows in the final image. 
 
 The link:https://en.wikipedia.org/wiki/Buddhabrot[Buddhabrot] visualizes the trajectory of each point (x,y) 
-as it escapes the mandelbrot set. The color of each pixel represents the probability of a point (x,y) 
-visiting it while we calculate whether or not it belongs to the mandelbrot set.
+as it escapes the Mandelbrot set. The color of each pixel represents the probability of a point (x,y) 
+visiting it while we calculate whether or not it belongs to the Mandelbrot set.
 
 Computing the Buddhabrot set requires three steps:
 
-* First, determine whether a point is in the mandelbrot set. Recall the points within the set remain less than 2*2 and are given a black color. Store whether a point escapes as a boolean in its own 2D array.
+* First, determine whether a point is in the Mandelbrot set. Recall the points within the set remain less than 2*2 and are given a black color. Store whether a point escapes as a boolean in its own 2D array.
 * Second, for the points that _do_ escape, you must update counts for each (x,y) coordinate visited. Store these counts in its own 2D array. Also keep track of the max count for any pixel.
 * Third, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written. 
 
 Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for 
 computing each step. 
 
-**Step 1: Determine mandelbrot set membership**
+**Step 1: Determine Mandelbrot set membership**
 [source]
 ----
 for each row in the image
@@ -94,7 +94,7 @@ for each row in the image
 ----
 for each row in the image
    for each col in the image
-      if (row,col) belongs to the mandelbrot set, continue
+      if (row,col) belongs to the Mandelbrot set, continue
 
       xfrac = row / image_size
       yfrac = col / image_size
@@ -153,8 +153,6 @@ void * start(void* data) {
 }
 ----
 
-
-
 [source,subs="quotes"]
 ----
 $ **./buddhabrot**
@@ -165,10 +163,10 @@ Generating buddhabrot with size 480x480
   Generating mandelbrot with size 480x480
   X range = [-2.0000,1.0000]
   Y range = [-1.1200,1.1200]
-Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
-Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
-Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
-Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140583141971712) sub-image block: rows (0, 120)
+Thread 140583133579008) sub-image block: rows (120, 240)
+Thread 140583125186304) sub-image block: rows (240, 360)
+Thread 140583116793600) sub-image block: rows (360, 480)
 Thread 140583141971712) finished
 Thread 140583133579008) finished
 Thread 140583125186304) finished

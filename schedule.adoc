@@ -102,7 +102,6 @@
 * Topics: Tracing assembly, loops, conditionals
 * Topics: what is an operating system?, System calls
 * Read: link:https://diveintosystems.org/singlepage/#_x64_assembly_chapter[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
-* Read: link:https://diveintosystems.org/singlepage/#_the_operating_system[Chapter 13, skip section 13.3] 
 * Lab March 3: **Quiz 02**, link:studyguide2.html[Study Guide 2], link:studyguide3.html[StudyGuide 3]
 * link:assts/asst07.html[Assignment 07]: Due March 17th in class, no extensions
 
@@ -125,6 +124,7 @@
 
 * Topics: Processes, fork, signals
 * Lab March 17: **Code Jam 03**
+* Read: link:https://diveintosystems.org/singlepage/#_the_operating_system[Chapter 13, skip section 13.3] 
 * link:assts/asst08.html[Assignment 08]: Image Conscious. Due March 20th at midnight
 
 | 
