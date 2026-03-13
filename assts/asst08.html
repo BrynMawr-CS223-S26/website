@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 8: Some Assembly Required</title>
+<title>Assignment 08: Image conscious</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,23 +14,26 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_8_some_assembly_required">Assignment 8: Some Assembly Required</a></li>
-<li><a href="#_operand_practice">1. Operand practice</a></li>
-<li><a href="#_the_answer_is_42">2. The answer is 42</a></li>
-<li><a href="#_submit_your_work">3. Submit your work</a></li>
-<li><a href="#_extra_credit_0_3_hackers">4. Extra Credit (0.3): Hackers</a></li>
+<li><a href="#_assignment_08_image_conscious">Assignment 08: Image conscious</a></li>
+<li><a href="#_ppm">PPM</a>
+<ul class="sectlevel2">
+<li><a href="#_background">Background</a></li>
+<li><a href="#_read_ppm">Read PPM</a></li>
+<li><a href="#_write_ppm">Write PPM</a></li>
+</ul>
+</li>
+<li><a href="#_glitch">Glitch</a></li>
+<li><a href="#_submit_your_work">Submit your work</a></li>
+<li><a href="#_grading_rubric">Grading Rubric</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_8_some_assembly_required">Assignment 8: Some Assembly Required</h2>
+<h2 id="_assignment_08_image_conscious">Assignment 08: Image conscious</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due (Hardcopy) Thursday, March 20th</strong></p>
-</div>
-<div class="paragraph">
-<p><strong>This is a written assignment, not a coding assignment!</strong></p>
+<p><strong>Due Friday, March 20, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -38,237 +41,198 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Understand basic x86_64 assembly instructions, especially memory addressing</p>
+<p>Read and write binary PPM files</p>
 </li>
 <li>
-<p>Visualize the execution of x86_64 assembly instructions</p>
+<p>Write simple multi-process programs</p>
 </li>
 </ul>
 </div>
+<h2 id="_update_your_repository" class="discrete">Update your repository</h2>
+<div class="paragraph">
+<p>Do a <strong>git pull</strong> to obtain the basecode for this assignment.</p>
+</div>
+<div class="paragraph">
+<p>Your repository should now contain a new folder named <code>A08</code>.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_operand_practice">1. Operand practice</h2>
-<div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Suppose memory has the following values:</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xf08</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0x10</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xf0a</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0x3c</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xf0c</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0x14</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xf0e</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0x04</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xf10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0x34</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xf12</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xe4</p></td>
-</tr>
-</tbody>
-</table></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>And suppose our registers have the following values:</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Register</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rax</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xf08</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rbx</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0x44</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rsi</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0x08</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%r8</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0x01</p></td>
-</tr>
-</tbody>
-</table></div></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Fill in the following table with the corresponding form, translation, and
-value for each of the given operands.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 14.2857%;">
-<col style="width: 14.2857%;">
-<col style="width: 57.1428%;">
-<col style="width: 14.2858%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Operand</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Form</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Translation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rax</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0x4(%rax)</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0x4(%rax, %r8, 4)</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xf00(,%rsi,2)</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_the_answer_is_42">2. The answer is 42</h2>
+<h2 id="_ppm">PPM</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Recall the following example from class and
-<a href="https://diveintosystems.org/book/C7-x86_64/functions.html"><em>Dive into
-Systems</em></a>. This mysterious program reliably produces the output <code>42</code>. In this
-question, you will trace the assembly to understand why.</p>
+<p>For this question, you will implement two functions, <code>read_ppm</code> and <code>write_ppm</code>,
+that read and write binary PPM files.</p>
+</div>
+<div class="sect2">
+<h3 id="_background">Background</h3>
+<div class="paragraph">
+<p><a href="http://netpbm.sourceforge.net/doc/ppm.html">PPM (Portable Pix Map)</a>
+ is an image file format that stores the colors of an image as a 2D array of
+colors. Each color is represented as a RGB triplet, representing red, green and blue respectively.
+The properties of the image, such as its size and color format, are specified at the start of the
+file (called its "header information"). PPM supports both ASCII (plain text) and binary data (raw).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We will be working only with <strong>PPM&#8217;s binary format</strong>!
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example, consider the following image</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://www.cs.swarthmore.edu/~soni/cs35/f13/Labs/images/01/example5000.png" alt="example5000">
+</div>
+</div>
+<div class="paragraph">
+<p>The above image contains a 4x4 grid of colored pixels. Each pixel is a triplet of red-blue-green (RGB) color
+values, each stored as an <code>unsigned char</code>. Unsigned chars have values which range from 0 to 255, where
+smaller values correspond to darker colors. The triplet (0,0,0) corresponds to black. The triplet
+(255,255,255) corresponds to white. The triplet (255,0,0) corresponds to red. This system of colors is called
+the <a href="https://en.wikipedia.org/wiki/RGB_color_model">RGB Color Model</a> and it is a common standard for
+representing colors on a computer.</p>
+</div>
+<div class="paragraph">
+<p>The RGB colors for the pixels in the above image are as follows</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>#include &lt;stdio.h&gt;
-
-int assign(void) {
-    int y = 40;
-    return y;
-}
-
-int adder(void) {
-    int a;
-    return a + 2;
-}
-
-int main(void) {
-    int x;
-    assign();
-    x = adder();
-    printf("x is: %d\n", x);
-    return 0;
-}</code></pre>
+<pre class="highlight"><code>(0,0,0)      (100,0,0)    (0,0,0)     (255,0,255)
+(0,0,0)      (0,255,175)  (0,0,0)     (0,0,0)
+(0,0,0)      (0,0,0)      (0,15,175)  (0,0,0)
+(255,0,255)  (0,0,0)      (0,0,0)     (255,255,255)</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Suppose that compiling the above program results in the following assembly
-instructions (x86_64)</p>
+<p>In binary format (also called <em>raw</em> format), the image is stored as follows.
+To see for yourself, do <code>hexedit feep-raw.ppm</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>0000000000001149 &lt;assign&gt;:
-    114d: 55                    push   %rbp
-    114e: 48 89 e5              mov    %rsp,%rbp
-    1151: c7 45 fc 28 00 00 00  movl   $0x28,-0x4(%rbp)
-    1158: 8b 45 fc              mov    -0x4(%rbp),%eax
-    115b: 5d                    pop    %rbp
-    115c: c3                    retq
-
-000000000000115d &lt;adder&gt;:
-    1161: 55                    push   %rbp
-    1162: 48 89 e5              mov    %rsp,%rbp
-    1165: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1168: 83 c0 02              add    $0x2,%eax
-    116b: 5d                    pop    %rbp
-    116c: c3                    retq
-
-000000000000116d &lt;main&gt;:
-    1171: 55                    push   %rbp
-    1172: 48 89 e5              mov    %rsp,%rbp
-    1175: 48 83 ec 10           sub    $0x10,%rsp
-    1179: e8 cb ff ff ff        callq  1149 &lt;assign&gt;
-    117e: e8 da ff ff ff        callq  115d &lt;adder&gt;
-    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
-    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1189: 89 c6                 mov    %eax,%esi
-    118b: 48 8d 3d 72 0e 00 00  lea    0xe72(%rip),%rdi
-    1192: b8 00 00 00 00        mov    $0x0,%eax
-    1197: e8 b4 fe ff ff        callq  1050 &lt;printf@plt&gt;
-    119c: b8 00 00 00 00        mov    $0x0,%eax
-    11a1: c9                    leaveq
-    11a2: c3                    retq</code></pre>
+<pre class="highlight"><code>00000000   50 36 0A 23  20 43 72 65  61 74 65 64  20 62 79 20  47 49 4D 50  20 76 65 72  P6.# Created by GIMP ver
+00000018   73 69 6F 6E  20 32 2E 31  30 2E 32 34  20 50 4E 4D  20 70 6C 75  67 2D 69 6E  sion 2.10.24 PNM plug-in
+00000030   0A 34 20 34  0A 32 35 35  0A 00 00 00  64 00 00 00  00 00 FF 00  FF 00 00 00  .4 4.255....d...........
+00000048   00 FF AF 00  00 00 00 00  00 00 00 00  00 00 00 00  0F AF 00 00  00 FF 00 FF  ........................
+00000060   00 00 00 00  00 00 FF FF  FF                                                  .........</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The leftmost column is byte number in hexadecimal. For example, 0x18 is 24 in decimal. There are 24 bytes
+on the first row on output. The rightmost column displays the raw data in ASCII, using <code>.</code> for non-visible
+ASCII codes, such as '\0' and 'Escape'.</p>
+</div>
+<div class="paragraph">
+<p>Regardless of format, every PPM file starts the following information in its header.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A two-byte "magic number" indicating the type of PPM. Binary types start with "P6". In hexedit, this corresponds to the binary values <code>50 36 A0</code>, e.g. the ascii values <code>P</code>, <code>6</code>, and <code>\n</code>.</p>
+</li>
+<li>
+<p>Width and height as ASCII decimal integers (separated by whitespace). Above this corresponds to the binary values <code>34 20 24 0A</code>, or ascii values <code>4 4\n</code>.</p>
+</li>
+<li>
+<p>Maximum color value as an ASCII decimal integer. Above this corresponds to the values <code>32 35 35 0A</code>, or ascii <code>255\n</code>. <strong>You can assume the Maxval is less than 256, meaning each RGB value is 1 byte.</strong></p>
+</li>
+<li>
+<p>A raster (e.g. the array of pixels) of Height number of rows and Width number of columns, in order from top to bottom.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+PPM images may contain comments in their header. These must be on their own line
+and start with the symbol <code><mark></code>. The above example has the comment <code></mark> Created by GIMP version 2.10.24 PNM plug-in</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+PPM files can be viewed using tools such as Photoshop and Gimp.  If you are using VS Code, I recommend installing the extension, "PBM/PPM/PGM Viewer" by ngtystr, so you can easily view your PPM files.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_read_ppm">Read PPM</h3>
+<div class="paragraph">
+<p>In the file, <code>../common/read_ppm.c</code>, implement the following two functions.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>struct ppm_pixel* read_ppm(const char* filename, int* width, int* height)</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Param <em>filename</em>: the image PPM to open and read</p>
+</li>
+<li>
+<p>Param <em>width</em>: the address of an integer into which we will place the width of the loaded image (e.g. pass by pointer parameter)</p>
+</li>
+<li>
+<p>Param <em>height</em>: the address of an integer into which we will place the height of the loaded image (e.g. pass by pointer parameter)</p>
+</li>
+<li>
+<p>Return <em>struct ppm_pixel*</em>: a flat 2D array of <em>struct ppm_pixel</em>. Returns NULL if an error occurs. The caller is responsible for freeing the array.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>struct ppm_pixel** read_ppm_2d(const char* filename, int* width, int* height)</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Param <em>filename</em>: the image PPM to open and read</p>
+</li>
+<li>
+<p>Param <em>width</em>: the address of an integer into which we will place the width of the loaded image (e.g. pass by pointer parameter)</p>
+</li>
+<li>
+<p>Param <em>height</em>: the address of an integer into which we will place the height of the loaded image (e.g. pass by pointer parameter)</p>
+</li>
+<li>
+<p>Return <em>struct ppm_pixel**</em>: an array of arrays 2D matrix of <em>struct ppm_pixel</em>. Returns NULL if an error occurs. The caller is responsible for free the array.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each of these functions read a PPM file stored in <em>binary</em> format and returns a 2D array
+of <code>struct pixel</code>. A <code>struct pixel</code> has the following definition</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>struct ppm_pixel {
+    unsigned char red;
+    unsigned char green;
+    unsigned char blue;
+};</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -278,846 +242,364 @@ instructions (x86_64)</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-In <em>The Hitchhiker&#8217;s Guide to the Galaxy</em> by Douglas Adams, the "Answer to the
-Ultimate Question of Life, the Universe, and Everything," calculated by an
-enormous supercomputer named Deep Thought over a period of 7.5 million years.
+You will re-use this function in future assignments. For this reason, we place its implementation
+in it&#8217;s own file, <code>read_ppm.c</code>, and use a header file, <code>read_ppm.h</code>, to include it in our main application.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>1) Suppose this is the state of the stack immediately prior to executing <code>main</code>
-Please show the before and after state (cross out old values).</p>
+<p>In the file, <code>../common/test_read.c</code>, write a short test that calls your function and prints the
+contents of <code>feep-raw.ppm</code> like so:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>000000000000116d &lt;main&gt;:
---&gt; 1171: 55                    push   %rbp
-    1172: 48 89 e5              mov    %rsp,%rbp
-    1175: 48 83 ec 10           sub    $0x10,%rsp
-    1179: e8 cb ff ff ff        callq  1149 &lt;assign&gt;
-    117e: e8 da ff ff ff        callq  115d &lt;adder&gt;
-    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
-    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1189: 89 c6                 mov    %eax,%esi</code></pre>
+<pre class="highlight"><code>$ <strong>make test_read</strong>
+gcc -g -Wall -Wvla -Werror test_read.c read_ppm.c -o test_read
+$ <strong>./test_read</strong>
+Testing file feep-raw.ppm with flat array:
+(0,0,0) (100,0,0) (0,0,0) (255,0,255)
+(0,0,0) (0,255,175) (0,0,0) (0,0,0)
+(0,0,0) (0,0,0) (0,15,175) (0,0,0)
+(255,0,255) (0,0,0) (0,0,0) (255,255,255)
+
+Testing file feep-raw.ppm with array of arrays:
+(0,0,0) (100,0,0) (0,0,0) (255,0,255)
+(0,0,0) (0,255,175) (0,0,0) (0,0,0)
+(0,0,0) (0,0,0) (0,15,175) (0,0,0)
+(255,0,255) (0,0,0) (0,0,0) (255,255,255)</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Register</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%eax</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">379</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%edi</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rsp</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xe68</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rbp</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0x1578</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rip</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0x1171</p></td>
-</tr>
-</tbody>
-</table></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>"Stack top"</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Stack value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xe68</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-</tr>
-</tbody>
-</table>
 <div class="paragraph">
-<p>2) What are the contents of registers and the stack after executing <code>mov %rsp, %rbp</code>?
-Please show the before and after state (cross out old values).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>000000000000116d &lt;main&gt;:
-    1171: 55                    push   %rbp
---&gt; 1172: 48 89 e5              mov    %rsp,%rbp
-    1175: 48 83 ec 10           sub    $0x10,%rsp
-    1179: e8 cb ff ff ff        callq  1149 &lt;assign&gt;
-    117e: e8 da ff ff ff        callq  115d &lt;adder&gt;
-    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
-    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1189: 89 c6                 mov    %eax,%esi</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Register</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%eax</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%edi</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rsp</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rbp</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rip</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>"Stack top"</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Stack value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xe68</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>3) What is the state of registers and the stack after executing <code>sub $0x10, %rsp</code>?
-Please show the before and after state (cross out old values).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>000000000000116d &lt;main&gt;:
-    1171: 55                    push   %rbp
-    1172: 48 89 e5              mov    %rsp,%rbp
---&gt; 1175: 48 83 ec 10           sub    $0x10,%rsp
-    1179: e8 cb ff ff ff        callq  1149 &lt;assign&gt;
-    117e: e8 da ff ff ff        callq  115d &lt;adder&gt;
-    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
-    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1189: 89 c6                 mov    %eax,%esi</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Register</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%eax</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%edi</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rsp</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rbp</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rip</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>"Stack top"</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Stack value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xe68</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>4) What is the state of registers and the stack after executing <code>callq 0x1149 &lt;assign&gt;</code>?
-Please show the before and after state (cross out old values).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>000000000000116d &lt;main&gt;:
-    1171: 55                    push   %rbp
-    1172: 48 89 e5              mov    %rsp,%rbp
-    1175: 48 83 ec 10           sub    $0x10,%rsp
---&gt; 1179: e8 cb ff ff ff        callq  1149 &lt;assign&gt;
-    117e: e8 da ff ff ff        callq  115d &lt;adder&gt;
-    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
-    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1189: 89 c6                 mov    %eax,%esi</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Register</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%eax</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%edi</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rsp</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rbp</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rip</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>"Stack top"</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Stack value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xe68</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>5) Skipping ahead, what is the state of registers and the stack when the program executes <code>pop %rbp</code>?
-What two changes occur during <code>pop</code>?
-Please show the before and after state (cross out old values).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>0000000000001149 &lt;assign&gt;:
-    114d: 55                    push   %rbp
-    114e: 48 89 e5              mov    %rsp,%rbp
-    1151: c7 45 fc 28 00 00 00  movl   $0x28,-0x4(%rbp)
-    1158: 8b 45 fc              mov    -0x4(%rbp),%eax
---&gt; 115b: 5d                    pop    %rbp
-    115c: c3                    retq</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Register</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%eax</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%edi</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rsp</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rbp</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rip</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>"Stack top"</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Stack value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xe68</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>6) What is the state of registers and the stack after executing <code>retq</code>?
-Please show the before and after state (cross out old values).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>0000000000001149 &lt;assign&gt;:
-    114d: 55                    push   %rbp
-    114e: 48 89 e5              mov    %rsp,%rbp
-    1151: c7 45 fc 28 00 00 00  movl   $0x28,-0x4(%rbp)
-    1158: 8b 45 fc              mov    -0x4(%rbp),%eax
-    115b: 5d                    pop    %rbp
---&gt; 115c: c3                    retq</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Register</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%eax</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%edi</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rsp</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rbp</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rip</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>"Stack top"</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Stack value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xe68</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>7) Skipping ahead, what are the state of registers and the stack when executing <code>retq</code> in adder?
-Please show the before and after state (cross out old values).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>000000000000115d &lt;adder&gt;:
-    1161: 55                    push   %rbp
-    1162: 48 89 e5              mov    %rsp,%rbp
-    1165: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1168: 83 c0 02              add    $0x2,%eax
-    116b: 5d                    pop    %rbp
---&gt; 116c: c3                    retq</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Register</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%eax</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%edi</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rsp</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rbp</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">%rip</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>"Stack top"</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Address</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Stack value</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;<br></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0xe68</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table></div></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>8) Consider the call the printf, <code>callq 1050 &lt;printf@plt&gt;</code>. The previous lines place the first
-argument to printf into <code>%rdi</code>. Assume this contains "x is %d\n". The second argument will be
-placed in <code>%esi</code>. What value will %esi containin?</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>000000000000116d &lt;main&gt;:
-    1171: 55                    push   %rbp
-    1172: 48 89 e5              mov    %rsp,%rbp
-    1175: 48 83 ec 10           sub    $0x10,%rsp
-    1179: e8 cb ff ff ff        callq  1149 &lt;assign&gt;
-    117e: e8 da ff ff ff        callq  115d &lt;adder&gt;
-    1183: 89 45 fc              mov    %eax,-0x4(%rbp)
-    1186: 8b 45 fc              mov    -0x4(%rbp),%eax
-    1189: 89 c6                 mov    %eax,%esi
-    118b: 48 8d 3d 72 0e 00 00  lea    0xe72(%rip),%rdi
-    1192: b8 00 00 00 00        mov    $0x0,%eax
-    1197: e8 b4 fe ff ff        callq  1050 &lt;printf@plt&gt;
-    119c: b8 00 00 00 00        mov    $0x0,%eax
-    11a1: c9                    leaveq
-    11a2: c3                    retq</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_submit_your_work">3. Submit your work</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This is a written assignment. Please submit a hard-copy in either Lecture or
-Lab, or submit to either Nina Fichera&#8217;s office (Park 348) or Aline Normoyle&#8217;s
-office (Park 200B).</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_extra_credit_0_3_hackers">4. Extra Credit (0.3): Hackers</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In class, we looked at how we can cheat at a guessing game by overriding the
-return address of a function to jump to the <code>endGame</code> function.  In this question,
-you can use the same techniques to</p>
+<p>Requirements/Hints:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Determine the secret codes of a program from the binary executable and partial source code.</p>
+<p>Your function should return NULL if the filename is invalid</p>
 </li>
 <li>
-<p>Develop a buffer overrun exploit to call a function directly, without using the secret codes.</p>
+<p>Your function should return NULL if memory cannot be allocated for the image data</p>
 </li>
 <li>
-<p><a href="secretGame-x86-64.tar.gz">Download the binary</a></p>
+<p>Your function should return a pointer to the array you create in read_ppm</p>
 </li>
 <li>
-<p><a href="https://diveintosystems.org/book/C3-C_debug/gdb_assembly.html#_debugging_assembly_code">Dive into systems: Debugging assembly code</a></p>
+<p>You can assume that it is safe to read the header line by line using a function such as <code>fgets</code> or <code>fscanf</code>.</p>
 </li>
 <li>
-<p><a href="https://diveintosystems.org/singlepage/#_real_world_buffer_overflow">Dive into systems: Buffer overflow</a></p>
+<p>Do not modify read_ppm.h. And do not remove the version of the function you do not implement!</p>
+</li>
+<li>
+<p>Make sure your program compiles using the Makefile</p>
+</li>
+<li>
+<p>Your solution should support an optional comment line.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_write_ppm">Write PPM</h3>
+<div class="paragraph">
+<p>Implement a new function, <code>write_ppm</code>, defined in <code>../common/write_ppm.c</code>.
+Similarly to <code>read_ppm</code>, you should implement both definitions of <code>write_ppm</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>int write_ppm(const char* filename, struct ppm_pixel* pixels, int width, int height)</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Param <em>filename</em>: the image PPM to write</p>
+</li>
+<li>
+<p>Param <em>struct ppm_pixel*</em>: a flat 2D array of <em>struct ppm_pixel</em> to write.</p>
+</li>
+<li>
+<p>Param <em>width</em>: the width of the image</p>
+</li>
+<li>
+<p>Param <em>height</em>: the height of the image</p>
+</li>
+<li>
+<p>Return (int): Returns 1 if an error occurred; otherwise, returns 0.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>int write_ppm_2d(const char* filename, struct ppm_pixel** pixels, int width, int height)</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Param <em>filename</em>: the image PPM to write</p>
+</li>
+<li>
+<p>Param <em>struct ppm_pixel**</em>: a 2D matrix array of arrays of <em>struct ppm_pixel</em> to write.</p>
+</li>
+<li>
+<p>Param <em>width</em>: the width of the image</p>
+</li>
+<li>
+<p>Param <em>height</em>: the height of the image</p>
+</li>
+<li>
+<p>Return (int): Returns 1 if an error occurred; otherwise, returns 0.</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>1) What is the secret number?
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p>
+<p>In the file, <code>test_write.c</code>, write an application that tests both your write functions. Your application
+should create a 4 by 4 image with alternating stripes and save it to the files <code>stripes_flat.ppm</code> and <code>stripes_aoa.ppm</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>make test_write</strong>
+gcc -g -Wall -Wvla -Werror test_write.c write_ppm.c read_ppm.c -o test_write
+$ <strong>./test_write</strong>
+Writing stripes-flat.ppm (4 4)
+Writing stripes-aoa.ppm (4 4)</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>2) What is the secret string?
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p>
+<p>The written images should both look the same. You can use any colors you like. Below, I used black and white.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/stripes.png" alt="stripes" width="100px">
+</div>
 </div>
 <div class="paragraph">
-<p>3) Give the buffer contents that can be used to overwrite the stack and jump to the funtion, <code>endGame</code>.
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br>
-&#160;<br></p>
+<p>Requirements/Hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>fprintf</code> to write the header and <code>fwrite</code> to write the binary Data to your file.</p>
+</li>
+<li>
+<p>Do not modify write_ppm.h. And do not remove the version of the function you do not implement!</p>
+</li>
+<li>
+<p>Make sure your program compiles using the Makefile</p>
+</li>
+<li>
+<p>You can optionally write a comment if you wish.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_glitch">Glitch</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://en.wikipedia.org/wiki/Glitch_art">Glitch Art</a> is the practice of leveraging technological errors for artistic purposes.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://www.joelatimer.com/wp-content/uploads/2019/09/JoeLatimer.com-Blog-Featured-Image-Landscape-08-31-19.jpg" alt="JoeLatimer.com Blog Featured Image Landscape 08 31 19" height="300px">
+</div>
+</div>
+<div class="paragraph">
+<p>First, implement a new function, <code>write_ppm</code>, defined in <code>read_ppm.c</code>. Similarly to <a href="asst04.html">Assignment 04</a>, you should change the definition of <code>write_ppm</code> if you use an "array of arrays" to store your pixels. <strong>Be careful that you do not change the definition of ppm_pixel!</strong></p>
+</div>
+<div class="paragraph">
+<p>Then write a program, <code>glitch.c</code>, that reads in a PPM file and "glitches" it. Your program should save the modified PPM in a new file with the suffix "-glitch". For example, if you load in the file
+"monalisa.ppm", you should output a file named "monalisa-glitch.ppm".</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./glitch monalisa.ppm</strong>
+Reading monalisa.ppm with width 606 and height 771
+Writing file monalisa-glitch.ppm</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Original Image</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Glitched Image</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="img/monalisa.png" alt="monalisa" height="300px">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="img/monalisa-glitch-v2.0.png" alt="monalisa glitch v2.0" height="300">
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Requirements/Hints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Read in a file using a command line argument and save the result to <code>[filename]-glitch.ppm</code></p>
+</li>
+<li>
+<p>To start, implement a minimal glitch, which shifts each color value by either 1 or 2 bits, choosen at random, e.g. <code>newcolorvalue = oldcolorvalue &lt;&lt; (rand() % 2);</code>. Your result should look like the example below.</p>
+</li>
+<li>
+<p>Submit your glitched images as part of your submission!</p>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Original Image</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Result of random bit shift</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="img/monalisa.png" alt="monalisa" height="300px">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="img/monalisa-glitch-simple.png" alt="monalisa glitch simple" height="300">
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Be creative with your glitches! You can use a combination of bit operations, switching colors, adding colors, etc.  Anything goes! Also, feel free to use your own images. PPM images can be exported using <a href="https://www.gimp.org">Gimp</a> or Photoshop.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">Submit your work</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Push you work to github to submit your work.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ cd A08
+$ git status
+$ git add *.c
+$ git commit -m "assignment complete"
+$ git status
+$ git push</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_grading_rubric">Grading Rubric</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Assignment rubrics</strong></p>
+</div>
+<div class="paragraph">
+<p>Grades are out of 4 points.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(1.5 points) Read PPM</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.6 points) correct behavior: reads the PPM file in binary format</p>
+</li>
+<li>
+<p>(0.8 points) no memory errors, style</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(1.5 points) Write PPM</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.6 points) correct behavior: write the PPM file in binary format</p>
+</li>
+<li>
+<p>(0.8 points) no memory errors, style</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(1 points) glitch</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.4 points) correct behavior: computes and saves a glitched image</p>
+</li>
+<li>
+<p>(0.6 points) no memory errors, style</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Code rubrics</strong></p>
+</div>
+<div class="paragraph">
+<p>For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and
+have good style.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Some credit lost for missing features or bugs, depending on severity of error</p>
+</li>
+<li>
+<p>-5% for style errors. See the <a href="../codingstandard.html">class coding style</a> here.</p>
+</li>
+<li>
+<p>-50% for memory errors</p>
+</li>
+<li>
+<p>-100% for failure to checkin work to Github</p>
+</li>
+<li>
+<p>-100% for failure to compile on linux using make</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-19 20:28:28 -0500
+Last updated 2026-03-13 16:59:33 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

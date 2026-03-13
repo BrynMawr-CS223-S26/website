@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 11: Glow</title>
+<title>Assignment 11: Mutually Exclusive</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,16 +14,9 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_11_glow">Assignment 11: Glow</a></li>
-<li><a href="#_background">Background</a>
-<ul class="sectlevel2">
-<li><a href="#_extract_bright_areas">Extract bright areas</a></li>
-<li><a href="#_blur">Blur</a></li>
-<li><a href="#_glow">Glow</a></li>
-</ul>
-</li>
-<li><a href="#_single_threaded">1. Single-threaded</a></li>
-<li><a href="#_multi_threaded">2. Multi-threaded</a></li>
+<li><a href="#_assignment_11_mutually_exclusive">Assignment 11: Mutually Exclusive</a></li>
+<li><a href="#_consumerproducer">1. Consumer/Producer</a></li>
+<li><a href="#_buddhabrot">2. Buddhabrot</a></li>
 <li><a href="#_submit_your_work">3. Submit your work</a></li>
 <li><a href="#_grading_rubric">4. Grading Rubric</a></li>
 </ul>
@@ -31,10 +24,10 @@
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_11_glow">Assignment 11: Glow</h2>
+<h2 id="_assignment_11_mutually_exclusive">Assignment 11: Mutually Exclusive</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, April 11th, before midnight</strong></p>
+<p><strong>Due Friday, April 17th, before midnight</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -42,248 +35,266 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Implement multi-thread algorithms using the pthread library</p>
+<p>Synchronize the behavior of multiple threads</p>
+</li>
+<li>
+<p>Work with mutex and barrier variables</p>
 </li>
 </ul>
 </div>
 <h3 id="_update_your_repository" class="discrete">Update your repository</h3>
 <div class="paragraph">
-<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
-</div>
-<div class="paragraph">
-<p>Using the command line</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Open terminal and change your current directory to your assignment repository.</p>
-</li>
-<li>
-<p>Run the command <code>git fetch upstream</code></p>
-</li>
-<li>
-<p>Run the command <code>git merge upstream/main</code></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Your repository should now contain a new folder named <code>A11</code>.</p>
-</div>
-<div class="paragraph">
-<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
+<p>Do a <strong>git pull</strong> to obtain the basecode for this assignment.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_background">Background</h2>
+<h2 id="_consumerproducer">1. Consumer/Producer</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this assignment, you will implement a glow filter for images. You will implement the filter both single- and
-multi-threaded.</p>
-</div>
-<div class="paragraph">
-<p>Before:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/earth-small.png" alt="earth small">
-</div>
-</div>
-<div class="paragraph">
-<p>After:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/glow.png" alt="glow">
-</div>
-</div>
-<div class="paragraph">
-<p>This filter requires three steps:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Extracting bright areas into a separate image</p>
-</li>
-<li>
-<p>Blurring the bright pixels</p>
-</li>
-<li>
-<p>Adding the blurred image to the original</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-We will work with PPM files for this assignment.
-</td>
-</tr>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_extract_bright_areas">Extract bright areas</h3>
-<div class="paragraph">
-<p>For each pixel, you can compute its brightness as the average of its red, green, and blue values. E.g.</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[brightness = (red + green + blue)/3\]
-</div>
-</div>
-<div class="paragraph">
-<p>We can compare this brightness to a threshold, say 200, to determine if we should apply the glow to this area.
-For the image below, we iterated through every pixel in the original image, computed its brightness, and
-then saved its brightness to a new image if the pixel exceeded the threshold.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/white.png" alt="white">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_blur">Blur</h3>
-<div class="paragraph">
-<p>For this assignment, we will apply a box blur to each pixel in the image computed in the previous step.</p>
-</div>
-<div class="paragraph">
-<p>In a box blur, the color of each pixel is set to the average of its neighbors. For example, if we look
-only at the immediate neighbors of the pixel (i,j), the new color would be as follows:</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[new_{i,j} = (p_{i-1,j-1} + p_{i,j-1} + p_{i+1,j-1} +
-             p_{i-1,j}   + p_{i,j}   + p_{i+1,j} +
-             p_{i-1,j+1} + p_{i,j+1} + p_{i+1,j+1} )/9\]
-</div>
-</div>
-<div class="paragraph">
-<p>The above calculation would correspond to a box size of 3 because the region around the pixel has
-width 3 and height 3.</p>
-</div>
-<div class="paragraph">
-<p>We compute the blur separately for each color channel (read, blue, green). In the image below, we used a
-box size of 25. In other words, we used the 24 neighbors that were left, right, above, and below of the current
-pixel. If a pixel is near the edge of the image, we can clamp the blur indices so they stay in the image.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/blur.png" alt="blur">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The glow will look better with a gaussian blur. Feel free to implement one instead
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_glow">Glow</h3>
-<div class="paragraph">
-<p>The glow effect is achieved by adding the blurred image (bij) with the original image (oij).</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[new_{i,j} = o_{i,j} + b_{i,j}\]
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="img/glow.png" alt="glow">
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_single_threaded">1. Single-threaded</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In the file, <code>glow.c</code>, implement a single-threaded program that applies a glow effect to the image "earth-small.ppm".
-In this question, you will get the core algorithm working, before re-implementing it to be multithreaded in
-the next question.</p>
+<p>In the file, <code>cp.c</code>, implement the producer/consumer demo from class. Your producer
+function should generate an integer between 0 and 9. Your consumer function should print
+the value. The size of your circular queue should be 10 elements.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>time ./glow</strong>
-real    0m0.518s
-user    0m0.513s
-sys     0m0.001s</code></pre>
+<pre class="highlight"><code>$ <strong>./cp</strong>
+Received item: 3
+Received item: 6
+Received item: 7
+Received item: 5
+Received item: 3
+Received item: 5
+^C</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements/Hints:</p>
+<p>Requirements:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>This program can be simple. You may hard-coded the input file (earth-small.ppm), the threshold (200), and the blur box size (25).</p>
+<p>Use sleep(1.0) to slow the production of values and make the output of your program easier to read.</p>
 </li>
 <li>
-<p>Your program must output a PPM file named <code>glow.ppm</code></p>
-</li>
-<li>
-<p>Use software that can view PPM files to check your work, either via VS Code, eog (Eye of Gnome), Gimp, Photoshop, etc</p>
+<p>Place the behavior of both threads in an infinite loop. Use Control-C to exit your demo.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_multi_threaded">2. Multi-threaded</h2>
+<h2 id="_buddhabrot">2. Buddhabrot</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the file, <code>glow_multithreaded.c</code>, implement a program that applies a glow effect using multiple threads.
-It should run much faster than your single threaded version.</p>
+<p>In the file, <code>buddhabrot.c</code>, compute a program that outputs a PPM image of
+the Buddhabrot using multiple threads.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://en.wikipedia.org/wiki/Buddhabrot">Buddhabrot</a> visualizes the trajectory of each point (x,y)
+as it escapes the mandelbrot set. The color of each pixel represents the probability of a point (x,y)
+visiting it while we calculate whether or not it belongs to the mandelbrot set.</p>
+</div>
+<div class="paragraph">
+<p>Computing the Buddhabrot set requires three steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>First, determine whether a point is in the mandelbrot set. Recall the points within the set remain less than 2*2 and are given a black color. Store whether a point escapes as a boolean in its own 2D array.</p>
+</li>
+<li>
+<p>Second, for the points that <em>do</em> escape, you must update counts for each (x,y) coordinate visited. Store these counts in its own 2D array. Also keep track of the max count for any pixel.</p>
+</li>
+<li>
+<p>Third, you must turn the counts from step 2 into a color. The final colors should be written to a 2D array of ppm_pixel (either flat or an array of arrays) and then written.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each of the above steps can be parallelized using threads. The second step will require a mutex to ensure that the counts are set correctly. Below are suggested algorithms for
+computing each step.</p>
+</div>
+<div class="paragraph">
+<p><strong>Step 1: Determine mandelbrot set membership</strong></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ ./glow_multithreaded -h
-usage: ./glow_multithreaded -N &lt;NumThreads&gt; -t &lt;brightness threshold&gt; -b &lt;box blur size&gt; -f &lt;ppmfile&gt;
-$ time ./glow_multithreaded
-Thread sub-image slice: rows (0,75)
-Thread sub-image slice: rows (75,150)
-Thread sub-image slice: rows (150,225)
-Thread sub-image slice: rows (225,300)
+<pre class="highlight"><code>for each row in the image
+   for each col in the image
+      xfrac = row / image_size
+      yfrac = col / image_size
+      x0 = xmin + xfrac * (xmax - xmin)
+      y0 = ymin + yfrac * (ymax - ymin)
 
-real    0m0.249s
-user    0m0.717s
-sys     0m0.000s</code></pre>
+      x = 0
+      y = 0
+      iter = 0
+      while (iter &lt; MAX &amp;&amp; x*x + y*y &lt; 2*2)
+        xtmp = x*x - y*y + x0
+        y = 2*x*y + y0
+        x = xtmp
+        iter++
+
+      if (iter &lt; MAX) // escaped
+        set membership at (row,col) to false
+      else
+        set membership at (row,col) to true</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Requirements and recommendations:</p>
+<p><strong>Step 2: Compute visited counts</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>for each row in the image
+   for each col in the image
+      if (row,col) belongs to the mandelbrot set, continue
+
+      xfrac = row / image_size
+      yfrac = col / image_size
+      x0 = xmin + xfrac * (xmax - xmin)
+      y0 = ymin + yfrac * (ymax - ymin)
+
+      x = 0
+      y = 0
+      while (x*x + y*y &lt; 2*2)
+        xtmp = x*x - y*y + x0
+        y = 2*x*y + y0
+        x = xtmp
+
+        yrow = round(size * (y - ymin)/(ymax - ymin))
+        xcol = round(size * (x - xmin)/(xmax - xmin))
+        if (yrow &lt; 0 || yrow &gt;= size) continue; // out of range
+        if (xcol &lt; 0 || xcol &gt;= size) continue; // out of range
+
+        increment count at (yrow, xcol)
+        update max count</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Step 3: Compute colors</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>gamma = 0.681
+factor = 1.0/gamma
+for each row in the image
+   for each col in the image
+      value = 0
+
+      if counts at (row,col) are greater than zero
+        value = log(counts[row][col]) / log(max_count)
+        value = pow(value, factor)
+
+      color.red = value * 255
+      color.green = value * 255
+      color.blue = value * 255
+
+      write color to image at location (row,col)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each thread should compute the three steps on a quadrant of the image. Below
+is a suggested outline for your thread&#8217;s start routine.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>void * start(void* data) {
+
+  // perform step 1
+  // perform step 2
+
+  // use a thread barrier to wait for all threads to finish steps 1 and 2
+  // perform step 3
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./buddhabrot</strong>
+Generating buddhabrot with size 480x480
+  Num processes = 4
+  X range = [-2.5000,1.0000]
+  Y range = [-1.1200,1.1200]
+  Generating mandelbrot with size 480x480
+  X range = [-2.0000,1.0000]
+  Y range = [-1.1200,1.1200]
+Thread 140583141971712) sub-image block: cols (0, 240) to rows (0,240)
+Thread 140583133579008) sub-image block: cols (240, 480) to rows (0,240)
+Thread 140583125186304) sub-image block: cols (0, 240) to rows (240,480)
+Thread 140583116793600) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140583141971712) finished
+Thread 140583133579008) finished
+Thread 140583125186304) finished
+Thread 140583116793600) finished
+Computed buddhabrot set (480x480) in 0.123721 seconds
+Writing file: buddhabrot-480-1650141479.ppm</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/buddhabrot-2000-1650142988.png" alt="buddhabrot 2000 1650142988" height="400"></span></p>
+</div>
+<div class="paragraph">
+<p>Requirements and hints:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Each thread should run all steps on a portion of the image. I recommend you divide the image into horizontal slices (not square blocks)</p>
+<p>You should re-use your PPM and mandelbrot functions from A09. If you use a 2D array of arrays, be sure to modify and commit <code>read_ppm.h</code>!</p>
 </li>
 <li>
-<p>You can assume that N will divide the images evenly. <code>earth.ppm</code> has resolution 3000x3000. <code>earth-small.ppm</code> has resolution 300x300.</p>
+<p>Each thread should run all three steps on a quadrant of the image.</p>
 </li>
 <li>
-<p>Your program should output a file named <code>glow.ppm</code></p>
+<p>You will need a <code>pthread_barrier_t</code> to wait for all counts to be computed before computing the colors</p>
 </li>
 <li>
-<p>Your program must support the command line arguments.</p>
+<p>Notice that the range of x and y might need to be larger to see the probability distribution</p>
 </li>
 <li>
-<p>Your program may not use global variables.</p>
+<p>Use mutex to compute the counts</p>
+</li>
+<li>
+<p>You should output the number of seconds needed to compute the image. Use this <a href="https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c">class example, matrix.c</a> for an example.</p>
+</li>
+<li>
+<p>Your output filename should have the format <code>buddhabrot-&lt;size&gt;-&lt;timestamp&gt;.ppm</code>. The timestamp can be obtained by calling <code>time(0)</code>.</p>
+</li>
+<li>
+<p>You may use global variables for this program.</p>
 </li>
 </ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Above, we compute a greyscale mandelbrot. To add colors, compute counts for the red, green, and blue channels separately, using different values for maxIterations in each. For example the following image used 5000 for red, 500 for green, and 50 for blue.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/buddhabrot-Small.png" alt="buddhabrot Small" height="400">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Other chaotic sets can be visualized in the same way as the Buddhabrot. To see more, read about <a href="https://flam3.com/flame_draves.pdf">Fractal Frames</a>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -321,26 +332,10 @@ $ git status</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(4 points) Threaded Fractal</p>
-<div class="ulist">
-<ul>
-<li>
-<p>(0.4 points) style and header comment</p>
+<p>(1 points) Consumer/Producer</p>
 </li>
 <li>
-<p>(0.4 points) Generated image with correct filename</p>
-</li>
-<li>
-<p>(0.2 points) Supports given command line arguments</p>
-</li>
-<li>
-<p>(1.0 points) Correct output, thread coordination, and output performance statistics</p>
-</li>
-<li>
-<p>(2.0 points) no memory errors</p>
-</li>
-</ul>
-</div>
+<p>(3 points) Buddhabrot</p>
 </li>
 </ul>
 </div>
@@ -375,7 +370,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-19 20:28:28 -0500
+Last updated 2026-03-13 14:47:10 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

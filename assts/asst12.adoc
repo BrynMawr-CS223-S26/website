@@ -1,6 +1,6 @@
 include::header.adoc[]
 
-:title: Assignment 12: Mutually Exclusive
+:title: Assignment 12: Hold on to your memories
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
@@ -9,147 +9,200 @@ include::header.adoc[]
 
 = {title}
 
-*Due Friday, April 18th, before midnight*
+Code Due Friday, April 17th, before midnight. 
+
+Written work Due Thursday, April 26th, in class. **Written portion is due April 26th - no late work accepted**
 
 The goals for this assignment are:
 
-* Synchronize the behavior of multiple threads
-* Work with mutex and condition variables
+* Understand void* types and pointer arithmetic
+* More linked list practice
+* Better understand malloc and free, particularly the use of the free list
 
 [discrete]
 == Update your repository
 
-Do a *fetch upstream* to obtain the basecode for this assignment. 
-
-Using the command line
-
-* Open terminal and change your current directory to your assignment repository.
-* Run the command `git fetch upstream`
-* Run the command `git merge upstream/main`
+Do a *git pull* to obtain the basecode for this assignment. 
 
 Your repository should now contain a new folder named `{ASST}`.
 
-The `fetch` and `merge` commands update your repository with any changes from the original.
-
 :sectnums:
 
-= Consumer/Producer 
+= Description
 
-In the file, `cp.c`, implement the producer/consumer demo from class. Your producer 
-function should generate an integer between 0 and 9. Your consumer function should print 
-the value. The size of your circular queue should be 10 elements. 
+In this assignment, we will implement our own version of malloc and free based on 
+"first-fit" strategy and analyze its behavior. 
 
-[source, subs="quotes"]
+For this assignment, you should submit both 
+
+* your code, and
+* a drawn visualization, *due in class*
+
+= Code setup
+
+Your basecode includes the following source files
+
+* `mylloc_list.c` - Malloc/free implementation that implements a free list with first-fit strategy (corresponds to `mhysa.c` in reading)
+* `rand.c` - Utilities for generating random sizes of memory
+* `sbrk.c` - Utilities for extending the amount of memory allocated to a program
+* `memstats.c` - A benchmark program
+* `unit_tests.c` - Unit tests for your malloc/free implementation 
+
+NOTE: This assignment is based on the reading: "My malloc: mylloc and mhysa" by
+Johan Montelius, posted to Slack. You should complete the reading and finish the
+implementation of `mylloc_list.c` _before_ starting the assignment. 
+
+= mylloc_list
+
+In `mylloc_list.c`, implement malloc and free based on the reading.
+
+Recall that the reading steps you through implementing your own malloc/free
+based on a free list and a _first-fit_ strategy.  This implementation uses a
+header to keep track of the memory requested from `sbrk`.  When we re-use memory
+that is freed, we typically will not re-use the entire block of memory. Modify
+the implementation from the reading to 
+
+* Extend this header to keep track of both the requested size and the amount of memory 
+currently used in the chunk.
+
+[source]
 ----
-$ **./cp**
-Received item: 3
-Received item: 6
-Received item: 7
-Received item: 5
-Received item: 3
-Received item: 5
-^C
-----
-
-Requirements:
-
-* Use sleep(1.0) to slow the production of values and make the output of your program easier to read.
-* Place the behavior of both threads in an infinite loop. Use Control-C to exit your demo.
-
-= Banking
-
-Edit the file, `banking.c`, so it correctly handles a series of transfers between two accounts. 
-Specifically, you should ensure
-
-* The program does not subtract funds if there aren't sufficient funds in the account.
-* The program does not hang due to deadlock
-
-When you run the basecode, you will see the following behavior. 
-
-[source, subs="quotes"]
-----
-$ **./banking**
-Starting balance A: 5000.00
-Starting balance B: 5000.00
-banking: banking.c:29: Transfer: Assertion `fromAcct->balance >= 0' failed.
-Aborted (core dumped)
-----
-
-Add a mutex and condition variable to each account. This variable can be used to 
-ensure that we do not subtract funds unless there is enough money in the account. 
-Use the consumer/producer demo in the previous question as an example. Also make 
-sure that your mutexes avoid deadlock as well. A working program should look at follows.
-
-[source, subs="quotes"]
-----
-$ **./banking**
-Starting balance A: 5000.00
-Starting balance B: 5000.00
-Ending balance A: 5000.00
-Ending balance B: 5000.00
+struct chunk {
+  int size; // size of memory allocated from sbrk
+  int used; // *NEW*: amount currently in use
+  struct chunk *next;
+};
 ----
 
-Requirements:
+Use the unit tests included with your assignment to test that your implementation is correct
 
-* Do not remove the `assert` in your code. A working program will not trigger the assert.
-* Use a condition variable to enforce whether an account has sufficient funds
-
-= Bridge
-
-In the remote town of Mountainview Village, there is a single lane bridge that connects 
-a popular overlook with a quaint town center with shops and cafes. During peak season, 
-tourists spend the day driving back and forth across the bridge, alternating between 
-fresh air and inspiring views at the outlook platform and coffee, ice cream, and snacks 
-at the town center. 
-
-In the file, `bridge.c`, your will find a simulation of summer tourists. 
-Each tourist is simulated with a thread. The bridge is modeled as a shared, global 
-resource. If two cars simultaneously try to drive in opposite directions on the bridge, 
-we have a terrible accident. The bridge explodes and any cars on the bridge plummet 
-to the rapids below. 
-
-Edit the file, `bridge.c`, to safely simulate N tourists spending the day in Mountainview Village.
-
-* prevent deadlocks where no one takes the bridge
-* prevent accidents where cars travel in both directions at once
-
-For example, here is a single tourist.
-
-[source, subs="quotes"]
+[source,subs="quotes"]
 ----
-$ **./bridge 1 10**
-Tourist 0 takes their 0/10 trip towards Outlook
-Tourist 0 takes their 1/10 trip towards Town
-Tourist 0 takes their 2/10 trip towards Outlook
-Tourist 0 takes their 3/10 trip towards Town
-Tourist 0 takes their 4/10 trip towards Outlook
-Tourist 0 takes their 5/10 trip towards Town
-Tourist 0 takes their 6/10 trip towards Outlook
-Tourist 0 takes their 7/10 trip towards Town
-Tourist 0 takes their 8/10 trip towards Outlook
-Tourist 0 takes their 9/10 trip towards Town
+$ **make all**
+gcc -g -Wall -Wvla -Werror memstats.c mylloc_list.c sbrk.c rand.c -o memstats -lm
+gcc -g -Wall -Wvla -Werror unit_tests.c mylloc_list.c sbrk.c rand.c -o unit_tests -lm
+$ **./unit_tests**
+Running tests...
+test 1: size 0 returns NULL: PASSED
+test 2: flist is NULL to start: PASSED
+test 3: flist is empty after first malloc: PASSED
+test 4: correct amount allocated: PASSED
+test 5: header size correct: PASSED
+test 6: header used correct: PASSED
+test 7: flist is non-empty after free: PASSED
+test 8: flist is empty: PASSED
+test9: correct amount allocated: PASSED
+test 10: header size correct: PASSED
+test 11: header used correct: PASSED
+test 12: flist is not empty: PASSED
+test 13: current-init correct size: PASSED
+test 14: header size correct: PASSED
+test 15: header used correct: PASSED
+test 16: flist's first node has correct size: PASSED
+test 17: flist is non-empty: PASSED
+test 18: flist's second node has correct size: PASSED
 ----
 
-But running with multiple tourists, we quickly see a problem.
+= Visualizing memory allocations
 
-[source, subs="quotes"]
+**This part of the assignment should be submitted in hard-copy - due April 23rd**
+
+Consider the output from the following program. This program makes a series of malloc/free calls based on random 
+sizes of memory. In this question, you will visualize the execution of malloc and free 
+from the previous question.
+
+[source,subs="quotes"]
 ----
-$ **./bridge 2 10**
-Tourist 1 takes their 0/10 trip towards Town
-Tourist 0 takes their 0/10 trip towards Outlook
-bridge: bridge.c:38: Move: Assertion `bridge.num_on_bridge[(bridge.direction+1)%2] == 0' failed.
-bridge: bridge.c:38: Move: Assertion `bridge.num_on_bridge[(bridge.direction+1)%2] == 0' failed.
-Aborted (core dumped)
+$ **./memstats**
+Starting test..
+The initial top of the heap is 0x7feffe84d010.
+---------------
+0
+Allocating 452 bytes at index 0
+Allocating 1042 bytes at index 4
+Allocating 45 bytes at index 1
+Freeing index 0
+Allocating 68 bytes at index 0
+Freeing index 1
+Freeing index 0
+Allocating 127 bytes at index 3
+Allocating 1141 bytes at index 2
+Allocating 89 bytes at index 1
+The new top of the heap is 0x7feffe84db31.
+Increased by 2849 (0xb21) bytes
+Total blocks: 5 Free blocks: 1 Used blocks: 4
+Total memory allocated: 2769 Free memory: 45 Used memory: 2724
+Underutilized memory: 0.12
+---------------
+1
+Freeing index 3
+Allocating 47 bytes at index 0
+Freeing index 4
+Freeing index 1
+Freeing index 2
+Freeing index 0
+Allocating 3426 bytes at index 1
+Freeing index 1
+Allocating 39 bytes at index 2
+Allocating 163 bytes at index 4
+The new top of the heap is 0x7feffe84e8a3.
+Increased by 3442 (0xd72) bytes
+Total blocks: 6 Free blocks: 4 Used blocks: 2
+Total memory allocated: 6195 Free memory: 2317 Used memory: 3878
+Underutilized memory: 0.95
+---------------
+2
+Allocating 1658 bytes at index 3
+Allocating 1812 bytes at index 0
+Freeing index 3
+Allocating 39 bytes at index 3
+Allocating 156 bytes at index 1
+Freeing index 3
+Freeing index 1
+Freeing index 4
+Freeing index 2
+Allocating 921 bytes at index 1
+The new top of the heap is 0x7feffe84f651.
+Increased by 3502 (0xdae) bytes
+Total blocks: 8 Free blocks: 6 Used blocks: 2
+Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
+Underutilized memory: 0.48
+Time is 4.1e-05
 ----
 
-Requirements:
+Below, we explain the first block of memory allocations (Round 1). 
+When the program starts, we have no buffers allocated and the free list is empty. 
 
-* Your program must leave the asserts which verify that the safety constraints are enforced.
-* You should use conditional variables and mutex to synchronize the threads that represent each tourist.
+image:memstats0.png[]
+
+After the first 3 allocations, the buffers and free list look as follows:
+
+image:memstats1.png[]
+
+After the next iteration, we have
+
+image:memstats2.png[]
+
+After the next iteration, we have
+image:memstats3.png[]
+
+After the next iteration, we have
+image:memstats4.png[]
+
+At the end of round 1, the buffers and free list look as follows
+
+image:memstats5.png[]
+
+Answer the following questions:
+
+. Why is the total memory allocated equal to 2769 bytes?
+. If the total memory is equal to 2769 bytes, why did the heap increase by 2849 bytes?
+. Draw the buffers and free list after round 1
+. Draw the buffers and free list after round 2
 
 = Submit your work
 
-Submit both your code and images.
+Submit both your code (by midnight) *and* your written questions (due in class Thursday).
 
 1) Push your code work to github
 
@@ -164,15 +217,21 @@ $ git push
 $ git status
 ----
 
+
 = Grading Rubric
 
 *Assignment rubrics*
 
 Grades are out of 4 points.
 
-* (1 points) Consumer/Producer
-* (1 points) Banking
-* (2 points) Bridge
+* (2 points) mylloc_list
+** (0.1 points) style and header comment
+** (1.9 points) passes all tests
+* (2 points) Readme
+
+NOTE: valgrind won't work for this assignment. You do not need to check for memory errors on this assignment.
+
+// TODO: Next smemester: get students to use valgrind header!!!`
 
 *Code rubrics*
 
@@ -181,7 +240,6 @@ have good style.
 
 * Some credit lost for missing features or bugs, depending on severity of error
 * -5% for style errors. See the link:../codingstandard.html[class coding style] here.
-* -50% for memory errors
 * -100% for failure to checkin work to Github
 * -100% for failure to compile on linux using make
 

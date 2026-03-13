@@ -100,7 +100,7 @@
 |*Assembly, The operating system* 
 
 * Topics: Tracing assembly, loops, conditionals
-* Topics: what is an operating system?, system calls
+* Topics: what is an operating system?, System calls
 * Read: link:https://diveintosystems.org/singlepage/#_x64_assembly_chapter[Chapter 7 (7.1-7.3,7.5,7.10), 10] 
 * Read: link:https://diveintosystems.org/singlepage/#_the_operating_system[Chapter 13, skip section 13.3] 
 * Lab March 3: **Quiz 02**, link:studyguide2.html[Study Guide 2], link:studyguide3.html[StudyGuide 3]
@@ -123,6 +123,7 @@
 * Topics: Processes, fork, signals
 * link:assts/asst08.[Assignment 08]: 
 * Lab March 17: **Code Jam 03**
+* link:assts/asst08.html[Assignment 08]: Image Conscious. Due March 20th at midnight
 
 | 
 
@@ -135,8 +136,8 @@
 * Topics: Threads vs processes, designing concurrent algorithms, pthreads
 * Read: link:https://diveintosystems.org/singlepage/#_some_advanced_c_features[Section 2.9.3, 2.9.4 (void* and pointer arithmetic)] 
 * Read: link:https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era[Chapter 14] 
-* link:assts/asst09.[Assignment 09]: Due March 27
-* Lab March 24: Practice Quiz 03 link:studyguide3.html[Study Guide 03]
+* Lab March 24: Practice Quiz 03 link:studyguide4.html[Study Guide 04]
+* link:assts/asst09.html[Assignment 09]: Trust the process. Due March 20th at midnight
 
 |
 
@@ -147,7 +148,7 @@
 
 * Topics: performance, deadlock, thread safety, producer/consumer pattern
 * Read: link:https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era[Chapter 14] 
-* link:assts/asst10.[Assignment 10]: Due April 3rd
+* link:assts/asst10.html[Assignment 10]: Mandelthreads. Due April 3rd
 * Lab March 31: **Quiz 03**: 50 minutes
 
 |
@@ -158,8 +159,9 @@
 |*Memory* 
 
 * Topics: Memory hierarchy, spatial/temporal locality, caching
-* Read: link:https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era[Chapter 14] 
-* link:assts/asst11.[Assignment 11]: Due April 10th
+* Read:"My malloc: mylloc and mhysa" by Johan Montelius 
+* Read: link:https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy[Chapter 11.1-11.3] 
+* link:assts/asst11.html[Assignment 11]: Mutually Exclusive. Due April 10th
 * Lab April 7: **Code Jam 04**
 
 |
@@ -167,12 +169,11 @@
 //-----------------------------
 |13
 |April 14, 16 anchor:week13[]
-|*Memory* 
+|*Code Optimization, C++* 
 
-* Read:"My malloc: mylloc and mhysa" by Johan Montelius 
-* Read: link:https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy[Chapter 11.1-11.3] 
-* link:assts/asst12.[Assignment 12]: 
-* Lab April 14: Practice Quiz 04 link:studyguide4.html[Study Guide 04]
+* Read: link:https://diveintosystems.org/singlepage/#_code_optimization[Chapter 12] 
+* link:assts/asst12.html[Assignment 12]: Hold on to your memories. Due April 17th.
+* Lab April 14: Memory Homework Visualizations; Practice Quiz 04 link:studyguide4.html[Study Guide 04]
 
 |
 
@@ -181,8 +182,7 @@
 |April 21, 23 anchor:week14[]
 |*Code Optimization, C++* 
 
-* Read: link:https://diveintosystems.org/singlepage/#_code_optimization[Chapter 12] 
-* link:assts/asst13.[Assignment 13]: Due April 24, **Hardcopy due in class April 24 - no late work accepted**
+* link:assts/asst13.[(Optional/Extra Credit) Assignment 13]: C++ Image Class. Due May 8th.
 * Lab 23: **Quiz 04**
 
 |

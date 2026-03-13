@@ -1,6 +1,6 @@
 include::header.adoc[]
 
-:title: Assignment 10: Sending mixed signals
+:title: Assignment 10: Mandelthreads
 :Author Initials: ASN
 :Date:    2020-08-15
 :Revision: 0.1
@@ -9,13 +9,11 @@ include::header.adoc[]
 
 = {title}
 
-*Due Friday, April 4th, before midnight*
+*Due Friday, April 3rd, before midnight*
 
 The goals for this assignment are:
 
-* Implement a program that uses signals to coordinate between two processes
-* Implement an embarrassingly parallel multi-threaded algorithms using the pthread library
-
+* Implement embarrassingly parallel multi-thread algorithms using the pthread library
 
 [discrete]
 == Update your repository
@@ -32,83 +30,172 @@ Your repository should now contain a new folder named `{ASST}`.
 
 The `fetch` and `merge` commands update your repository with any changes from the original.
 
+
+
+= Mandelbrot Set
+
+The link:https://en.wikipedia.org/wiki/Mandelbrot_set[mandelbrot set] is fractal popularized by 
+Benoit Mandelbrot in 1980. 
+
+The mandelbrot set consists of the set of complex numbers z for which stem:[z^2 + c] does not diverge to infinity when z starts at 0. To visualize this set, recall that a link:https://en.wikipedia.org/wiki/Complex_number[complex number], stem:[z = x + yi], can be visualized as a 2D point stem:[(x,y)]. Although the set derives from complex 
+numbers, we can compute the set by thinking about 2D coordinates, stem:[(x,y)].
+
+To see whether the complex number stem:[(x,y)] diverges, we simply need a loop that repeatedly computes stem:[z^2 + c]. If we expand the 
+complex number multiplication of stem:[z = x + y*i], z will change each iteration based on the following algorith. To test for divergence, we check whether z goes 
+out of the bounds of 4*4. If z does go out of bounds, we assign it a color based on how quickly it "escaped" the distance 4*4. If after MAX iterations, z is still 
+smaller than 4*4, it belongs to the set and we color it black.
+
+The last thing we need to draw the set is the region of values for x and y that bound the set. 
+X should vary from -2.0 to 0.47. Y should vary from -1.12 to 1.12. Here is the full algorithm.
+Assume that the image width and height are the same, e.g. square images.
+
+[source]
+----
+for each row in the image
+   for each col in the image
+      xfrac = row / image_size
+      yfrac = col / image_size
+      x0 = xmin + xfrac * (xmax - xmin)
+      y0 = ymin + yfrac * (ymax - ymin)
+
+      x = 0
+      y = 0
+      iter = 0
+      while (iter < MAX && x*x + y*y < 2*2) 
+        xtmp = x*x - y*y + x0
+        y = 2*x*y + y0
+        x = xtmp
+        iter++
+
+      if (iter < MAX) // escaped
+        color = palette[iter]
+      else
+        color = black
+
+      write color to image at location (row,col)    
+----
+
+[discrete]
+== Palette
+
+The palette should contain the same number of colors as MAX iterations. 
+Use `ppm_pixel` to represent colors in the pallet. You can either generate 
+random colors or compute a base color and jitter it e.g. 
+
+[cols="1a,1a"]
+!===
+|image::mandelbrot-random.gif[]
+|[source]
+----
+for each palette color
+  red = rand() % 255
+  green = rand() % 255
+  blue = rand() % 255
+----
+|image::mandelbrot-jitter.gif[]
+|[source]
+----
+basered = rand() % 255
+basegreen = rand() % 255
+baseblue = rand() % 255
+for each palette color
+  red = basered + rand() % 100 - 50
+  green = basegreen + rand() % 100 - 50
+  blue = baseblue + rand() % 100 - 50
+----
+!===
+
 :sectnums:
+= Single-threaded
 
-= Marco Polo
+In the file, `single_mandelbrot`, compute a program that outputs a PPM image of the mandelbrot 
+set. You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
 
-In the file, `marco_polo.c`, implement a program that uses signals to coordinate between two processes, like so. 
+Arguments:
 
-. When the user presses the 'm' key, the parents sends SIGALRM. 
-. When the child receives SIGALRM, the child prints "Marco" and sends SIGALRM to the parent.
-. When the parent receives SIGALRM, the parent prints "Polo".
+* `-s <size>` the image width and height
+* `-l <xmin>` the leftmost coordinate, e.g. minimum x value
+* `-r <xmax>` the rightmost coordinate, e.g. maximum x value
+* `-t <ymin>` the topmost coordinate, e.g. minimum y value
+* `-b <ymax>` the bottommost coordinate, e.g. maximum y value
 
-You can use strace to track the signals sent between the the parent and the child.
+image::A09.png[height=400]
 
-[source, subs="quotes"]
+When you run your program, you should get the output such as the following
+
+[source,subs="quotes"]
 ----
-$ **strace -e 'trace=!all' -f ./marco_polo**
-Parent is 738
-strace: Process 739 attached
-**m**
-[pid   739] --- SIGALRM {si_signo=SIGALRM, si_code=SI_USER, si_pid=738, si_uid=1000} ---
-Marco [739]
-[pid   738] --- SIGALRM {si_signo=SIGALRM, si_code=SI_USER, si_pid=739, si_uid=1000} ---
-Polo [738]
-**m**
-[pid   739] --- SIGALRM {si_signo=SIGALRM, si_code=SI_USER, si_pid=738, si_uid=1000} ---
-Marco [739]
-[pid   738] --- SIGALRM {si_signo=SIGALRM, si_code=SI_USER, si_pid=739, si_uid=1000} ---
-Polo [738]
-**q**
-[pid   739] --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=738, si_uid=1000} ---
-[pid   739] +++ killed by SIGTERM +++
---- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=739, si_uid=1000, si_status=SIGTERM, si_utime=0, si_stime=0} ---
-+++ exited with 0 +++
+$ **make single_mandelbrot**
+$ **./single_mandelbrot**
+Generating mandelbrot with size 480x480
+  X range = [-2.0000,0.4700]
+  Y range = [-1.1200,1.1200]
+Computed mandelbrot set (480x480) in 0.323261 seconds
+Writing file: mandelbrot-480-1649001071.ppm
 ----
 
-Requirements/Hints:
+Requirements and hints:
 
-* Use `fork` to create a parent and child process.
-* Use `kill` to send signals between the parent and the child.
-* Register two signal handlers, one for the parent and one for the child. Configure the signal handler to trigger when it receives SIGALRM.
-* The child process should say "Marco". The parent process should respond with "Polo".
-* In the parent, implement a loop that responds to commands from the user, specifically
-** 'm' should send the initial signal that triggers the child to say "Marco"
-** 'q' should send quit the application. This command should also send SIGTERM to the child, so the child also exits.
+* You should re-use your PPM functions from A06. If you use a 2D array of arrays, be sure to modify and commit `read_ppm.h`!
+* Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
+* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. 
+* Your output filename should have the format `mandelbrot-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
+* Set a random seed to ensure that the color palette is different each time, e.g. `srand(time(0))` 
+* In your `README.adoc`, call `single_mandelbrot` with sizes of 100, 400, 800, 1000, and 2000. Record the number of seconds it takes to compute each image.
+* (Optional) Experiment with visualizing other regions of the mandelbrot set. For example, if you run with `./single_mandelbrot -s 480 -l -0.02524993 -r 0.00975 -b -0.8172 -t -0.79725`, you get the following image
 
-= Grep
+image::mandelbrot-480-subregion.png[]
 
-This question implements a simplified version of the bash command `grep`. Grep searches a list of files 
-for a given keyword or expression. For example, the following command searches for the keyword `public` 
-in a list of source files. We use the `find` command to generate the list of source files to search.
+= Multi-threaded 
 
-image::grep.png[width=500px]
+Implement a multi-threaded version of the mandelbrot set that you implemented for the previous question.
 
-NOTE: Make sure you include the backticks, e.g. `` ` ``. This adds the filenames found by `find` as command line arguments to `grep`.
+In the file, `multi_mandelbrot.c`, compute a program that outputs a PPM image of the mandelbrot 
+set. You have been given basecode that initializes the following values from command line arguments. This code uses the link:https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/[getopt function].
 
-In the file, `grep.c`, implement a program that uses N threads to search for a keyword 
-in a set of files. 
+Arguments:
 
-[source, subs="quotes"]
+* `-s <size>` the image width and height
+* `-l <xmin>` the leftmost coordinate, e.g. minimum x value
+* `-r <xmax>` the rightmost coordinate, e.g. maximum x value
+* `-t <ymin>` the topmost coordinate, e.g. minimum y value
+* `-b <ymax>` the bottommost coordinate, e.g. maximum y value
+
+When you run your program, you should get the output such as the following
+
+[source,subs="quotes"]
 ----
-$ **make grep**
-gcc -g -Wall -Wvla -Werror grep.c -o grep -lpthreads
-$ **./grep**
-usage: ./grep ``<``NumThreads``>`` ``<``Keyword``>`` ``<``Files``>``
+$ **make multi_mandelbrot**
+$ **./multi_mandelbrot**
+Generating mandelbrot with size 480x480
+  X range = [-2.0000,0.4700]
+  Y range = [-1.1200,1.1200]
+Thread 140392055985920) sub-image block: cols (0, 240) to rows (0,240)
+Thread 140392047593216) sub-image block: cols (240, 480) to rows (0,240)
+Thread 140392039200512) sub-image block: cols (0, 240) to rows (240,480)
+Thread 140392030807808) sub-image block: cols (240, 480) to rows (240,480)
+Thread 140392055985920) finished
+Thread 140392047593216) finished
+Thread 140392039200512) finished
+Thread 140392030807808) finished
+Computed mandelbrot set (480x480) in 0.143906 seconds
+Writing file: mandelbrot-480-1650116924.ppm
 ----
 
-// Backticks can be written with `` ` ``
-image::thread-grep.png[width=500px]
+Requirements and hints:
 
-Requirements:
-
-* Your program should take the number of threads, keyword, and a list of files as command line arguments
-* Subdivide the files among the N threads. Note that the number of files may not divide evenly between threads.
-* Print the totals and sub-division of files similarly to the output above
-* Use the `fgets` to process the lines in each file
-* Use the function `strstr` defined in `string.h` to search lines of text for the keyword. link:https://en.cppreference.com/w/c/string/byte/strstr[Documentation is here]
+* You should re-use your PPM and mandelbrot functions from A09. If you use a 2D array of arrays, be sure to modify and commit `read_ppm.h`!
+* Create four threads. Each thread should process a quadrant of the image.
+* Print the ids and work tasks for each thread. You can print either the pthread_t ID, or your own given id. Above, we print the pthread_t ID. See the code from class for examples.
+* Allocate an array of pixels using malloc and then save the final image using `write_ppm`.
+* Do not declare global variables! Use parameters to send data to each thread's start_routine.
+* You should output the number of seconds needed to compute the image. Use this link:https://github.com/BrynMawr-CS223-S22/class-examples/blob/main/lec17/matrix.c[class example, matrix.c] for an example. The performance should be comparable to your multi_mandelbrot version from A09.
+* Your output filename should have the format `mandelbrot-<size>-<timestamp>.ppm`. The timestamp can be obtained by calling `time(0)`.
+* Set a random seed to ensure that the color palette is different each time, e.g. `srand(time(0))` 
 
 = Submit your work
+
+Submit both your code and images.
 
 1) Push your code work to github
 
@@ -123,23 +210,24 @@ $ git push
 $ git status
 ----
 
-
 = Grading Rubric
 
 *Assignment rubrics*
 
 Grades are out of 4 points.
 
-* (2 points) Marco Polo
-** (0.1 points) style and header comment
-** (0.9 points) Implementation satisfies requirements and works correctly.
+* (2 points) Single-Threaded Mandelbrot
+** (0.2 points) style and header comment
+** (0.2 points) Generated image with correct filename
+** (0.1 points) Supports given command line arguments
+** (0.5 points) Correct output and output performance statistics
+** (1.0 points) no memory errors, good style
+* (2 points) Multi-Threaded Mandelbrot
+** (0.2 points) style and header comment
+** (0.2 points) Generated image with correct filename
+** (0.1 points) Supports given command line arguments
+** (0.5 points) Correct output, thread coordination, and output performance statistics
 ** (1.0 points) no memory errors
-* (2 points) Grep
-** (0.15 points) style and header comment
-** (0.1 points) Correct command line arguments: number of threads, keyword, and a list of files
-** (0.2 points) Subdivide the files among the N threads
-** (0.3 points) Correct output
-** (0.75 points) no memory errors
 
 *Code rubrics*
 

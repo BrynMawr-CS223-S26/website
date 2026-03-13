@@ -15,8 +15,9 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* 
 * link:assts/asst07.html[Assignment 07]: Hardcopy is due Tuesday, March 17th, in class. No late homeworks will be accepted.
+* link:assts/asst08.html[Assignment 08]: Due Friday, March 20th at midnight. 
+* Final Exam: 3 hours, Closed Book with one written cheatsheet, May 6th, 9:30AM-12:30PM. Old Library Room 102
 
 == Course Info
 

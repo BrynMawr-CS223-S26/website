@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 12: Mutually Exclusive</title>
+<title>Assignment 12: Hold on to your memories</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,21 +14,25 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_12_mutually_exclusive">Assignment 12: Mutually Exclusive</a></li>
-<li><a href="#_consumerproducer">1. Consumer/Producer</a></li>
-<li><a href="#_banking">2. Banking</a></li>
-<li><a href="#_bridge">3. Bridge</a></li>
-<li><a href="#_submit_your_work">4. Submit your work</a></li>
-<li><a href="#_grading_rubric">5. Grading Rubric</a></li>
+<li><a href="#_assignment_12_hold_on_to_your_memories">Assignment 12: Hold on to your memories</a></li>
+<li><a href="#_description">1. Description</a></li>
+<li><a href="#_code_setup">2. Code setup</a></li>
+<li><a href="#_mylloc_list">3. mylloc_list</a></li>
+<li><a href="#_visualizing_memory_allocations">4. Visualizing memory allocations</a></li>
+<li><a href="#_submit_your_work">5. Submit your work</a></li>
+<li><a href="#_grading_rubric">6. Grading Rubric</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_12_mutually_exclusive">Assignment 12: Mutually Exclusive</h2>
+<h2 id="_assignment_12_hold_on_to_your_memories">Assignment 12: Hold on to your memories</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>Due Friday, April 18th, before midnight</strong></p>
+<p>Code Due Friday, April 17th, before midnight.</p>
+</div>
+<div class="paragraph">
+<p>Written work Due Thursday, April 26th, in class. <strong>Written portion is due April 26th - no late work accepted</strong></p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -36,216 +40,279 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Synchronize the behavior of multiple threads</p>
+<p>Understand void* types and pointer arithmetic</p>
 </li>
 <li>
-<p>Work with mutex and condition variables</p>
+<p>More linked list practice</p>
+</li>
+<li>
+<p>Better understand malloc and free, particularly the use of the free list</p>
 </li>
 </ul>
 </div>
 <h3 id="_update_your_repository" class="discrete">Update your repository</h3>
 <div class="paragraph">
-<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
-</div>
-<div class="paragraph">
-<p>Using the command line</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Open terminal and change your current directory to your assignment repository.</p>
-</li>
-<li>
-<p>Run the command <code>git fetch upstream</code></p>
-</li>
-<li>
-<p>Run the command <code>git merge upstream/main</code></p>
-</li>
-</ul>
+<p>Do a <strong>git pull</strong> to obtain the basecode for this assignment.</p>
 </div>
 <div class="paragraph">
 <p>Your repository should now contain a new folder named <code>A12</code>.</p>
 </div>
-<div class="paragraph">
-<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_consumerproducer">1. Consumer/Producer</h2>
+<h2 id="_description">1. Description</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the file, <code>cp.c</code>, implement the producer/consumer demo from class. Your producer
-function should generate an integer between 0 and 9. Your consumer function should print
-the value. The size of your circular queue should be 10 elements.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>./cp</strong>
-Received item: 3
-Received item: 6
-Received item: 7
-Received item: 5
-Received item: 3
-Received item: 5
-^C</code></pre>
-</div>
+<p>In this assignment, we will implement our own version of malloc and free based on
+"first-fit" strategy and analyze its behavior.</p>
 </div>
 <div class="paragraph">
-<p>Requirements:</p>
+<p>For this assignment, you should submit both</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Use sleep(1.0) to slow the production of values and make the output of your program easier to read.</p>
+<p>your code, and</p>
 </li>
 <li>
-<p>Place the behavior of both threads in an infinite loop. Use Control-C to exit your demo.</p>
+<p>a drawn visualization, <strong>due in class</strong></p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_banking">2. Banking</h2>
+<h2 id="_code_setup">2. Code setup</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Edit the file, <code>banking.c</code>, so it correctly handles a series of transfers between two accounts.
-Specifically, you should ensure</p>
+<p>Your basecode includes the following source files</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The program does not subtract funds if there aren&#8217;t sufficient funds in the account.</p>
+<p><code>mylloc_list.c</code> - Malloc/free implementation that implements a free list with first-fit strategy (corresponds to <code>mhysa.c</code> in reading)</p>
 </li>
 <li>
-<p>The program does not hang due to deadlock</p>
+<p><code>rand.c</code> - Utilities for generating random sizes of memory</p>
+</li>
+<li>
+<p><code>sbrk.c</code> - Utilities for extending the amount of memory allocated to a program</p>
+</li>
+<li>
+<p><code>memstats.c</code> - A benchmark program</p>
+</li>
+<li>
+<p><code>unit_tests.c</code> - Unit tests for your malloc/free implementation</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>When you run the basecode, you will see the following behavior.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>./banking</strong>
-Starting balance A: 5000.00
-Starting balance B: 5000.00
-banking: banking.c:29: Transfer: Assertion `fromAcct->balance >= 0' failed.
-Aborted (core dumped)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Add a mutex and condition variable to each account. This variable can be used to
-ensure that we do not subtract funds unless there is enough money in the account.
-Use the consumer/producer demo in the previous question as an example. Also make
-sure that your mutexes avoid deadlock as well. A working program should look at follows.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>./banking</strong>
-Starting balance A: 5000.00
-Starting balance B: 5000.00
-Ending balance A: 5000.00
-Ending balance B: 5000.00</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Do not remove the <code>assert</code> in your code. A working program will not trigger the assert.</p>
-</li>
-<li>
-<p>Use a condition variable to enforce whether an account has sufficient funds</p>
-</li>
-</ul>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This assignment is based on the reading: "My malloc: mylloc and mhysa" by
+Johan Montelius, posted to Slack. You should complete the reading and finish the
+implementation of <code>mylloc_list.c</code> <em>before</em> starting the assignment.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_bridge">3. Bridge</h2>
+<h2 id="_mylloc_list">3. mylloc_list</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the remote town of Mountainview Village, there is a single lane bridge that connects
-a popular overlook with a quaint town center with shops and cafes. During peak season,
-tourists spend the day driving back and forth across the bridge, alternating between
-fresh air and inspiring views at the outlook platform and coffee, ice cream, and snacks
-at the town center.</p>
+<p>In <code>mylloc_list.c</code>, implement malloc and free based on the reading.</p>
 </div>
 <div class="paragraph">
-<p>In the file, <code>bridge.c</code>, your will find a simulation of summer tourists.
-Each tourist is simulated with a thread. The bridge is modeled as a shared, global
-resource. If two cars simultaneously try to drive in opposite directions on the bridge,
-we have a terrible accident. The bridge explodes and any cars on the bridge plummet
-to the rapids below.</p>
-</div>
-<div class="paragraph">
-<p>Edit the file, <code>bridge.c</code>, to safely simulate N tourists spending the day in Mountainview Village.</p>
+<p>Recall that the reading steps you through implementing your own malloc/free
+based on a free list and a <em>first-fit</em> strategy.  This implementation uses a
+header to keep track of the memory requested from <code>sbrk</code>.  When we re-use memory
+that is freed, we typically will not re-use the entire block of memory. Modify
+the implementation from the reading to</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>prevent deadlocks where no one takes the bridge</p>
-</li>
-<li>
-<p>prevent accidents where cars travel in both directions at once</p>
+<p>Extend this header to keep track of both the requested size and the amount of memory
+currently used in the chunk.</p>
 </li>
 </ul>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>struct chunk {
+  int size; // size of memory allocated from sbrk
+  int used; // *NEW*: amount currently in use
+  struct chunk *next;
+};</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>For example, here is a single tourist.</p>
+<p>Use the unit tests included with your assignment to test that your implementation is correct</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>./bridge 1 10</strong>
-Tourist 0 takes their 0/10 trip towards Outlook
-Tourist 0 takes their 1/10 trip towards Town
-Tourist 0 takes their 2/10 trip towards Outlook
-Tourist 0 takes their 3/10 trip towards Town
-Tourist 0 takes their 4/10 trip towards Outlook
-Tourist 0 takes their 5/10 trip towards Town
-Tourist 0 takes their 6/10 trip towards Outlook
-Tourist 0 takes their 7/10 trip towards Town
-Tourist 0 takes their 8/10 trip towards Outlook
-Tourist 0 takes their 9/10 trip towards Town</code></pre>
+<pre class="highlight"><code>$ <strong>make all</strong>
+gcc -g -Wall -Wvla -Werror memstats.c mylloc_list.c sbrk.c rand.c -o memstats -lm
+gcc -g -Wall -Wvla -Werror unit_tests.c mylloc_list.c sbrk.c rand.c -o unit_tests -lm
+$ <strong>./unit_tests</strong>
+Running tests...
+test 1: size 0 returns NULL: PASSED
+test 2: flist is NULL to start: PASSED
+test 3: flist is empty after first malloc: PASSED
+test 4: correct amount allocated: PASSED
+test 5: header size correct: PASSED
+test 6: header used correct: PASSED
+test 7: flist is non-empty after free: PASSED
+test 8: flist is empty: PASSED
+test9: correct amount allocated: PASSED
+test 10: header size correct: PASSED
+test 11: header used correct: PASSED
+test 12: flist is not empty: PASSED
+test 13: current-init correct size: PASSED
+test 14: header size correct: PASSED
+test 15: header used correct: PASSED
+test 16: flist's first node has correct size: PASSED
+test 17: flist is non-empty: PASSED
+test 18: flist's second node has correct size: PASSED</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>But running with multiple tourists, we quickly see a problem.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>./bridge 2 10</strong>
-Tourist 1 takes their 0/10 trip towards Town
-Tourist 0 takes their 0/10 trip towards Outlook
-bridge: bridge.c:38: Move: Assertion `bridge.num_on_bridge[(bridge.direction+1)%2] == 0' failed.
-bridge: bridge.c:38: Move: Assertion `bridge.num_on_bridge[(bridge.direction+1)%2] == 0' failed.
-Aborted (core dumped)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Requirements:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Your program must leave the asserts which verify that the safety constraints are enforced.</p>
-</li>
-<li>
-<p>You should use conditional variables and mutex to synchronize the threads that represent each tourist.</p>
-</li>
-</ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">4. Submit your work</h2>
+<h2 id="_visualizing_memory_allocations">4. Visualizing memory allocations</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Submit both your code and images.</p>
+<p><strong>This part of the assignment should be submitted in hard-copy - due April 23rd</strong></p>
+</div>
+<div class="paragraph">
+<p>Consider the output from the following program. This program makes a series of malloc/free calls based on random
+sizes of memory. In this question, you will visualize the execution of malloc and free
+from the previous question.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ <strong>./memstats</strong>
+Starting test..
+The initial top of the heap is 0x7feffe84d010.
+---------------
+0
+Allocating 452 bytes at index 0
+Allocating 1042 bytes at index 4
+Allocating 45 bytes at index 1
+Freeing index 0
+Allocating 68 bytes at index 0
+Freeing index 1
+Freeing index 0
+Allocating 127 bytes at index 3
+Allocating 1141 bytes at index 2
+Allocating 89 bytes at index 1
+The new top of the heap is 0x7feffe84db31.
+Increased by 2849 (0xb21) bytes
+Total blocks: 5 Free blocks: 1 Used blocks: 4
+Total memory allocated: 2769 Free memory: 45 Used memory: 2724
+Underutilized memory: 0.12
+---------------
+1
+Freeing index 3
+Allocating 47 bytes at index 0
+Freeing index 4
+Freeing index 1
+Freeing index 2
+Freeing index 0
+Allocating 3426 bytes at index 1
+Freeing index 1
+Allocating 39 bytes at index 2
+Allocating 163 bytes at index 4
+The new top of the heap is 0x7feffe84e8a3.
+Increased by 3442 (0xd72) bytes
+Total blocks: 6 Free blocks: 4 Used blocks: 2
+Total memory allocated: 6195 Free memory: 2317 Used memory: 3878
+Underutilized memory: 0.95
+---------------
+2
+Allocating 1658 bytes at index 3
+Allocating 1812 bytes at index 0
+Freeing index 3
+Allocating 39 bytes at index 3
+Allocating 156 bytes at index 1
+Freeing index 3
+Freeing index 1
+Freeing index 4
+Freeing index 2
+Allocating 921 bytes at index 1
+The new top of the heap is 0x7feffe84f651.
+Increased by 3502 (0xdae) bytes
+Total blocks: 8 Free blocks: 6 Used blocks: 2
+Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
+Underutilized memory: 0.48
+Time is 4.1e-05</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Below, we explain the first block of memory allocations (Round 1).
+When the program starts, we have no buffers allocated and the free list is empty.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/memstats0.png" alt="memstats0"></span></p>
+</div>
+<div class="paragraph">
+<p>After the first 3 allocations, the buffers and free list look as follows:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/memstats1.png" alt="memstats1"></span></p>
+</div>
+<div class="paragraph">
+<p>After the next iteration, we have</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/memstats2.png" alt="memstats2"></span></p>
+</div>
+<div class="paragraph">
+<p>After the next iteration, we have
+<span class="image"><img src="img/memstats3.png" alt="memstats3"></span></p>
+</div>
+<div class="paragraph">
+<p>After the next iteration, we have
+<span class="image"><img src="img/memstats4.png" alt="memstats4"></span></p>
+</div>
+<div class="paragraph">
+<p>At the end of round 1, the buffers and free list look as follows</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="img/memstats5.png" alt="memstats5"></span></p>
+</div>
+<div class="paragraph">
+<p>Answer the following questions:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Why is the total memory allocated equal to 2769 bytes?</p>
+</li>
+<li>
+<p>If the total memory is equal to 2769 bytes, why did the heap increase by 2849 bytes?</p>
+</li>
+<li>
+<p>Draw the buffers and free list after round 1</p>
+</li>
+<li>
+<p>Draw the buffers and free list after round 2</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submit_your_work">5. Submit your work</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Submit both your code (by midnight) <strong>and</strong> your written questions (due in class Thursday).</p>
 </div>
 <div class="paragraph">
 <p>1) Push your code work to github</p>
@@ -264,7 +331,7 @@ $ git status</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">5. Grading Rubric</h2>
+<h2 id="_grading_rubric">6. Grading Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Assignment rubrics</strong></p>
@@ -275,15 +342,34 @@ $ git status</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>(1 points) Consumer/Producer</p>
+<p>(2 points) mylloc_list</p>
+<div class="ulist">
+<ul>
+<li>
+<p>(0.1 points) style and header comment</p>
 </li>
 <li>
-<p>(1 points) Banking</p>
-</li>
-<li>
-<p>(2 points) Bridge</p>
+<p>(1.9 points) passes all tests</p>
 </li>
 </ul>
+</div>
+</li>
+<li>
+<p>(2 points) Readme</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+valgrind won&#8217;t work for this assignment. You do not need to check for memory errors on this assignment.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p><strong>Code rubrics</strong></p>
@@ -301,9 +387,6 @@ have good style.</p>
 <p>-5% for style errors. See the <a href="../codingstandard.html">class coding style</a> here.</p>
 </li>
 <li>
-<p>-50% for memory errors</p>
-</li>
-<li>
 <p>-100% for failure to checkin work to Github</p>
 </li>
 <li>
@@ -316,7 +399,7 @@ have good style.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-19 20:28:28 -0500
+Last updated 2026-03-13 14:53:34 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">
