@@ -16,17 +16,19 @@ Everything from link:studyguide3.html[Study Guide 3], plus
 
 * Generating assembly from C code
 * Assembly basics: registers, instructions, operands, memory forms
-* Using GDB to step through assembly code and inspect registers
+//* Using GDB to step through assembly code and inspect registers
 
 [discrete]
 = Short answers
 
 Can you answer the following?
 
+. What is assembly language?
+. How are data types handled in assembly?
+. What is a register? 
 . What does the `lea` instruction do?
 . How are parameters passed to functions?
 . How is machine code generated from source code? What is the relationship between machine code and assembly?
-. What is a register? 
 . What do the registers %rsp and %rbp represent? How do they relate to functions?
 . What the do the registers %rax and %eax typically represent? When do we use one versus the other? 
 . What does the CMP function do?
@@ -41,32 +43,114 @@ Can you answer the following?
 ++++
 
 [discrete]
-= Practice questions
+= Instruction practice
 
-1) Consider the following programs. Use `gcc -S div.c -o div.S` to generate the assembly code for this program.
+1) What would the values of ZF and SF be for the following comparisons if 
+
+* %rax has the value 0
+* %edi has the value 12 
+* %esi has the value 3
 
 [source]
 ----
-#include <stdio.h>
-int main() {
-  int a = 40;
-  int value = a << 2;
-  printf("values = %d", value); 
+cmp $0, %rax
+cmp %esi, %edi
+test %edi, %esi
+test %rax, %rax
+----
+
+2) Re-write the following code using goto statements
+
+[source]
+----
+int getSmallest(int x, int y) {
+    int smallest;
+    if ( x > y ) { //if (conditional)
+        smallest = y; //then statement
+    }
+    else {
+        smallest = x; //else statement
+    }
+    return smallest;
 }
 ----
 
-2) Try modifying the assembly code from Q1 to shift by 4 instead of 2. 
-Edit the file `div.S` and use the command `gcc div.S` to build `a.out`.
+3) Re-write the following code to use conditional move statements.
 
-{nbsp} +
-{nbsp} +
-{nbsp} +
+[source]
+----
+int get_min(int a, int b, int c, int d)
+{
+  int result = 0;
+  if (a < b && a < c && a < d) result = a;
+  else if (b < a && b < c && b < d) result = b;
+  else if (c < a && c < b && c < d) result = c;
+  else if (d < a && d < b && d < c) result = d;
+  return result;
+}
+----
 
-++++
-<div class="pagebreak"> </div>
-++++
+4) Consider the following program 
 
-3) Fill in the following table
+[source]
+----
+int getSmallest(int x, int y) {
+    int smallest;
+    if ( x > y ) {
+        smallest = y;
+    }
+    else {
+        smallest = x;
+    }
+    return smallest;
+}
+----
+
+The following table has x86_64 assembly code that corresponds to the above code. For each instruction, 
+explain its meaning, and a description of how it corresponds to the original code. The first instruction has been 
+done for you, as an example.
+
+[cols="1,2,2"]
+|===
+| Instruction | Meaning | Description
+| mov    %edi,-0x14(%rbp) | | 
+| mov    %esi,-0x18(%rbp) | | 
+| mov    -0x14(%rbp),%eax | | 
+| cmp    -0x18(%rbp),%eax | | 
+| jle    0x4005b0 <getSmallest+26> | | 
+| mov    -0x18(%rbp),%eax | | 
+| jmp    0x4005b9 <getSmallest+35> | | 
+| mov    -0x14(%rbp),%eax | | 
+|===
+
+
+5) Consider the following program 
+
+[source]
+----
+int getSmallest_cmov(int x, int y) {
+    return x > y ? y : x;
+}
+----
+
+[cols="1,2,2"]
+|===
+| Instruction | Meaning | Description
+| push   %rbp | %rsp = %rsp - $0x8, M[%rsp] = %rbp | save %rbp
+| mov    %rsp,%rbp | $rbp = %rsp | update %rbp
+| mov    %edi,-0x4(%rbp) | | 
+| mov    %esi,-0x8(%rbp) | | 
+| mov    -0x8(%rbp),%eax | | 
+| cmp    %eax,-0x4(%rbp) | | 
+| cmovle -0x4(%rbp),%eax | | 
+| pop    %rbp | %rbp = M[%rsp], %rsp = %rsp + $0x8| restore %rbp
+| retq | pop %rip | Return from the function  
+|===
+
+[discrete]
+= Operands
+
+Fill in the following table
 
 [cols="1a,1a"]
 |===

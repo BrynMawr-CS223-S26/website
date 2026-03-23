@@ -31,9 +31,6 @@
 <li>
 <p>Assembly basics: registers, instructions, operands, memory forms</p>
 </li>
-<li>
-<p>Using GDB to step through assembly code and inspect registers</p>
-</li>
 </ul>
 </div>
 <h2 id="_short_answers" class="discrete">Short answers</h2>
@@ -43,6 +40,15 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
+<p>What is assembly language?</p>
+</li>
+<li>
+<p>How are data types handled in assembly?</p>
+</li>
+<li>
+<p>What is a register?</p>
+</li>
+<li>
 <p>What does the <code>lea</code> instruction do?</p>
 </li>
 <li>
@@ -50,9 +56,6 @@
 </li>
 <li>
 <p>How is machine code generated from source code? What is the relationship between machine code and assembly?</p>
-</li>
-<li>
-<p>What is a register?</p>
 </li>
 <li>
 <p>What do the registers %rsp and %rbp represent? How do they relate to functions?</p>
@@ -81,32 +84,212 @@
 </ol>
 </div>
 <div class="pagebreak"> </div>
-<h2 id="_practice_questions" class="discrete">Practice questions</h2>
+<h2 id="_instruction_practice" class="discrete">Instruction practice</h2>
 <div class="paragraph">
-<p>1) Consider the following programs. Use <code>gcc -S div.c -o div.S</code> to generate the assembly code for this program.</p>
+<p>1) What would the values of ZF and SF be for the following comparisons if</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>%rax has the value 0</p>
+</li>
+<li>
+<p>%edi has the value 12</p>
+</li>
+<li>
+<p>%esi has the value 3</p>
+</li>
+</ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>#include &lt;stdio.h&gt;
-int main() {
-  int a = 40;
-  int value = a &lt;&lt; 2;
-  printf("values = %d", value);
+<pre class="highlight"><code>cmp $0, %rax
+cmp %esi, %edi
+test %edi, %esi
+test %rax, %rax</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>2) Re-write the following code using goto statements</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>int getSmallest(int x, int y) {
+    int smallest;
+    if ( x &gt; y ) { //if (conditional)
+        smallest = y; //then statement
+    }
+    else {
+        smallest = x; //else statement
+    }
+    return smallest;
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>2) Try modifying the assembly code from Q1 to shift by 4 instead of 2.
-Edit the file <code>div.S</code> and use the command <code>gcc div.S</code> to build <code>a.out</code>.</p>
+<p>3) Re-write the following code to use conditional move statements.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>int get_min(int a, int b, int c, int d)
+{
+  int result = 0;
+  if (a &lt; b &amp;&amp; a &lt; c &amp;&amp; a &lt; d) result = a;
+  else if (b &lt; a &amp;&amp; b &lt; c &amp;&amp; b &lt; d) result = b;
+  else if (c &lt; a &amp;&amp; c &lt; b &amp;&amp; c &lt; d) result = c;
+  else if (d &lt; a &amp;&amp; d &lt; b &amp;&amp; d &lt; c) result = d;
+  return result;
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>&#160;<br>
-&#160;<br>
-&#160;<br></p>
+<p>4) Consider the following program</p>
 </div>
-<div class="pagebreak"> </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>int getSmallest(int x, int y) {
+    int smallest;
+    if ( x &gt; y ) {
+        smallest = y;
+    }
+    else {
+        smallest = x;
+    }
+    return smallest;
+}</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>3) Fill in the following table</p>
+<p>The following table has x86_64 assembly code that corresponds to the above code. For each instruction,
+explain its meaning, and a description of how it corresponds to the original code. The first instruction has been
+done for you, as an example.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instruction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meaning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov    %edi,-0x14(%rbp)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov    %esi,-0x18(%rbp)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov    -0x14(%rbp),%eax</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cmp    -0x18(%rbp),%eax</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jle    0x4005b0 &lt;getSmallest+26&gt;</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov    -0x18(%rbp),%eax</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jmp    0x4005b9 &lt;getSmallest+35&gt;</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov    -0x14(%rbp),%eax</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>5) Consider the following program</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>int getSmallest_cmov(int x, int y) {
+    return x &gt; y ? y : x;
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instruction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meaning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">push   %rbp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%rsp = %rsp - $0x8, M[%rsp] = %rbp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">save %rbp</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov    %rsp,%rbp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$rbp = %rsp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">update %rbp</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov    %edi,-0x4(%rbp)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov    %esi,-0x8(%rbp)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mov    -0x8(%rbp),%eax</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cmp    %eax,-0x4(%rbp)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cmovle -0x4(%rbp),%eax</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pop    %rbp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">%rbp = M[%rsp], %rsp = %rsp + $0x8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">restore %rbp</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">retq</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pop %rip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Return from the function</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_operands" class="discrete">Operands</h2>
+<div class="paragraph">
+<p>Fill in the following table</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -493,7 +676,7 @@ Edit the file <code>div.S</code> and use the command <code>gcc div.S</code> to b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-19 20:28:28 -0500
+Last updated 2026-03-23 16:13:37 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">

@@ -139,7 +139,7 @@
 * Read: link:https://diveintosystems.org/singlepage/#_some_advanced_c_features[Section 2.9.3, 2.9.4 (void* and pointer arithmetic)] 
 * Read: link:https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era[Chapter 14] 
 * Lab March 24: Practice Quiz 03 link:studyguide4.html[Study Guide 04]
-* link:assts/asst09.html[Assignment 09]: Trust the process. Due March 20th at midnight
+* link:assts/asst09.html[Assignment 09]: Trust the process. Due March 27th at midnight
 
 |
 
