@@ -36,6 +36,8 @@
 |
 * link:lectures/Lecture-Week02-Jan27-Pointers.pdf[Lecture - Jan 27]
 * link:lectures/Lecture-Week02-Jan29-Pointers.pdf[Lecture - Jan 22]
+* link:lectures/ask_matrix_aa.c[ask_matrix_aa.c]
+* link:lectures/ask_matrix_flat.c[ask_matrix_flat.c]
 
 //-----------------------------
 |3
@@ -128,6 +130,7 @@
 * link:assts/asst08.html[Assignment 08]: Image Conscious. Due March 20th at midnight
 
 | 
+link:lectures/Lecture-Week09-March17-OS-Processes.pdf[Lectures - March 17 and 19]
 
 
 //-----------------------------
@@ -142,6 +145,8 @@
 * link:assts/asst09.html[Assignment 09]: Trust the process. Due March 27th at midnight
 
 |
+* link:lectures/Lecture-Week10-March31-Threads1.pdf[Lectures - March 24 and 16]
+* link:lectures/threads-min.c[threads-min.c]
 
 //-----------------------------
 |11
