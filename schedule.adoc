@@ -153,7 +153,7 @@ link:lectures/Lecture-Week09-March17-OS-Processes.pdf[Lectures - March 17 and 19
 |March 31, April 2 anchor:week11[]
 |*Threads II* 
 
-* Topics: performance, deadlock, thread safety, producer/consumer pattern
+* Topics: synchronization, deadlock, producer/consumer pattern
 * Read: link:https://diveintosystems.org/singlepage/#_leveraging_shared_memory_in_the_multicore_era[Chapter 14] 
 * link:assts/asst10.html[Assignment 10]: Mandelthreads. Due April 3rd
 * Lab March 31: **Quiz 03**: 50 minutes
@@ -166,8 +166,9 @@ link:lectures/Lecture-Week09-March17-OS-Processes.pdf[Lectures - March 17 and 19
 //-----------------------------
 |12
 |April 7, 9 anchor:week12[]
-|*Memory* 
+|*Threads III, Memory* 
 
+* Topics: Thread safety, thread performance
 * Topics: Memory hierarchy, spatial/temporal locality, caching
 * Read:"My malloc: mylloc and mhysa" by Johan Montelius 
 * Read: link:https://diveintosystems.org/singlepage/#_storage_and_the_memory_hierarchy[Chapter 11.1-11.3] 
