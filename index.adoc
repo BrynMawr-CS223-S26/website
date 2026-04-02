@@ -16,7 +16,9 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 [.anns]
 
 * Lab March 24: Practice Quiz 3. link:studyguide4.html[Study Guide 4: Assembly] 
-* link:assts/asst09.html[Assignment 09]: Due Friday, March 27th at midnight. 
+* link:assts/asst10.html[Assignment 10]: Due Friday, April 3rd at midnight. 
+* link:assts/asst11.html[Assignment 11]: Due Friday, April 10th at midnight. 
+* link:assts/asst12.html[Assignment 12]: Due Friday, April 17th at midnight. 
 * Final Exam: 3 hours, Closed Book with one written cheatsheet, May 6th, 9:30AM-12:30PM. Park 200A/200D
 
 == Course Info

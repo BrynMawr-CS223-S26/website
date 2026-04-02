@@ -159,6 +159,9 @@ link:lectures/Lecture-Week09-March17-OS-Processes.pdf[Lectures - March 17 and 19
 * Lab March 31: **Quiz 03**: 50 minutes
 
 |
+* link:lectures/Lecture-Week11-March31-ThreadsConcurrency.pdf[Lectures - March 31, April 2]
+* link:lectures/threads-count.c[threads-count.c]
+
 
 //-----------------------------
 |12
