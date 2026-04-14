@@ -176,22 +176,26 @@ link:lectures/Lecture-Week09-March17-OS-Processes.pdf[Lectures - March 17 and 19
 * Lab April 7: **Code Jam 04**
 
 |
+* link:lectures/Lecture-Week12-April7-ThreadPerformance.pdf[Lecture April 7]
+* link:lectures/Lecture-Week12-April9-MemoryHierarchy.pdf[Lecture April 9]
 
 //-----------------------------
 |13
 |April 14, 16 anchor:week13[]
-|*Code Optimization, C++* 
+|*Malloc, Code Optimization* 
 
 * Read: link:https://diveintosystems.org/singlepage/#_code_optimization[Chapter 12] 
-* link:assts/asst12.html[Assignment 12]: Hold on to your memories. Due April 17th.
+* link:assts/asst12.html[Assignment 12]: Hold on to your memories. Due April 17th. ** Worksheet due tuesday April 21**
 * Lab April 14: Memory Homework Visualizations; Practice Quiz 04 link:studyguide4.html[Study Guide 04]
 
 |
+* link:lectures/Lecture-Week12-April9-Malloc.pdf[Lecture April 14]
+* link:lectures/Lecture-Week13-April16-CodeOpt.pdf[Lecture April 16]
 
 //-----------------------------
 |14
 |April 21, 23 anchor:week14[]
-|*Code Optimization, C++* 
+|*C++* 
 
 * link:assts/asst13.[(Optional/Extra Credit) Assignment 13]: C++ Image Class. Due May 8th.
 * Lab 23: **Quiz 04**
