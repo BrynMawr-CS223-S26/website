@@ -11,7 +11,7 @@ include::header.adoc[]
 
 Code Due Friday, April 17th, before midnight. 
 
-Written work Due Thursday, April 26th, in class. **Written portion is due April 26th - no late work accepted**
+Written work Due Tuesday, April 21st - **no late work accepted**
 
 The goals for this assignment are:
 
@@ -202,7 +202,7 @@ Answer the following questions:
 
 = Submit your work
 
-Submit both your code (by midnight) *and* your written questions (due in class Thursday).
+Submit both your code (by midnight) *and* your written questions (due in class).
 
 1) Push your code work to github
 
