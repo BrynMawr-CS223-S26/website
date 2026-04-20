@@ -186,7 +186,7 @@ link:lectures/Lecture-Week09-March17-OS-Processes.pdf[Lectures - March 17 and 19
 
 * Read: link:https://diveintosystems.org/singlepage/#_code_optimization[Chapter 12] 
 * link:assts/asst12.html[Assignment 12]: Hold on to your memories. Due April 17th. ** Worksheet due tuesday April 21**
-* Lab April 14: Memory Homework Visualizations; Practice Quiz 04 link:studyguide4.html[Study Guide 04]
+* Practice Quiz 04 link:studyguide5.html[Study Guide 05]
 
 |
 * link:lectures/Lecture-Week12-April9-Malloc.pdf[Lecture April 14]
@@ -197,8 +197,9 @@ link:lectures/Lecture-Week09-March17-OS-Processes.pdf[Lectures - March 17 and 19
 |April 21, 23 anchor:week14[]
 |*C++* 
 
-* link:assts/asst13.[(Optional/Extra Credit) Assignment 13]: C++ Image Class. Due May 8th.
-* Lab 23: **Quiz 04**
+* C++ classes (operators, constructors, destructors), references, STL (list, vector, map), simple templates
+* link:assts/asst13.html[(Optional/Extra Credit) Assignment 13]: C++ Image Class. Due May 1st.
+* Lab 23: **Quiz 04** link:studyguide5.html[Study Guide 05]
 
 |
 
@@ -208,9 +209,9 @@ link:lectures/Lecture-Week09-March17-OS-Processes.pdf[Lectures - March 17 and 19
 |*Review* 
 
 * link:studyguide-final[Final Study Guide]
-* Class April 28: Practice Final
-* Lab April 28: Practice Final Answers
-* Class April 30: Review Quizzo and party
+* Class April 28: Review Quizzo and party
+* Lab April 28: Practice Final
+* Class April 30: Practice Final Answers and Q+A
 
 |
 

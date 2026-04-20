@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>Assignment 13: Hold on to your memories</title>
+<title>(Optional) Assignment 13: C++ Photoshop</title>
 <link rel="stylesheet" href="../style/cs21.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -14,25 +14,35 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_assignment_13_hold_on_to_your_memories">Assignment 13: Hold on to your memories</a></li>
-<li><a href="#_description">1. Description</a></li>
-<li><a href="#_code_setup">2. Code setup</a></li>
-<li><a href="#_mylloc_list">3. mylloc_list</a></li>
-<li><a href="#_visualizing_memory_allocations">4. Visualizing memory allocations</a></li>
-<li><a href="#_submit_your_work">5. Submit your work</a></li>
-<li><a href="#_grading_rubric">6. Grading Rubric</a></li>
+<li><a href="#_optional_assignment_13_c_photoshop">(Optional) Assignment 13: C++ Photoshop</a></li>
+<li><a href="#_getting_started">Getting started</a></li>
+<li><a href="#_part_i_image_class">1. Part I: Image class</a>
+<ul class="sectlevel2">
+<li><a href="#_requirements">1.1. Requirements</a></li>
+<li><a href="#_loadcopysave">1.2. Load/Copy/Save</a></li>
+<li><a href="#_resize">1.3. Resize</a></li>
+<li><a href="#_flip_horizontally">1.4. Flip horizontally</a></li>
+<li><a href="#_gamma_correction">1.5. Gamma correction</a></li>
+<li><a href="#_grayscale">1.6. Grayscale</a></li>
+<li><a href="#_subimage">1.7. Subimage</a></li>
+<li><a href="#_blend_and_replace">1.8. Blend and replace</a></li>
+</ul>
+</li>
+<li><a href="#_part_ii_make_some_art">2. Part II: Make some art</a></li>
+<li><a href="#_what_to_hand_in">3. What to hand in</a></li>
+<li><a href="#_grading_rubric">4. Grading rubric</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_assignment_13_hold_on_to_your_memories">Assignment 13: Hold on to your memories</h2>
+<h2 id="_optional_assignment_13_c_photoshop">(Optional) Assignment 13: C++ Photoshop</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Code Due Friday, April 25th, before midnight.</p>
+<p><strong>Due Friday May 1, at midnight</strong></p>
 </div>
 <div class="paragraph">
-<p>Written work Due Thursday, April 24th, in class. <strong>Written portion is due April 24th - no late work accepted</strong></p>
+<p>This assignment implements a Image API that emulates common image operations, such as those found in tools such as photoshop and Gimp.</p>
 </div>
 <div class="paragraph">
 <p>The goals for this assignment are:</p>
@@ -40,388 +50,527 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Understand void* types and pointer arithmetic</p>
+<p>Implement an class for loading and saving image files</p>
 </li>
 <li>
-<p>More linked list practice</p>
-</li>
-<li>
-<p>Better understand malloc and free, particularly the use of the free list</p>
-</li>
-</ul>
-</div>
-<h3 id="_update_your_repository" class="discrete">Update your repository</h3>
-<div class="paragraph">
-<p>Do a <strong>fetch upstream</strong> to obtain the basecode for this assignment.</p>
-</div>
-<div class="paragraph">
-<p>Using the command line</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Open terminal and change your current directory to your assignment repository.</p>
-</li>
-<li>
-<p>Run the command <code>git fetch upstream</code></p>
-</li>
-<li>
-<p>Run the command <code>git merge upstream/main</code></p>
+<p>Implement various operations and filters for images (like Photoshop)</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Your repository should now contain a new folder named <code>A13</code>.</p>
-</div>
-<div class="paragraph">
-<p>The <code>fetch</code> and <code>merge</code> commands update your repository with any changes from the original.</p>
+<p>This is an optional assignment for extra credit on your final grade.  Only complete assignments are eligible for extra credits.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_description">1. Description</h2>
+<h2 id="_getting_started">Getting started</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this assignment, we will implement our own version of malloc and free based on
-"first-fit" strategy and analyze its behavior.</p>
-</div>
-<div class="paragraph">
-<p>For this assignment, you should submit both</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>your code, and</p>
-</li>
-<li>
-<p>a written report, <strong>due in class</strong></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_code_setup">2. Code setup</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Your basecode includes the following source files</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>mylloc_list.c</code> - Malloc/free implementation that implements a free list with first-fit strategy (corresponds to <code>mhysa.c</code> in reading)</p>
-</li>
-<li>
-<p><code>rand.c</code> - Utilities for generating random sizes of memory</p>
-</li>
-<li>
-<p><code>sbrk.c</code> - Utilities for extending the amount of memory allocated to a program</p>
-</li>
-<li>
-<p><code>memstats.c</code> - A benchmark program</p>
-</li>
-<li>
-<p><code>unit_tests.c</code> - Unit tests for your malloc/free implementation</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This assignment is based on the reading: "My malloc: mylloc and mhysa" by
-Johan Montelius, posted to Slack. You should complete the reading and finish the
-implementation of <code>mylloc_list.c</code> <em>before</em> starting the assignment.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_mylloc_list">3. mylloc_list</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In <code>mylloc_list.c</code>, implement malloc and free based on the reading.</p>
-</div>
-<div class="paragraph">
-<p>Recall that the reading steps you through implementing your own malloc/free
-based on a free list and a <em>first-fit</em> strategy.  This implementation uses a
-header to keep track of the memory requested from <code>sbrk</code>.  When we re-use memory
-that is freed, we typically will not re-use the entire block of memory. Modify
-the implementation from the reading to</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Extend this header to keep track of both the requested size and the amount of memory
-currently used in the chunk.</p>
-</li>
-</ul>
+<p>Update your repository to get the basecode for this assignment.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>struct chunk {
-  int size; // size of memory allocated from sbrk
-  int used; // *NEW*: amount currently in use
-  struct chunk *next;
-};</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Use the unit tests included with your assignment to test that your implementation is correct</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ <strong>make all</strong>
-gcc -g -Wall -Wvla -Werror memstats.c mylloc_list.c sbrk.c rand.c -o memstats -lm
-gcc -g -Wall -Wvla -Werror unit_tests.c mylloc_list.c sbrk.c rand.c -o unit_tests -lm
-$ <strong>./unit_tests</strong>
-Running tests...
-test 1: size 0 returns NULL: PASSED
-test 2: flist is NULL to start: PASSED
-test 3: flist is empty after first malloc: PASSED
-test 4: correct amount allocated: PASSED
-test 5: header size correct: PASSED
-test 6: header used correct: PASSED
-test 7: flist is non-empty after free: PASSED
-test 8: flist is empty: PASSED
-test9: correct amount allocated: PASSED
-test 10: header size correct: PASSED
-test 11: header used correct: PASSED
-test 12: flist is not empty: PASSED
-test 13: current-init correct size: PASSED
-test 14: header size correct: PASSED
-test 15: header used correct: PASSED
-test 16: flist's first node has correct size: PASSED
-test 17: flist is non-empty: PASSED
-test 18: flist's second node has correct size: PASSED</code></pre>
+<pre class="highlight"><code>$ git pull
+$ cd A13
+$ make
+$ ./pixmap_test
+$ ./pixmap_art</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_visualizing_memory_allocations">4. Visualizing memory allocations</h2>
+<h2 id="_part_i_image_class">1. Part I: Image class</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>This part of the assignment should be submitted in hard-copy - due April 24th</strong></p>
+<p>Complete the implementation of a class <code>Image</code> in the files <code>image.h</code> and <code>image.cpp</code>.
+Your <code>Image</code> class should use your PPM reader and writer from common.</p>
 </div>
 <div class="paragraph">
-<p>Consider the output from the following program. This program makes a series of malloc/free calls based on random
-sizes of memory. In this question, you will visualize the execution of malloc and free
-from the previous question.</p>
+<p>The base code uses a <strong>header file</strong> to keep the class definition separate from its
+implementation. The header file is included in your main application file. If you add
+new methods to <code>Image</code>, you will need to edit both the header (.h) and source (.cpp)
+files.</p>
+</div>
+<div class="sect2">
+<h3 id="_requirements">1.1. Requirements</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Your class should implement an <strong>assignment operator</strong>, <strong>copy constructor</strong>, and <strong>destructor</strong></p>
+</li>
+<li>
+<p>Your class should manage a 2D color array in PPM format. Make sure you don&#8217;t leak memory.</p>
+</li>
+<li>
+<p>Your class should implement the following methods:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>bool load(const std::string&amp; filename);</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Loads the file with the given name. Returns true if successful; False otherwise</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>bool save(const std::string&amp; filename);</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Saves the file with the given name. Returns true if successful; False otherwise</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>int width() const;</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Returns the number of columns in this image</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>int height() const;</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Returns the number of rows in this image</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>Pixel get(int row, int col) const;</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Gets a pixel (value range in [0,255]) at position (row, col).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>void set(int row, int col, const Pixel&amp; c);</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Sets a pixel (value range in [0,255]) at position (row, col)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>Image flip_horizontal();</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Returns a copy of the image flipped along the horizontal middle axis</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>Image resize(int width, int height);</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Returns a copy of the imaged resized to the given width and height</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>Image gammaCorrect(float gamma);</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Returns a copy of this image with the given gamma correction factor applied to it.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>Image grayscale();</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Returns a copy of this image as a grayscale image.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>Image blend(const Image&amp; other, float alpha);</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Returns a copy of this image with the other image blended with it by factor alpha. E.g. result.pixel = this.pixel * (1 - alpha) + other.pixel * alpha. Assumes other and this have the same dimensions.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>Image subimage(int row, int col, int width, int height) const;</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Returns a sub-image with top,left corner at (x,y) and width and height</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>void replace(const Image&amp; image, int row, int col);</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Replaces the block of pixels starting at (row, col) with the image. Should not assume image fits on this image.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_testing">1.1.1. Testing</h4>
+<div class="paragraph">
+<p>You are given a program to test your image class, implemented in <code>pixmap_test.cpp</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>./memstats</strong>
-Starting test..
-The initial top of the heap is 0x7feffe84d010.
----------------
-0
-Allocating 452 bytes at index 0
-Allocating 1042 bytes at index 4
-Allocating 45 bytes at index 1
-Freeing index 0
-Allocating 68 bytes at index 0
-Freeing index 1
-Freeing index 0
-Allocating 127 bytes at index 3
-Allocating 1141 bytes at index 2
-Allocating 89 bytes at index 1
-The new top of the heap is 0x7feffe84db31.
-Increased by 2849 (0xb21) bytes
-Total blocks: 5 Free blocks: 1 Used blocks: 4
-Total memory allocated: 2769 Free memory: 45 Used memory: 2724
-Underutilized memory: 0.12
----------------
-1
-Freeing index 3
-Allocating 47 bytes at index 0
-Freeing index 4
-Freeing index 1
-Freeing index 2
-Freeing index 0
-Allocating 3426 bytes at index 1
-Freeing index 1
-Allocating 39 bytes at index 2
-Allocating 163 bytes at index 4
-The new top of the heap is 0x7feffe84e8a3.
-Increased by 3442 (0xd72) bytes
-Total blocks: 6 Free blocks: 4 Used blocks: 2
-Total memory allocated: 6195 Free memory: 2317 Used memory: 3878
-Underutilized memory: 0.95
----------------
-2
-Allocating 1658 bytes at index 3
-Allocating 1812 bytes at index 0
-Freeing index 3
-Allocating 39 bytes at index 3
-Allocating 156 bytes at index 1
-Freeing index 3
-Freeing index 1
-Freeing index 4
-Freeing index 2
-Allocating 921 bytes at index 1
-The new top of the heap is 0x7feffe84f651.
-Increased by 3502 (0xdae) bytes
-Total blocks: 8 Free blocks: 6 Used blocks: 2
-Total memory allocated: 9665 Free memory: 4427 Used memory: 5238
-Underutilized memory: 0.48
-Time is 4.1e-05</code></pre>
+<pre class="highlight"><code>$ <strong>../bin/pixmap_test</strong> (or ../bin/Debug/pixmap_test from the developer console in Visual Studio)
+(0,0,0) (100,0,0) (0,0,0) (255,0,255)
+(0,0,0) (0,255,175) (0,0,0) (0,0,0)
+(0,0,0) (0,0,0) (0,15,175) (0,0,0)
+(255,0,255) (0,0,0) (0,0,0) (255,255,255)
+loaded feep: 4 4
+0 255 175
+loaded earth: 400 400</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_loadcopysave">1.2. Load/Copy/Save</h3>
+<div class="paragraph">
+<p>To start, make sure that the file, <code>earth.png</code>, loads and saves correctly. Then test
+that your width, height, copy constructor, and assignment operator
+work correctly. Lastly, check that your destructor is cleaning up
+any memory created by your class!!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_resize">1.3. Resize</h3>
+<div class="paragraph">
+<p>Test resizing the image, <code>earth.png</code>.
+The following code and image show an example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Image resize = image.resize(200,300);
+resize.save("earth-200-300.png");</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/A02/earth-200-300.png" alt="earth 200 300">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_flip_horizontally">1.4. Flip horizontally</h3>
+<div class="paragraph">
+<p>The following code and image show an example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code> ----
+Image flip = image.flip_horizontal();
+flip.save("earth-flip.png");
+----</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/A02/earth-flip.png" alt="earth flip">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gamma_correction">1.5. Gamma correction</h3>
+<div class="paragraph">
+<p>The following code and images show two examples.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Image gamma = image.gammaCorrect(0.6f);
+gamma.save("earth-gamma-0.6.png");
+
+gamma = image.gammaCorrect(2.2f);
+gamma.save("earth-gamma-2.2.png");</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Below, we explain the first block of memory allocations (Round 1).
-When the program starts, we have no buffers allocated and the free list is empty.</p>
+<p>Gamma = 0.6</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/A02/earth-gamma-0.6.png" alt="earth gamma 0.6">
+</div>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="img/memstats0.png" alt="memstats0"></span></p>
+<p>Gamma = 2.2</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/A02/earth-gamma-2.2.png" alt="earth gamma 2.2">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_grayscale">1.6. Grayscale</h3>
+<div class="paragraph">
+<p>The following code and image show an example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Image grayscale = image.grayscale();
+grayscale.save("earth-grayscale.png");</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/A02/earth-grayscale.png" alt="earth grayscale">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_subimage">1.7. Subimage</h3>
+<div class="paragraph">
+<p>The following code and image show an example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Image sub = image.subimage(200, 200, 100, 100);
+sub.save("earth-subimage.png");</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/A02/earth-subimage.png" alt="earth subimage">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_blend_and_replace">1.8. Blend and replace</h3>
+<div class="paragraph">
+<p>The following code and image show an example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Image soup;
+soup.load("../images/soup.png");
+
+int x = (int) (0.5f * (image.width() - soup.width()));
+int y = (int) (0.5f * (image.height() - soup.height()));
+Image background = image.subimage(x, y, soup.width(), soup.height());
+background.save("background-test.png");
+
+Image blend = background.alpha_blend(soup, 0.5f);
+image.replace(blend, x, y);
+image.save("earth-blend-0.5.png");</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="img/A02/earth-blend-0.5.png" alt="earth blend 0.5">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_part_ii_make_some_art">2. Part II: Make some art</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the file, <code>pixmap_art.cpp</code>, implement a program that creates a cool-looking image.
+You may want to implement additional features in your image class to do this (See below).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Rotate 90 degrees: rotate the image clockwise by 90 degrees</p>
+</li>
+<li>
+<p>Swirl colors: rotate the colors of your image such that the red channel becomes the green channel, the green becomes blue, and the blue becomes red.</p>
+</li>
+<li>
+<p>Invert colors: subtract each color channel from the max value, 255.</p>
+</li>
+<li>
+<p>Add a border around the edge of your images.</p>
+</li>
+<li>
+<p>Distort: displace pixels based on sine and cosine.</p>
+</li>
+<li>
+<p>Extract the red, blue, or green channels</p>
+</li>
+<li>
+<p>Bitmap: Create a 'fat bits' version of your image</p>
+</li>
+<li>
+<p>Overlay a fill color, or blend a pattern of colors</p>
+</li>
+<li>
+<p>Lightest: given a Image, implement <code>max(this.pixel, other.pixel)</code></p>
+</li>
+<li>
+<p>Darkest: given a Image, implement <code>min(this.pixel, other.pixel)</code></p>
+</li>
+<li>
+<p>Difference: given a Image, implement <code>this.pixel - other.pixel</code></p>
+</li>
+<li>
+<p>Multiply: given a Image, implement <code>this.pixel * other.pixel</code></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Sobel_operator">Sobel operator</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Gaussian_blur">Gaussian blur</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Box_blur">Box blur</a></p>
+</li>
+<li>
+<p>Randomize colors or 'jitter' the colors</p>
+</li>
+<li>
+<p>Glow: produce a glow effect around all pixels of a given color, such as white</p>
+</li>
+<li>
+<p>Painterly effect</p>
+</li>
+<li>
+<p>Glitch effect</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>After the first 3 allocations, the buffers and free list look as follows:</p>
+<p>Below are some ideas:</p>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="img/memstats1.png" alt="memstats1"></span></p>
+<div class="imageblock">
+<div class="content">
+<img src="img/A02/kitty-bitmap.png" alt="kitty bitmap" width="256px">
 </div>
-<div class="paragraph">
-<p>After the next iteration, we have</p>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="img/memstats2.png" alt="memstats2"></span></p>
+<div class="imageblock">
+<div class="content">
+<img src="img/A02/SoupTile.png" alt="SoupTile" width="256px">
 </div>
-<div class="paragraph">
-<p>After the next iteration, we have
-<span class="image"><img src="img/memstats3.png" alt="memstats3"></span></p>
 </div>
-<div class="paragraph">
-<p>After the next iteration, we have
-<span class="image"><img src="img/memstats4.png" alt="memstats4"></span></p>
+<div class="imageblock">
+<div class="content">
+<img src="img/A02/SoupTunnel-Darkest.png" alt="SoupTunnel Darkest" width="128px">
 </div>
-<div class="paragraph">
-<p>At the end of round 1, the buffers and free list look as follows</p>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="img/memstats5.png" alt="memstats5"></span></p>
 </div>
-<div class="paragraph">
-<p>Answer the following questions:</p>
 </div>
+<div class="sect1">
+<h2 id="_what_to_hand_in">3. What to hand in</h2>
+<div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Why is the total memory allocated equal to 2769 bytes?</p>
+<p>Your code. Make sure your code is checked into github. Make sure it adheres to the <a href="codingstandard.html">coding style</a>.</p>
 </li>
 <li>
-<p>If the total memory is equal to 2769 bytes, why did the heap increase by 2849 bytes?</p>
-</li>
-<li>
-<p>Why is the underutilized memory 12%?</p>
-</li>
-<li>
-<p>Draw the buffers and free list after round 1</p>
-</li>
-<li>
-<p>Draw the buffers and free list after round 2</p>
+<p>Images made with your program</p>
 </li>
 </ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_submit_your_work">5. Submit your work</h2>
+<h2 id="_grading_rubric">4. Grading rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Submit both your code (by midnight) <strong>and</strong> your written questions (due in class Thursday).</p>
-</div>
-<div class="paragraph">
-<p>1) Push your code work to github</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>$ git status
-$ git add .
-$ git status
-$ git commit -m "assignment complete"
-$ git status
-$ git push
-$ git status</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_grading_rubric">6. Grading Rubric</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>Assignment rubrics</strong></p>
-</div>
-<div class="paragraph">
-<p>Grades are out of 4 points.</p>
+<p>Grades each week are out of 4 points.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>(2 points) mylloc_list</p>
+<p>(4 points) Image class</p>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.1 points) style and header comment</p>
+<p>(0.6 points) load/constructors/assignment/destructor/set (memory management)</p>
 </li>
 <li>
-<p>(1.9 points) passes all tests</p>
+<p>(1.0 points) No memory errors</p>
+</li>
+<li>
+<p>(0.6 points) set/set/width/height/save</p>
+</li>
+<li>
+<p>(0.2 points) resize</p>
+</li>
+<li>
+<p>(0.2 points) flip_horizontal</p>
+</li>
+<li>
+<p>(0.2 points) gammaCorrect</p>
+</li>
+<li>
+<p>(0.2 points) grayscale</p>
+</li>
+<li>
+<p>(0.2 points) blend</p>
+</li>
+<li>
+<p>(0.2 points) subimage</p>
+</li>
+<li>
+<p>(0.2 points) replace</p>
+</li>
+<li>
+<p>(0.4 points) cool images</p>
 </li>
 </ul>
 </div>
 </li>
-<li>
-<p>(2 points) Readme</p>
-</li>
 </ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-valgrind won&#8217;t work for this assignment. You do not need to check for memory errors on this assignment.
-</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
 <p><strong>Code rubrics</strong></p>
 </div>
 <div class="paragraph">
-<p>For full credit, your C programs must be feature-complete, robust (e.g. run without memory errors or crashing) and
-have good style.</p>
+<p>For full credit, your C++ programs must be feature-complete, robust (e.g. run without memory errors or crashing) and have good style.
+Some credit lost for missing features or bugs, depending on severity of error</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Some credit lost for missing features or bugs, depending on severity of error</p>
-</li>
-<li>
-<p>-5% for style errors. See the <a href="../codingstandard.html">class coding style</a> here.</p>
-</li>
-<li>
-<p>-100% for failure to checkin work to Github</p>
-</li>
-<li>
-<p>-100% for failure to compile on linux using make</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>-5% for style errors. See the class coding style here.
+-50% for memory errors
+-100% for failure to checkin work to Github
+-100% for failure to compile on linux using make</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-19 20:28:28 -0500
+Last updated 2026-04-20 15:52:09 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">
