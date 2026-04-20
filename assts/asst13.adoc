@@ -16,7 +16,7 @@ The goals for this assignment are:
 * Implement an class for loading and saving image files
 * Implement various operations and filters for images (like Photoshop)
 
-This is an optional assignment for extra credit on your final grade.  Only complete assignments are eligible for extra credits.
+This is an optional assignment for extra credit on your final grade.  Only assignments that complete the minimal requirements are eligible for extra credit.
 
 = Getting started
 
@@ -27,6 +27,7 @@ Update your repository to get the basecode for this assignment.
 $ git pull
 $ cd A13 
 $ make 
+$ ./pixmap_minimal
 $ ./pixmap_test
 $ ./pixmap_art
 ----
@@ -43,7 +44,7 @@ implementation. The header file is included in your main application file. If yo
 new methods to `Image`, you will need to edit both the header (.h) and source (.cpp) 
 files. 
 
-== Requirements
+== Minimal Requirements
 
 * Your class should implement an *assignment operator*, *copy constructor*, and *destructor*
 * Your class should manage a 2D color array in PPM format. Make sure you don't leak memory.
@@ -60,6 +61,10 @@ files.
 *** Gets a pixel (value range in [0,255]) at position (row, col). 
 ** `void set(int row, int col, const Pixel& c);` 
 *** Sets a pixel (value range in [0,255]) at position (row, col)
+
+== Basic Image Features
+
+* Your class should implement the following methods:
 ** `Image flip_horizontal();`
 *** Returns a copy of the image flipped along the horizontal middle axis
 ** `Image resize(int width, int height);` 
@@ -81,32 +86,31 @@ You are given a program to test your image class, implemented in `pixmap_test.cp
 
 [source, subs="quotes"]
 ----
-$ *../bin/pixmap_test* (or ../bin/Debug/pixmap_test from the developer console in Visual Studio)
+$ *./pixmap_minimal* 
 (0,0,0) (100,0,0) (0,0,0) (255,0,255)
 (0,0,0) (0,255,175) (0,0,0) (0,0,0)
 (0,0,0) (0,0,0) (0,15,175) (0,0,0)
 (255,0,255) (0,0,0) (0,0,0) (255,255,255)
 loaded feep: 4 4
 0 255 175
-loaded earth: 400 400
 ----
 
 == Load/Copy/Save
 
-To start, make sure that the file, `earth.png`, loads and saves correctly. Then test 
+To start, make sure that the file, `feep.ppm`, loads and saves correctly. Then test 
 that your width, height, copy constructor, and assignment operator 
 work correctly. Lastly, check that your destructor is cleaning up 
 any memory created by your class!!
 
 == Resize
 
-Test resizing the image, `earth.png`. 
+Test resizing the image, `earth.ppm`. 
 The following code and image show an example.
 
 [source]
 ----
 Image resize = image.resize(200,300);
-resize.save("earth-200-300.png");
+resize.save("earth-200-300.ppm");
 ----
 
 image::A02/earth-200-300.png[]
@@ -118,7 +122,7 @@ The following code and image show an example.
 [source]
  ----
 Image flip = image.flip_horizontal(); 
-flip.save("earth-flip.png"); 
+flip.save("earth-flip.ppm"); 
 ----
 
 image::A02/earth-flip.png[]
@@ -130,10 +134,10 @@ The following code and images show two examples.
 [source]
 ----
 Image gamma = image.gammaCorrect(0.6f); 
-gamma.save("earth-gamma-0.6.png"); 
+gamma.save("earth-gamma-0.6.ppm"); 
 
 gamma = image.gammaCorrect(2.2f);
-gamma.save("earth-gamma-2.2.png"); 
+gamma.save("earth-gamma-2.2.ppm"); 
 ----
 
 Gamma = 0.6
@@ -151,7 +155,7 @@ The following code and image show an example.
 [source]
 ----
 Image grayscale = image.grayscale(); 
-grayscale.save("earth-grayscale.png");
+grayscale.save("earth-grayscale.ppm");
 ----
 
 image::A02/earth-grayscale.png[]
@@ -163,7 +167,7 @@ The following code and image show an example.
 [source]
 ----
 Image sub = image.subimage(200, 200, 100, 100); 
-sub.save("earth-subimage.png"); 
+sub.save("earth-subimage.ppm"); 
 ----
 
 image::A02/earth-subimage.png[]
@@ -175,16 +179,16 @@ The following code and image show an example.
 [source]
 ----
 Image soup;
-soup.load("../images/soup.png");
+soup.load("../images/soup.ppm");
 
 int x = (int) (0.5f * (image.width() - soup.width()));
 int y = (int) (0.5f * (image.height() - soup.height()));
 Image background = image.subimage(x, y, soup.width(), soup.height());
-background.save("background-test.png");
+background.save("background-test.ppm");
 
 Image blend = background.alpha_blend(soup, 0.5f);
 image.replace(blend, x, y);
-image.save("earth-blend-0.5.png");
+image.save("earth-blend-0.5.ppm");
 ----
 
 image::A02/earth-blend-0.5.png[]
@@ -225,22 +229,23 @@ image::A02/SoupTunnel-Darkest.png[width=128px]
 . Your code. Make sure your code is checked into github. Make sure it adheres to the link:codingstandard.html[coding style].
 . Images made with your program
 
-= Grading rubric
+= Rubric
 
-Grades each week are out of 4 points.
+Extra credit is added to your final exam grade (out of 100).
 
-* (4 points) Image class
-** (0.6 points) load/constructors/assignment/destructor/set (memory management)
-** (1.0 points) No memory errors
-** (0.6 points) set/set/width/height/save 
-** (0.2 points) resize
-** (0.2 points) flip_horizontal
-** (0.2 points) gammaCorrect
-** (0.2 points) grayscale
-** (0.2 points) blend
-** (0.2 points) subimage
-** (0.2 points) replace
-** (0.4 points) cool images
+* (2 points) Minimal Features
+** load/constructors/assignment/destructor/set (memory management)
+** No memory errors
+** set/get/width/height/save 
+* (2 points) Image operators 
+** resize
+** flip_horizontal
+** gammaCorrect
+** grayscale
+** blend
+** subimage
+** replace
+* (2 points) Cool images
 
 **Code rubrics**
 

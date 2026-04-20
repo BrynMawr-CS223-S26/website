@@ -18,19 +18,20 @@
 <li><a href="#_getting_started">Getting started</a></li>
 <li><a href="#_part_i_image_class">1. Part I: Image class</a>
 <ul class="sectlevel2">
-<li><a href="#_requirements">1.1. Requirements</a></li>
-<li><a href="#_loadcopysave">1.2. Load/Copy/Save</a></li>
-<li><a href="#_resize">1.3. Resize</a></li>
-<li><a href="#_flip_horizontally">1.4. Flip horizontally</a></li>
-<li><a href="#_gamma_correction">1.5. Gamma correction</a></li>
-<li><a href="#_grayscale">1.6. Grayscale</a></li>
-<li><a href="#_subimage">1.7. Subimage</a></li>
-<li><a href="#_blend_and_replace">1.8. Blend and replace</a></li>
+<li><a href="#_minimal_requirements">1.1. Minimal Requirements</a></li>
+<li><a href="#_basic_image_features">1.2. Basic Image Features</a></li>
+<li><a href="#_loadcopysave">1.3. Load/Copy/Save</a></li>
+<li><a href="#_resize">1.4. Resize</a></li>
+<li><a href="#_flip_horizontally">1.5. Flip horizontally</a></li>
+<li><a href="#_gamma_correction">1.6. Gamma correction</a></li>
+<li><a href="#_grayscale">1.7. Grayscale</a></li>
+<li><a href="#_subimage">1.8. Subimage</a></li>
+<li><a href="#_blend_and_replace">1.9. Blend and replace</a></li>
 </ul>
 </li>
 <li><a href="#_part_ii_make_some_art">2. Part II: Make some art</a></li>
 <li><a href="#_what_to_hand_in">3. What to hand in</a></li>
-<li><a href="#_grading_rubric">4. Grading rubric</a></li>
+<li><a href="#_rubric">4. Rubric</a></li>
 </ul>
 </div>
 </div>
@@ -58,7 +59,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>This is an optional assignment for extra credit on your final grade.  Only complete assignments are eligible for extra credits.</p>
+<p>This is an optional assignment for extra credit on your final grade.  Only assignments that complete the minimal requirements are eligible for extra credit.</p>
 </div>
 </div>
 </div>
@@ -73,6 +74,7 @@
 <pre class="highlight"><code>$ git pull
 $ cd A13
 $ make
+$ ./pixmap_minimal
 $ ./pixmap_test
 $ ./pixmap_art</code></pre>
 </div>
@@ -93,7 +95,7 @@ new methods to <code>Image</code>, you will need to edit both the header (.h) an
 files.</p>
 </div>
 <div class="sect2">
-<h3 id="_requirements">1.1. Requirements</h3>
+<h3 id="_minimal_requirements">1.1. Minimal Requirements</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -166,6 +168,20 @@ files.</p>
 </ul>
 </div>
 </li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_basic_image_features">1.2. Basic Image Features</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Your class should implement the following methods:</p>
+<div class="ulist">
+<ul>
 <li>
 <p><code>Image flip_horizontal();</code></p>
 <div class="ulist">
@@ -242,43 +258,42 @@ files.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_testing">1.1.1. Testing</h4>
+<h4 id="_testing">1.2.1. Testing</h4>
 <div class="paragraph">
 <p>You are given a program to test your image class, implemented in <code>pixmap_test.cpp</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>$ <strong>../bin/pixmap_test</strong> (or ../bin/Debug/pixmap_test from the developer console in Visual Studio)
+<pre class="highlight"><code>$ <strong>./pixmap_minimal</strong>
 (0,0,0) (100,0,0) (0,0,0) (255,0,255)
 (0,0,0) (0,255,175) (0,0,0) (0,0,0)
 (0,0,0) (0,0,0) (0,15,175) (0,0,0)
 (255,0,255) (0,0,0) (0,0,0) (255,255,255)
 loaded feep: 4 4
-0 255 175
-loaded earth: 400 400</code></pre>
+0 255 175</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_loadcopysave">1.2. Load/Copy/Save</h3>
+<h3 id="_loadcopysave">1.3. Load/Copy/Save</h3>
 <div class="paragraph">
-<p>To start, make sure that the file, <code>earth.png</code>, loads and saves correctly. Then test
+<p>To start, make sure that the file, <code>feep.ppm</code>, loads and saves correctly. Then test
 that your width, height, copy constructor, and assignment operator
 work correctly. Lastly, check that your destructor is cleaning up
 any memory created by your class!!</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_resize">1.3. Resize</h3>
+<h3 id="_resize">1.4. Resize</h3>
 <div class="paragraph">
-<p>Test resizing the image, <code>earth.png</code>.
+<p>Test resizing the image, <code>earth.ppm</code>.
 The following code and image show an example.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>Image resize = image.resize(200,300);
-resize.save("earth-200-300.png");</code></pre>
+resize.save("earth-200-300.ppm");</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -288,7 +303,7 @@ resize.save("earth-200-300.png");</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_flip_horizontally">1.4. Flip horizontally</h3>
+<h3 id="_flip_horizontally">1.5. Flip horizontally</h3>
 <div class="paragraph">
 <p>The following code and image show an example.</p>
 </div>
@@ -296,7 +311,7 @@ resize.save("earth-200-300.png");</code></pre>
 <div class="content">
 <pre class="highlight"><code> ----
 Image flip = image.flip_horizontal();
-flip.save("earth-flip.png");
+flip.save("earth-flip.ppm");
 ----</code></pre>
 </div>
 </div>
@@ -307,17 +322,17 @@ flip.save("earth-flip.png");
 </div>
 </div>
 <div class="sect2">
-<h3 id="_gamma_correction">1.5. Gamma correction</h3>
+<h3 id="_gamma_correction">1.6. Gamma correction</h3>
 <div class="paragraph">
 <p>The following code and images show two examples.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>Image gamma = image.gammaCorrect(0.6f);
-gamma.save("earth-gamma-0.6.png");
+gamma.save("earth-gamma-0.6.ppm");
 
 gamma = image.gammaCorrect(2.2f);
-gamma.save("earth-gamma-2.2.png");</code></pre>
+gamma.save("earth-gamma-2.2.ppm");</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -338,14 +353,14 @@ gamma.save("earth-gamma-2.2.png");</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_grayscale">1.6. Grayscale</h3>
+<h3 id="_grayscale">1.7. Grayscale</h3>
 <div class="paragraph">
 <p>The following code and image show an example.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>Image grayscale = image.grayscale();
-grayscale.save("earth-grayscale.png");</code></pre>
+grayscale.save("earth-grayscale.ppm");</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -355,14 +370,14 @@ grayscale.save("earth-grayscale.png");</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_subimage">1.7. Subimage</h3>
+<h3 id="_subimage">1.8. Subimage</h3>
 <div class="paragraph">
 <p>The following code and image show an example.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>Image sub = image.subimage(200, 200, 100, 100);
-sub.save("earth-subimage.png");</code></pre>
+sub.save("earth-subimage.ppm");</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -372,23 +387,23 @@ sub.save("earth-subimage.png");</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_blend_and_replace">1.8. Blend and replace</h3>
+<h3 id="_blend_and_replace">1.9. Blend and replace</h3>
 <div class="paragraph">
 <p>The following code and image show an example.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>Image soup;
-soup.load("../images/soup.png");
+soup.load("../images/soup.ppm");
 
 int x = (int) (0.5f * (image.width() - soup.width()));
 int y = (int) (0.5f * (image.height() - soup.height()));
 Image background = image.subimage(x, y, soup.width(), soup.height());
-background.save("background-test.png");
+background.save("background-test.ppm");
 
 Image blend = background.alpha_blend(soup, 0.5f);
 image.replace(blend, x, y);
-image.save("earth-blend-0.5.png");</code></pre>
+image.save("earth-blend-0.5.ppm");</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -503,52 +518,59 @@ You may want to implement additional features in your image class to do this (Se
 </div>
 </div>
 <div class="sect1">
-<h2 id="_grading_rubric">4. Grading rubric</h2>
+<h2 id="_rubric">4. Rubric</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Grades each week are out of 4 points.</p>
+<p>Extra credit is added to your final exam grade (out of 100).</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>(4 points) Image class</p>
+<p>(2 points) Minimal Features</p>
 <div class="ulist">
 <ul>
 <li>
-<p>(0.6 points) load/constructors/assignment/destructor/set (memory management)</p>
+<p>load/constructors/assignment/destructor/set (memory management)</p>
 </li>
 <li>
-<p>(1.0 points) No memory errors</p>
+<p>No memory errors</p>
 </li>
 <li>
-<p>(0.6 points) set/set/width/height/save</p>
-</li>
-<li>
-<p>(0.2 points) resize</p>
-</li>
-<li>
-<p>(0.2 points) flip_horizontal</p>
-</li>
-<li>
-<p>(0.2 points) gammaCorrect</p>
-</li>
-<li>
-<p>(0.2 points) grayscale</p>
-</li>
-<li>
-<p>(0.2 points) blend</p>
-</li>
-<li>
-<p>(0.2 points) subimage</p>
-</li>
-<li>
-<p>(0.2 points) replace</p>
-</li>
-<li>
-<p>(0.4 points) cool images</p>
+<p>set/get/width/height/save</p>
 </li>
 </ul>
 </div>
+</li>
+<li>
+<p>(2 points) Image operators</p>
+<div class="ulist">
+<ul>
+<li>
+<p>resize</p>
+</li>
+<li>
+<p>flip_horizontal</p>
+</li>
+<li>
+<p>gammaCorrect</p>
+</li>
+<li>
+<p>grayscale</p>
+</li>
+<li>
+<p>blend</p>
+</li>
+<li>
+<p>subimage</p>
+</li>
+<li>
+<p>replace</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(2 points) Cool images</p>
 </li>
 </ul>
 </div>
@@ -570,7 +592,7 @@ Some credit lost for missing features or bugs, depending on severity of error</p
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-04-20 15:52:09 -0400
+Last updated 2026-04-20 16:51:24 -0400
 </div>
 </div>
 <script type="text/x-mathjax-config">
