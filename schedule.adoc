@@ -208,7 +208,7 @@ link:lectures/Lecture-Week09-March17-OS-Processes.pdf[Lectures - March 17 and 19
 |April 28, April 30 anchor:week15[]
 |*Review* 
 
-* link:studyguide-final[Final Study Guide]
+* link:studyguide-final.html[Final Study Guide]
 * Class April 28: Review Quizzo and party
 * Lab April 28: Practice Final
 * Class April 30: Practice Final Answers and Q+A
