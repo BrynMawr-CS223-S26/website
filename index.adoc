@@ -15,7 +15,7 @@ Instructor: link:https://www.cs.brynmawr.edu/~alinen[Aline Normoyle]
 
 [.anns]
 
-* Lab April 21: Quiz 04
+* link:final-practice.html[Final Exam Flashcards]
 * link:assts/asst13.html[Assignment 13]: C++ Photoshop. Due Friday, May 1 at midnight. 
 * Final Exam: 3 hours, Closed Book with one written cheatsheet, May 6th, 9:30AM-12:30PM. Park 200A/200D
 
