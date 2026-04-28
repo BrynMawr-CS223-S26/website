@@ -202,6 +202,8 @@ link:lectures/Lecture-Week09-March17-OS-Processes.pdf[Lectures - March 17 and 19
 * Lab 23: **Quiz 04** link:studyguide5.html[Study Guide 05]
 
 |
+* link:lectures/Lecture-Week14-April21-C++.pdf[Lecture April 21, 23]
+* link:lectures/mystring.cpp[mystring.cpp]
 
 //-----------------------------
 |15
